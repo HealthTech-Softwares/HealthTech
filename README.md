@@ -5,9 +5,7 @@
   </a>
 
   <h2 align="center">HealthTech</h2>
-  <p align="center">
-    "Mejorando tu experiencia"
-  </p>
+  <h3 align="center">"Mejorando tu experiencia"</h3>
 </div>
 
 **HealthTech** es una empresa especializada en el desarrollo de soluciones tecnológicas avanzadas para el sector de la salud mental. Nos enfocamos en crear software innovador que facilite la gestión y el cuidado en hospitales psiquiátricos, clínicas de psicología y centros de salud mental, tanto en el ámbito público como privado.
