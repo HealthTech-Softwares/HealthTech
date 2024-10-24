@@ -1,0 +1,13 @@
+1. Iniciar sesión
+2. Ver psicólogos
+3. Reservar cita
+4. Realizar pago
+5. Realizar encuesta
+6. Ver citas
+7. Asistir cita online
+8. Generar diagnóstico
+9. Gestionar historial de citas
+10. Modificar datos
+11. Ver notificación
+12. Gestionar perfil
+13. Gestionar psicólogo
