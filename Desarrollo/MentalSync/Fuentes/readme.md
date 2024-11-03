@@ -45,6 +45,12 @@ Asegúrate de tener instalados estos elementos:
 
    Con ello, se ejecutará el servidor local para el backend. Recuerda tener configurado el archivo _.env_
 
+   Si quieres ejecutar el servidor y que este se actualice automaticamente con cada cambio realizado, ejecuta el siguiente comando en lugar del anterior:
+
+   ```bash
+   npm run dev
+   ```
+
 1. En la carpeta client, a la que puedes desplazarte otra vez, con el comando:
 
    ```bash
