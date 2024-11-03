@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,5 +19,8 @@
     "morgan": "^1.10.0",
     "pg": "^8.13.1",
     "pg-promise": "^11.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
