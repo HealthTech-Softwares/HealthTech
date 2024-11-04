@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import pruebaRouter from "../routes/prueba.routes.js";
 import psicologoRouter from "../routes/psicologos.routes.js";
+import turnoRouter from "../routes/turnos.routes.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", psicologoRouter);
+app.use("/api", turnoRouter);
 
 // Handling errors
 app.use((err, req, res, next) => {
