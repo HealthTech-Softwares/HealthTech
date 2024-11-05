@@ -92,6 +92,7 @@ export const getPsicologo = async (req, res, next) => {
     const { id } = req.params;
     const result = await db.oneOrNone(
       `SELECT foto, nombre, apellidop, apellidom, dni
+      FROM psicologo
       WHERE idpsicologo = $1`,
       [id]
     );
