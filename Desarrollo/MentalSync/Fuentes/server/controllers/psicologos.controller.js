@@ -1,4 +1,4 @@
-import { connectDB } from "../src/db.js";
+import db from "../src/db.js";
 
 export const createPsicologo = async (req, res, next) => {
   try {
@@ -13,8 +13,6 @@ export const createPsicologo = async (req, res, next) => {
       firma,
       sede,
     } = req.body;
-
-    const db = await connectDB();
 
     const result = await db.tx(async (t) => {
       // Verificamos si existe el correo y el DNI
@@ -74,7 +72,6 @@ export const createPsicologo = async (req, res, next) => {
 
 export const getPsicologos = async (req, res, next) => {
   try {
-    const db = await connectDB();
     const result = await db.any(
       `SELECT idpsicologo, foto, nombre, apellidop, apellidom, dni
       FROM psicologo
@@ -88,7 +85,6 @@ export const getPsicologos = async (req, res, next) => {
 
 export const getPsicologo = async (req, res, next) => {
   try {
-    const db = await connectDB();
     const { id } = req.params;
     const result = await db.oneOrNone(
       `SELECT foto, nombre, apellidop, apellidom, dni
@@ -107,7 +103,6 @@ export const getPsicologo = async (req, res, next) => {
 
 export const deletePsicologo = async (req, res, next) => {
   try {
-    const db = await connectDB();
     const { id } = req.params;
     const result = await db.result(
       `DELETE FROM psicologo
