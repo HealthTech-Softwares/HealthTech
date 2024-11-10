@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { BuscarPsico } from './components/pantalla_principal_paciente/buscar_psico'
 import { Inicio } from './components/inicio_sesion/inicio'
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
   return (
     <>
       <div>
-        <Inicio/>
+        {/* <Inicio/> */}
+        <BuscarPsico/>
       </div>
     </>
   )

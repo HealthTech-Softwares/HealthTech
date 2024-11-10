@@ -1,29 +1,29 @@
 import logoMental from '../../assets/logo_mentalsync.png';
-import './inicio.css';
+import styles from './inicio.module.css';
 
 export function Inicio() {
   return (
-    <div className="container">
+    <div className={`container-fluid ${styles.containerFluid}`}>
       <div className="row align-items-center justify-content-center vh-100">
         <div className="col-6 text-center">
-            <img src={logoMental} alt="Logo" />
-            <h1>Mentalsync</h1>
+            <img src={logoMental} alt="Logo" className={styles.logo} />
+            <h1 className={styles.title}>Mentalsync</h1>
         </div>
         <div className="col-6">
-            <h2 className='text-center mb-4'>Iniciar sesión</h2>
-            <form class="row g-3 d-flex flex-column align-items-center">
-                <div class="col-6">
-                    <label for="inputEmail4" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="inputEmail4"/>
+            <h2 className={`text-center mb-4 ${styles.subtitle}`}>Iniciar sesión</h2>
+            <form className="row g-3 d-flex flex-column align-items-center">
+                <div className="col-6">
+                    <label htmlFor="inputEmail4" className="form-label">Correo electrónico</label>
+                    <input type="email" className="form-control" id="inputEmail4"/>
                 </div>
-                <div class="col-6">
-                    <label for="inputPassword4" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="inputPassword4"/>
+                <div className="col-6">
+                    <label htmlFor="inputPassword4" className="form-label">Contraseña</label>
+                    <input type="password" className="form-control" id="inputPassword4"/>
                 </div>
-                <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                <div className="col-12 text-center">
+                    <button type="submit" className="btn btn-primary">Ingresar</button>
                 </div>
-                </form>
+            </form>
         </div>
       </div>
     </div>
