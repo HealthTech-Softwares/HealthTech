@@ -30,6 +30,8 @@ const dbConfig = {
 
 const db = pgp(dbConfig);
 
+export default db;
+/*
 export const connectDB = async () => {
   try {
     await db.connect();
@@ -40,3 +42,4 @@ export const connectDB = async () => {
     throw error;
   }
 };
+*/
