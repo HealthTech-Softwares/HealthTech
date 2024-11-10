@@ -50,3 +50,23 @@ export const getTurnoPsicologo = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getTurnosFaltantesPricologo = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { dia } = req.body;
+    const result = await db.any(
+      `SELECT t.idturno, t.hora_inicio, t.hora_fin
+      FROM turno t
+      LEFT JOIN horario h
+      ON t.idturno = h.idturno
+      AND h.idpsicologo = $1
+      AND h.dia = $2
+      WHERE h.idpsicologo IS NULL`,
+      [id, dia]
+    );
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
