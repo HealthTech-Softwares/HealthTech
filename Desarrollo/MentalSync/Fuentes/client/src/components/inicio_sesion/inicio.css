@@ -1,0 +1,17 @@
+body{
+   background: rgb(178,211,245);
+   background: linear-gradient(90deg, rgba(178,211,245,1) 0%, rgba(107,159,223,1) 54%, rgba(151,200,219,1) 100%);
+   color:rgb(28, 28, 28)
+}
+
+h1{
+   font-weight: bold;
+}
+
+h2{
+   font-weight: 400;
+}
+
+img {
+   height: 300px; 
+}
