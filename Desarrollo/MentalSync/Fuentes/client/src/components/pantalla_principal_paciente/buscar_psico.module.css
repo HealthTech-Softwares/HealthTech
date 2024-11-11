@@ -2,3 +2,17 @@
     height: 50px;
     margin-right: 10px;
 }
+
+.logoPsico{
+    height: 150px;
+    margin-right: 10px;
+}
+
+.fondo{
+    background-color: rgb(228, 228, 227);
+}
+
+.myCard{
+    width: 60%;
+    margin: auto;
+}
