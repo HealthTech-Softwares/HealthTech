@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 
 dotenv.config();
+export const TOKEN_SECRET = "mytoken";
 
 export const PORT = 4000;
 export const DB_HOST = process.env.DB_HOST;
