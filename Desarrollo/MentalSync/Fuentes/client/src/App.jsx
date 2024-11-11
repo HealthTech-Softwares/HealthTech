@@ -1,33 +1,48 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import { Inicio } from './components/inicio_sesion/inicio'
+import { BuscarPsico } from './components/pantalla_principal_paciente/buscar_psico'
+import { ReservaCita } from './components/reservar_cita/reservar_cita'
+import { MetodoPago} from './components/metodo_pago/metodo_pago'
+import { CalificarPsico } from './components/calificar_psico/calificar_psico'
+import { MisCitas } from './components/mis_citas/mis_citas'
+import { CitaVirtual } from './components/cita_virtual/cita_virtual'
+import { GenerarDiagnostico } from './components/generar_diagnostico/generar_diagnostico'
+import { ModificarDatosPaciente } from './components/modificar_datos_paciente/modificar_datos_paciente'
+import { ModificarDatosPsicologo } from './components/modificar_datos_psicologo/modificar_datos_psicologo'
+import { MisPacientes } from './components/mis_pacientes/mis_pacientes'
+import { ListaPsicologos } from './components/lista_psicologos/lista_psicologos'
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        {/* Pantalla Inicial */}
+        <Route path="/" element={<Inicio/>}/>
+        <Route path="*" element={<Inicio/>}/>
+
+        {/* Pantallas Paciente */}
+        <Route path="/principal" element={<BuscarPsico/>}/>
+        <Route path="/reserva-cita" element={<ReservaCita/>}/>
+        <Route path="/metodo-pago" element={<MetodoPago/>}/>
+        <Route path="/calificar-psicologo" element={<CalificarPsico/>}/>
+        <Route path="/mis-citas" element={<MisCitas/>}/>
+        <Route path="/cita-reservada" element={<CitaVirtual/>}/>
+        <Route path="/modificar-datos-paciente" element={<ModificarDatosPaciente/>}/>
+
+        {/* Pantallas Psicólogo */}
+        <Route path='/generar-diagnostico' element={<GenerarDiagnostico/>}/>
+        <Route path='/modificar-datos-psicologo' element={<ModificarDatosPsicologo/>}/>
+        <Route path='/mis-pacientes' element={<MisPacientes/>}/>
+
+        {/* Pantallas Administrador */}
+        <Route path='/lista-psicologos' element={<ListaPsicologos/>}/>
+        
+      </Routes>
     </>
   )
 }
