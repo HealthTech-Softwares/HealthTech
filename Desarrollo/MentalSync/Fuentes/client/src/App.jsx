@@ -12,6 +12,7 @@ import { GenerarDiagnostico } from './components/generar_diagnostico/generar_dia
 import { ModificarDatosPaciente } from './components/modificar_datos_paciente/modificar_datos_paciente'
 import { ModificarDatosPsicologo } from './components/modificar_datos_psicologo/modificar_datos_psicologo'
 import { MisPacientes } from './components/mis_pacientes/mis_pacientes'
+import { ListaPsicologos } from './components/lista_psicologos/lista_psicologos'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         {/* Pantalla Inicial */}
         <Route path="/" element={<Inicio/>}/>
+        <Route path="*" element={<Inicio/>}/>
 
         {/* Pantallas Paciente */}
         <Route path="/principal" element={<BuscarPsico/>}/>
@@ -38,7 +40,8 @@ function App() {
         <Route path='/mis-pacientes' element={<MisPacientes/>}/>
 
         {/* Pantallas Administrador */}
-        <Route path="*" element={<Inicio/>}/>
+        <Route path='/lista-psicologos' element={<ListaPsicologos/>}/>
+        
       </Routes>
     </>
   )
