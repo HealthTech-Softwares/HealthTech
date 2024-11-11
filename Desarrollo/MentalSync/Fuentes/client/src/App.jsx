@@ -9,6 +9,7 @@ import { CalificarPsico } from './components/calificar_psico/calificar_psico'
 import { MisCitas } from './components/mis_citas/mis_citas'
 import { CitaVirtual } from './components/cita_virtual/cita_virtual'
 import { GenerarDiagnostico } from './components/generar_diagnostico/generar_diagnostico'
+import { ModificarDatosPaciente } from './components/modificar_datos_paciente/modificar_datos_paciente'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/calificar-psicologo" element={<CalificarPsico/>}/>
         <Route path="/mis-citas" element={<MisCitas/>}/>
         <Route path="/cita-reservada" element={<CitaVirtual/>}/>
+        <Route path="/modificar-datos-paciente" element={<ModificarDatosPaciente/>}/>
 
         {/* Pantallas Psicólogo */}
         <Route path='/generar-diagnostico' element={<GenerarDiagnostico/>}/>
