@@ -5,6 +5,7 @@ import { Inicio } from './components/inicio_sesion/inicio'
 import { BuscarPsico } from './components/pantalla_principal_paciente/buscar_psico'
 import { ReservaCita } from './components/reservar_cita/reservar_cita'
 import { MetodoPago} from './components/metodo_pago/metodo_pago'
+import { CalificarPsico } from './components/calificar_psico/calificar_psico'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/principal" element={<BuscarPsico/>}/>
         <Route path="/reserva-cita" element={<ReservaCita/>}/>
         <Route path="/metodo-pago" element={<MetodoPago/>}/>
+        <Route path="/calificar-psicologo" element={<CalificarPsico/>}/>
       </Routes>
     </>
   )

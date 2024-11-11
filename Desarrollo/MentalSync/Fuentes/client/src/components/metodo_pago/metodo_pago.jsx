@@ -46,7 +46,7 @@ export function MetodoPago(){
                                                 </div>
                                                 <div className="row m-2">
                                                     <div className="col-12 d-flex justify-content-end">
-                                                        <button type="submit" className="btn btn-primary">Reservar cita</button>
+                                                        <button type="submit" className="btn btn-primary">Realizar pago</button>
                                                     </div>
                                                 </div>
                                             </form>
