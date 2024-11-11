@@ -11,6 +11,7 @@ import { CitaVirtual } from './components/cita_virtual/cita_virtual'
 import { GenerarDiagnostico } from './components/generar_diagnostico/generar_diagnostico'
 import { ModificarDatosPaciente } from './components/modificar_datos_paciente/modificar_datos_paciente'
 import { ModificarDatosPsicologo } from './components/modificar_datos_psicologo/modificar_datos_psicologo'
+import { MisPacientes } from './components/mis_pacientes/mis_pacientes'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         {/* Pantallas Psicólogo */}
         <Route path='/generar-diagnostico' element={<GenerarDiagnostico/>}/>
         <Route path='/modificar-datos-psicologo' element={<ModificarDatosPsicologo/>}/>
+        <Route path='/mis-pacientes' element={<MisPacientes/>}/>
 
         {/* Pantallas Administrador */}
         <Route path="*" element={<Inicio/>}/>
