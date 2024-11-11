@@ -1,8 +1,4 @@
-import Info from 'three/examples/jsm/renderers/common/Info.js'
-import logoMental from '../../assets/logo_mentalsync.png'
-import logoUsuario from '../../assets/user.png'
-import { BotonBuscar, InputInfo, NavBarMental, NombrePantalla, SelectInfo } from '../principales'
-import { InfoPsicologo } from '../principales'
+import { BotonAccion, InputInfo, NavBarMental, NombrePantalla, SelectInfo, InfoPsicologo } from '../principales'
 import styles from '../principales.module.css'
 
 export function BuscarPsico(){
@@ -20,10 +16,10 @@ export function BuscarPsico(){
                                         <InputInfo/>
                                     </div>
                                     <div className="col-3">
-                                        <SelectInfo/>
+                                        <SelectInfo valor1="Especialidad" valor2="Psicología clínica" valor3="Psicología infantil" valor4="Psicología de pareja"/>
                                     </div>
                                     <div className="col-2">
-                                        <BotonBuscar/>
+                                        <BotonAccion nombre="Buscar"/>
                                     </div>
                                 </div>
                             </form>
@@ -31,9 +27,11 @@ export function BuscarPsico(){
                     </div>
                     <div className={`row justify-content-center`}>
                         <div className="col-12">
-                            <InfoPsicologo/>
-                            <InfoPsicologo/>
-                            <InfoPsicologo/>
+                            <InfoPsicologo nombre="Ruperta Matinez Obergon" especialidad="Psicología clínica" descripcion="Soy un psicólogo especializado en terapia de pareja, dedicado a ayudar a las personas a mejorar la comunicación, resolver conflictos y fortalecer su relación. Mi enfoque se centra en crear un espacio seguro y de confianza donde ambas partes puedan expresar sus emociones y preocupaciones, y trabajar juntos para encontrar soluciones que promuevan el bienestar emocional y la armonía en la relación."/>
+
+                            <InfoPsicologo nombre="Juanito Perez Gutierrez" especialidad="Psicología infantil" descripcion="Soy un psicólogo especializado en terapia de pareja, dedicado a ayudar a las personas a mejorar la comunicación, resolver conflictos y fortalecer su relación. Mi enfoque se centra en crear un espacio seguro y de confianza donde ambas partes puedan expresar sus emociones y preocupaciones, y trabajar juntos para encontrar soluciones que promuevan el bienestar emocional y la armonía en la relación."/>
+
+                            <InfoPsicologo nombre="Betzabeth Coronación Musayón" especialidad="Psicología de pareja" descripcion="Soy un psicólogo especializado en terapia de pareja, dedicado a ayudar a las personas a mejorar la comunicación, resolver conflictos y fortalecer su relación. Mi enfoque se centra en crear un espacio seguro y de confianza donde ambas partes puedan expresar sus emociones y preocupaciones, y trabajar juntos para encontrar soluciones que promuevan el bienestar emocional y la armonía en la relación."/>
                         </div>
                     </div>
                 </div>
