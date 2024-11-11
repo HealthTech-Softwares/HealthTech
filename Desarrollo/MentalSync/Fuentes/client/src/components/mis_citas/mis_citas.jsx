@@ -1,6 +1,7 @@
 import styles from './mis_citas.module.css';
 import logoMental from '../../assets/logo_mentalsync.png';
 import logoUsuario from '../../assets/user.png';
+import { BotonAccion, SelectInfo } from '../principales';
 
 export function MisCitas(){
     return(
@@ -28,31 +29,13 @@ export function MisCitas(){
                                 <div class="card-body m-3">
                                     <div className="row align-items-center mb-4">
                                         <div className="col-3">
-                                            <select className="form-select w-75">
-                                                <option value="1">Fecha</option>
-                                                <option value="2">1</option>
-                                                <option value="3">2</option>
-                                                <option value="4">3</option>
-                                                <option value="5">4</option>
-                                            </select>
+                                            <SelectInfo valor1="Fecha" valor2="1" valor3="2" valor4="3"/>
                                         </div>
                                         <div className="col-3">
-                                            <select className="form-select w-75">
-                                                <option value="1">Psicólogo</option>
-                                                <option value="2">P1</option>
-                                                <option value="3">P2</option>
-                                                <option value="4">P3</option>
-                                                <option value="5">P4</option>
-                                            </select>
+                                            <SelectInfo valor1="Psicólogo" valor2="P1" valor3="P2" valor4="P3"/>
                                         </div>
                                         <div className="col-3">
-                                            <select className="form-select w-75">
-                                                <option value="1">Especialidad</option>
-                                                <option value="2">E1</option>
-                                                <option value="3">E2</option>
-                                                <option value="4">E3</option>
-                                                <option value="5">E4</option>
-                                            </select>
+                                            <SelectInfo valor1="Especialidad" valor2="E1" valor3="E2" valor4="E3"/>
                                         </div>
                                     </div>
                                     <div className="row align-items-center">
@@ -91,7 +74,7 @@ export function MisCitas(){
                                     </div>
                                     <div className="row m-2">
                                         <div className="col-12 d-flex justify-content-end">
-                                            <button type="submit" className="btn btn-primary">Regresar</button>
+                                            <BotonAccion nombre="Regresar"/>
                                         </div>
                                     </div>
                                 </div>

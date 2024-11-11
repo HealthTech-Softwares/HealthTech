@@ -1,30 +1,23 @@
-import styles from './calificar_psico.module.css';
-import logoMental from '../../assets/logo_mentalsync.png';
+import cali from './calificar_psico.module.css';
+import styles from '../principales.module.css';
 import logoUsuario from '../../assets/user.png';
+import { BotonAccion, EnlaceLabel, NavBarMental, NombrePantalla } from '../principales';
 
 export function CalificarPsico() {
     return(
         <body className={`${styles.fondo}`}>
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid d-flex align-items-center">
-                    <a class="navbar-brand d-flex align-items-center" href="#">
-                        <img src={logoMental} alt="Logo" class={`d-inline-block align-text-top ${styles.logoNav}`}/>
-                    MentalSync
-                    </a>
-                    <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
-                </div>
-            </nav>
+            <NavBarMental/>
 
             <section>
                 <div className="container-fluid">
                     <div className="row ms-4">
                         <div className="col-12">
-                            <h2 className='mb-4 mt-3'>Califique a su psicólogo</h2>
+                            <NombrePantalla nombre="Calificar psicólogo"/>
                         </div>
                     </div>
                     <div className="row justify-content-center ">
                         <div className="col-12">
-                            <div class={`card ${styles.myCard} mb-3`}>
+                            <div class={`card ${cali.myCardCalificarPsico} mb-3`}>
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-4 text-center">
@@ -37,13 +30,12 @@ export function CalificarPsico() {
                                             <form>
                                                 <div className="row m-2">
                                                     <div className="col-12">
-                                                        <label for="exampleInputEmail1" class="form-label">Enlace</label>
-                                                        <input type="text" className={`form-control mb-3`}placeholder="URL de Google Forms" readOnly/>
+                                                        <EnlaceLabel enlace="URL de Google Forms" />
                                                     </div>
                                                 </div>
                                                 <div className="row m-2">
                                                     <div className="col-12 d-flex justify-content-end">
-                                                        <button type="submit" className="btn btn-primary">Aceptar</button>
+                                                        <BotonAccion nombre="Aceptar"/>
                                                     </div>
                                                 </div>
                                             </form>

@@ -1,7 +1,7 @@
 import styles from './principales.module.css';
 import logoMental from '../assets/logo_mentalsync.png';
 import logoUsuario from '../assets/user.png';
-import { label } from 'three/examples/jsm/nodes/Nodes.js';
+import { div, label } from 'three/examples/jsm/nodes/Nodes.js';
 
 export function NavBarMental(){
     return(
@@ -89,5 +89,14 @@ export function BotonAccion(props){
 export function NombrePantalla(props){
     return(
         <h2 className='mb-3 mt-3'>{props.nombre}</h2>
+    )
+}
+
+export function EnlaceLabel(props){
+    return(
+        <div>
+            <label for="exampleInputEmail1" class="form-label">Enlace</label>
+            <input type="text" className={`form-control mb-3`}placeholder={`${props.enlace}`} readOnly/>
+        </div>
     )
 }
