@@ -38,9 +38,33 @@ export function InfoPsicologo(props){
     )
 }
 
-export function InputInfo(){
+export function InputInfoSinLabel(){
     return(
-        <input type="text" className="form-control" placeholder="Código/Nombre"/>
+        <input type="text" className="form-control" placeholder='Código/Nombre'/>
+    )
+}
+
+export function InputInfoConLabel(props){
+    return(
+        <div className="col-5 ms-5">
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <input type="text" className={`form-control w-75`} placeholder={`${props.ejemplo}`}/>
+        </div>
+    )
+}
+
+export function SelectInfoConLabel(props){
+    return(
+        <div className="col-5 ms-5">
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <select className="form-select w-75">
+                <option value="1">{props.valor1}</option>
+                <option value="2">{props.valor2}</option>
+                <option value="3">{props.valor3}</option>
+                <option value="4">{props.valor4}</option>
+                <option value="5">{props.valor5}</option>
+            </select>
+        </div>
     )
 }
 
@@ -64,5 +88,36 @@ export function BotonAccion(props){
 export function NombrePantalla(props){
     return(
         <h2 className='mb-3 mt-3'>{props.nombre}</h2>
+    )
+}
+
+export function EnlaceLabel(props){
+    return(
+        <div>
+            <label for="exampleInputEmail1" class="form-label">Enlace</label>
+            <input type="text" className={`form-control mb-3`}placeholder={`${props.enlace}`} readOnly/>
+        </div>
+    )
+}
+
+export function PacienteConFoto(props){
+    return(
+        <div>
+            <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
+            <h5 class="card-title">{props.nombre}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{props.identificador}</h6>
+            <p><b>Última cita: </b>{props.ultimaCita}</p>
+        </div>
+    )
+}
+
+export function PsicologoConFoto(props){
+    return(
+        <div>
+            <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
+            <h5 class="card-title">{props.nombre}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{props.identificador}</h6>
+            <p>{props.especialidad}</p>
+        </div>
     )
 }
