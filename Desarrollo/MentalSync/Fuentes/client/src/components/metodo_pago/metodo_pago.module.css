@@ -14,7 +14,7 @@
 }
 
 .myCard{
-    background-color: #e6e8fe;
+    background-color: #e6e8fe !important;
     width: 90%;
     margin: auto;
 }

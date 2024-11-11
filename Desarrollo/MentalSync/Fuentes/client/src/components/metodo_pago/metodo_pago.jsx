@@ -5,7 +5,7 @@ import MetPago from '../../assets/metodo_pago.png';
 
 export function MetodoPago(){
     return(
-        <body>
+        <body className={`${styles.fondo}`}>
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid d-flex align-items-center">
                     <a class="navbar-brand d-flex align-items-center" href="#">
