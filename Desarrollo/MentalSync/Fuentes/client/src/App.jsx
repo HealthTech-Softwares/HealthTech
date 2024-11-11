@@ -10,6 +10,7 @@ import { MisCitas } from './components/mis_citas/mis_citas'
 import { CitaVirtual } from './components/cita_virtual/cita_virtual'
 import { GenerarDiagnostico } from './components/generar_diagnostico/generar_diagnostico'
 import { ModificarDatosPaciente } from './components/modificar_datos_paciente/modificar_datos_paciente'
+import { ModificarDatosPsicologo } from './components/modificar_datos_psicologo/modificar_datos_psicologo'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
 
         {/* Pantallas Psicólogo */}
         <Route path='/generar-diagnostico' element={<GenerarDiagnostico/>}/>
+        <Route path='/modificar-datos-psicologo' element={<ModificarDatosPsicologo/>}/>
 
         {/* Pantallas Administrador */}
         <Route path="*" element={<Inicio/>}/>
