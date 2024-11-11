@@ -7,7 +7,7 @@ export function Inicio() {
       <div className="row align-items-center justify-content-center vh-100">
         <div className="col-6 text-center">
             <img src={logoMental} alt="Logo" className={styles.logo} />
-            <h1 className={styles.title}>Mentalsync</h1>
+            <h1 className={styles.title}>MentalSync</h1>
         </div>
         <div className="col-6">
             <h2 className={`text-center mb-4 ${styles.subtitle}`}>Iniciar sesión</h2>

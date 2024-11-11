@@ -5,11 +5,12 @@
 
 .logoPsico{
     height: 150px;
-    margin-right: 10px;
 }
 
 .fondo{
     background-color: rgb(228, 228, 227);
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 .myCard{
