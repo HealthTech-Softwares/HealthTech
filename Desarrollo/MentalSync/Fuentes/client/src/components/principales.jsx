@@ -1,7 +1,6 @@
 import styles from './principales.module.css';
 import logoMental from '../assets/logo_mentalsync.png';
 import logoUsuario from '../assets/user.png';
-import { div, label } from 'three/examples/jsm/nodes/Nodes.js';
 
 export function NavBarMental(){
     return(
@@ -97,6 +96,28 @@ export function EnlaceLabel(props){
         <div>
             <label for="exampleInputEmail1" class="form-label">Enlace</label>
             <input type="text" className={`form-control mb-3`}placeholder={`${props.enlace}`} readOnly/>
+        </div>
+    )
+}
+
+export function PacienteConFoto(props){
+    return(
+        <div>
+            <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
+            <h5 class="card-title">{props.nombre}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{props.identificador}</h6>
+            <p><b>Última cita: </b>{props.ultimaCita}</p>
+        </div>
+    )
+}
+
+export function PsicologoConFoto(props){
+    return(
+        <div>
+            <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
+            <h5 class="card-title">{props.nombre}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{props.identificador}</h6>
+            <p>{props.especialidad}</p>
         </div>
     )
 }

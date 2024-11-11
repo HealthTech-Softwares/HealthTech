@@ -1,38 +1,44 @@
-import styles from './modificar_datos_paciente.module.css';
-import logoMental from '../../assets/logo_mentalsync.png';
-import logoUsuario from '../../assets/user.png';
+import modi from '../modificar_datos_paciente/modificar_datos_paciente.module.css';
+import styles from '../principales.module.css';
+import { BotonAccion, NavBarMental, NombrePantalla, PacienteConFoto } from '../principales';
+
+export function LabelModifDatosSoloLectura(props){
+    return(
+        <div>
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <input type="text" className={`form-control w-80 mb-4`} placeholder={`${props.ejemplo}`} readOnly />
+        </div>
+    )
+}
+
+export function LabelModifDatosEditar(props){
+    return(
+        <div>
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <input type="text" className={`form-control w-80 mb-4`} placeholder={`${props.ejemplo}`} />
+        </div>
+    )
+}
 
 export function ModificarDatosPaciente() {
     return(
         <body className={`${styles.fondo}`}>
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid d-flex align-items-center">
-                    <a class="navbar-brand d-flex align-items-center" href="#">
-                        <img src={logoMental} alt="Logo" class={`d-inline-block align-text-top ${styles.logoNav}`}/>
-                    MentalSync
-                    </a>
-                    <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
-                </div>
-            </nav>
+            <NavBarMental/>
 
             <section>
                 <div className="container-fluid">
                     <div className="row ms-4">
                         <div className="col-12">
-                            <h2 className='mb-4 mt-3'>Modificar datos del paciente</h2>
+                            <NombrePantalla nombre="Modificar datos de paciente"/>
                         </div>
                     </div>
                     <div className="row justify-content-center ">
                         <div className="col-3">
-                            <div class={`card ${styles.myCard} mb-3`}>
+                            <div class={`card ${modi.myCard} mb-3`}>
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
-                                            <h5 class="card-title">Santos Jiggets</h5>
-                                            <h6 class="card-subtitle mb-2 text-body-secondary">ID: U0304</h6>
-                                            <p><b>Última cita:</b> 23/09/24</p>
-                                            <button className='btn btn-primary text-center'>Ver historia clínica</button>
+                                            <PacienteConFoto nombre="Santos Jiggets" identificador="ID: U0304" ultimaCita="23/09/2024"/>
                                         </div>
                                     </div>
                                 </div>
@@ -42,29 +48,19 @@ export function ModificarDatosPaciente() {
                             <form>
                                 <div className="row m-2">
                                     <div className="col-5">
-                                        <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                                        <input type="text" className={`form-control w-80 mb-4`} placeholder="Nombre" readOnly />
-
-                                        <label for="exampleInputEmail1" class="form-label">Fecha de nacimiento</label>
-                                        <input type="text" className={`form-control w-80 mb-4`} placeholder="Fecha" readOnly />
-
-                                        <label for="exampleInputEmail1" class="form-label">Dirección</label>
-                                        <input type="text" className={`form-control w-80 mb-4`} placeholder="Dirección" />
+                                        <LabelModifDatosSoloLectura propiedad="Nombres" ejemplo="Santos Carlos"/>
+                                        <LabelModifDatosSoloLectura propiedad="Fecha de nacimiento" ejemplo="1/04/1989"/>
+                                        <LabelModifDatosEditar propiedad="Dirección" ejemplo="Av Mi Casa 209"/>
                                     </div>
                                     <div className="col-5">
-                                        <label for="exampleInputEmail1" class="form-label">Apellidos</label>
-                                        <input type="text" className={`form-control w-80 mb-4`} placeholder="Nombre" readOnly />
-
-                                        <label for="exampleInputEmail1" class="form-label">Identificador</label>
-                                        <input type="text" className={`form-control w-80 mb-4`} placeholder="Identificador" readOnly />
-
-                                        <label for="exampleInputEmail1" class="form-label">Correo</label>
-                                        <input type="text" className={`form-control w-80 mb-4`} placeholder="@example.com" />
+                                        <LabelModifDatosSoloLectura propiedad="Apellidos" ejemplo="Jigget Rojas"/>
+                                        <LabelModifDatosSoloLectura propiedad="Identificador" ejemplo="U0304"/>
+                                        <LabelModifDatosEditar propiedad="Correo electrónico" ejemplo="@example.com"/>
                                     </div>
                                 </div>
                                 <div className="row m-2">
                                     <div className="col-10 d-flex justify-content-end">
-                                        <button type="submit" className="btn btn-primary">Aceptar cambios</button>
+                                        <BotonAccion nombre="Guardar cambios"/>
                                     </div>
                                 </div>
                             </form>
