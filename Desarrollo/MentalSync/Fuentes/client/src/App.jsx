@@ -7,6 +7,7 @@ import { ReservaCita } from './components/reservar_cita/reservar_cita'
 import { MetodoPago} from './components/metodo_pago/metodo_pago'
 import { CalificarPsico } from './components/calificar_psico/calificar_psico'
 import { MisCitas } from './components/mis_citas/mis_citas'
+import { CitaVirtual } from './components/cita_virtual/cita_virtual'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/metodo-pago" element={<MetodoPago/>}/>
         <Route path="/calificar-psicologo" element={<CalificarPsico/>}/>
         <Route path="/mis-citas" element={<MisCitas/>}/>
+        <Route path="/cita-reservada" element={<CitaVirtual/>}/> 
         <Route path="*" element={<Inicio/>}/>
       </Routes>
     </>
