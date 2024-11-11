@@ -1,6 +1,7 @@
 import styles from './principales.module.css';
 import logoMental from '../assets/logo_mentalsync.png';
 import logoUsuario from '../assets/user.png';
+import { label } from 'three/examples/jsm/nodes/Nodes.js';
 
 export function NavBarMental(){
     return(
@@ -38,9 +39,33 @@ export function InfoPsicologo(props){
     )
 }
 
-export function InputInfo(){
+export function InputInfoSinLabel(){
     return(
-        <input type="text" className="form-control" placeholder="Código/Nombre"/>
+        <input type="text" className="form-control" placeholder='Código/Nombre'/>
+    )
+}
+
+export function InputInfoConLabel(props){
+    return(
+        <div className="col-5 ms-5">
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <input type="text" className={`form-control w-75`} placeholder={`${props.ejemplo}`}/>
+        </div>
+    )
+}
+
+export function SelectInfoConLabel(props){
+    return(
+        <div className="col-5 ms-5">
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <select className="form-select w-75">
+                <option value="1">{props.valor1}</option>
+                <option value="2">{props.valor2}</option>
+                <option value="3">{props.valor3}</option>
+                <option value="4">{props.valor4}</option>
+                <option value="5">{props.valor5}</option>
+            </select>
+        </div>
     )
 }
 

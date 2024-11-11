@@ -1,4 +1,4 @@
-import { BotonAccion, InputInfo, NavBarMental, NombrePantalla, SelectInfo, InfoPsicologo } from '../principales'
+import { BotonAccion, NavBarMental, NombrePantalla, SelectInfo, InfoPsicologo, InputInfoSinLabel } from '../principales'
 import styles from '../principales.module.css'
 
 export function BuscarPsico(){
@@ -9,11 +9,11 @@ export function BuscarPsico(){
                 <div className="container-fluid">
                     <div className="row ms-4">
                         <div className="col-12">
-                            <NombrePantalla nombre="Buscar Psicólogo"/>
+                            <NombrePantalla nombre="Buscar psicólogo"/>
                             <form>
                                 <div className="row mb-4">
                                     <div className="col-3">
-                                        <InputInfo/>
+                                        <InputInfoSinLabel/>
                                     </div>
                                     <div className="col-3">
                                         <SelectInfo valor1="Especialidad" valor2="Psicología clínica" valor3="Psicología infantil" valor4="Psicología de pareja"/>
