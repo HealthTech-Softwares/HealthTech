@@ -57,35 +57,35 @@ export function MisCitas(){
                                     </div>
                                     <div className="row align-items-center">
                                         <div className="col-12">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Fecha</th>
-                                                    <th scope="col">Psicólogo</th>
-                                                    <th scope="col">Especialidad</th>
-                                                    <th scope="col">Estado</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>23/09/2024</td>
-                                                    <td>Carlos, Salazar Huaman</td>
-                                                    <td>Psicología Clínica</td>
-                                                    <td>Proceso</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>20/08/2024</td>
-                                                    <td>Juan, Cáceres Condori</td>
-                                                    <td>Psicología Infantil</td>
-                                                    <td>Completado</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12/02/2023</td>
-                                                    <td>Ana, Torres Paredes</td>
-                                                    <td>Psicología Familiar</td>
-                                                    <td>Completado</td>
-                                                </tr>
-                                            </tbody>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Fecha</th>
+                                                        <th scope="col">Psicólogo</th>
+                                                        <th scope="col">Especialidad</th>
+                                                        <th scope="col">Estado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>23/09/2024</td>
+                                                        <td>Carlos, Salazar Huaman</td>
+                                                        <td>Psicología Clínica</td>
+                                                        <td>Proceso</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>20/08/2024</td>
+                                                        <td>Juan, Cáceres Condori</td>
+                                                        <td>Psicología Infantil</td>
+                                                        <td>Completado</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>12/02/2023</td>
+                                                        <td>Ana, Torres Paredes</td>
+                                                        <td>Psicología Familiar</td>
+                                                        <td>Completado</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>

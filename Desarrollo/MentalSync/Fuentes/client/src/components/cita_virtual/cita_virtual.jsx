@@ -29,6 +29,30 @@ export function CitaVirtual() {
                                             </div>
                                         </div>
                                         <div className="row m-2">
+                                            <div className="col-12">
+                                                <table className={`table`}>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope='row'>Nombre</th>
+                                                            <td>Juan Perez</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope='row'>Correo electrónico</th>
+                                                            <td>@example.com</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope='row'>Teléfono</th>
+                                                            <td>+51 --- --- ---</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope='row'>Horario</th>
+                                                            <td>8:00 AM - 10:00 AM</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div className="row m-2">
                                             <div className="col-12 d-flex justify-content-end">
                                                 <button type="submit" className="btn btn-primary">Asistir a cita online</button>
                                             </div>
@@ -39,9 +63,9 @@ export function CitaVirtual() {
                         </div>
                     </div>
                     <div className="row justify-content-center">
-                        <div className="col-12">
+                        <div className="col-12 d-flex flex-column align-items-center mt-5">
                             <label for="exampleInputEmail1" class="form-label">Enlace de la reunión:</label>
-                            <input type="text" className={`form-control w-75`} placeholder="URL de la reunión de Zoom"/>
+                            <input type="text" className="form-control w-50" placeholder="URL de la reunión de Zoom" readOnly/>
                         </div>
                     </div>
                 </div>
