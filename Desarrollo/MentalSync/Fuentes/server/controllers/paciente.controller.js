@@ -64,17 +64,28 @@ export const getPacientes = async (req, res, next) => {
 
 export const getPaciente = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const idusuario = req.userId;
     const paciente = await db.oneOrNone(
-      `SELECT *
-      FROM paciente
-      WHERE idpaciente = $1`,
-      [id]
+      `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
+      [idusuario]
     );
+
     if (!paciente) {
       return res.status(404).json({ message: "Paciente no encontrado" });
     }
-    res.json(paciente);
+
+    const idpaciente = paciente.idpaciente;
+
+    const result = await db.oneOrNone(
+      `SELECT *
+      FROM paciente
+      WHERE idpaciente = $1`,
+      [idpaciente]
+    );
+    if (!result) {
+      return res.status(404).json({ message: "Paciente no encontrado" });
+    }
+    res.json(result);
   } catch (error) {
     next(error);
   }
@@ -82,21 +93,30 @@ export const getPaciente = async (req, res, next) => {
 
 export const updatePaciente = async (req, res) => {
   try {
-    const { id } = req.params;
+    const idusuario = req.userId;
     const updateFields = req.body;
 
-    // Construir el SET del query
+    const paciente = await db.oneOrNone(
+      `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    if (!paciente) {
+      return res.status(404).json({ message: "Paciente no encontrado" });
+    }
+
+    const idpaciente = paciente.idpaciente;
+
     const fields = Object.keys(updateFields);
     const values = Object.values(updateFields);
 
-    // Crear una lista con los campos y valores
     const setClause = fields.map((field, index) => `${field} = $1`).join(", ");
 
     const result = await db.query(
       `UPDATE paciente SET ${setClause} 
       WHERE idpaciente = $2
       RETURNING *`,
-      [...values, id]
+      [...values, idpaciente]
     );
 
     res.json(result);

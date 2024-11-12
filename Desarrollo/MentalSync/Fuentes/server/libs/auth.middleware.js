@@ -2,17 +2,19 @@ import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET } from "../src/config.js";
 
 export const verifyToken = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers['authorization'];
+
     if (!token) {
-        return res.status(403).json({ message: "No se otorgo token" });
+        return res.status(401).json({ message: 'Acceso denegado' });
     }
 
-    jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
+    jwt.verify(token, TOKEN_SECRET, (err, user) => {
         if (err) {
-            return res.status(401).json({ message: "Sin autorizacion" });
+            return res.status(403).json({ message: 'Token no válido' });
         }
-        req.userId = decoded.id;
-        req.userRole = decoded.rol;
+
+        req.userId = user.id;
+        req.userRole = user.rol;
         next();
     });
 };
