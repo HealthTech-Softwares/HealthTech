@@ -26,3 +26,18 @@ export const getTodasNotificaciones = async (res, next) => {
     next(error);
   }
 }
+
+export const getNotificaciones = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await db.any(
+      `SELECT *
+      FROM notificacion
+      WHERE idreceptor = $1`,
+      [id]
+    );
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
