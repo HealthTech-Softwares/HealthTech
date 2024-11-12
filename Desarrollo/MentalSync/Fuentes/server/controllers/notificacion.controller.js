@@ -25,7 +25,7 @@ export const getTodasNotificaciones = async (res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 export const getNotificaciones = async (req, res, next) => {
   try {
