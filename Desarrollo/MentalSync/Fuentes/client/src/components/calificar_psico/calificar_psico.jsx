@@ -1,6 +1,5 @@
 import cali from './calificar_psico.module.css';
 import styles from '../principales.module.css';
-import logoUsuario from '../../assets/user.png';
 import { BotonAccion, EnlaceLabel, NavBarMental, NombrePantalla } from '../principales';
 import { Link } from 'react-router-dom';
 
