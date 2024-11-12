@@ -2,6 +2,7 @@ import styles from './mis_citas.module.css';
 import logoMental from '../../assets/logo_mentalsync.png';
 import logoUsuario from '../../assets/user.png';
 import { BotonAccion, SelectInfo } from '../principales';
+import { Link } from 'react-router-dom';
 
 export function MisCitas(){
     return(
@@ -47,6 +48,7 @@ export function MisCitas(){
                                                         <th scope="col">Psicólogo</th>
                                                         <th scope="col">Especialidad</th>
                                                         <th scope="col">Estado</th>
+                                                        <th scope="col"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -55,18 +57,33 @@ export function MisCitas(){
                                                         <td>Carlos, Salazar Huaman</td>
                                                         <td>Psicología Clínica</td>
                                                         <td>Proceso</td>
+                                                        <td>
+                                                            <Link to="/calificar-psicologo">
+                                                                <BotonAccion nombre="Calificar"/>
+                                                            </Link>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>20/08/2024</td>
                                                         <td>Juan, Cáceres Condori</td>
                                                         <td>Psicología Infantil</td>
                                                         <td>Completado</td>
+                                                        <td>
+                                                            <Link to="/calificar-psicologo">
+                                                                <BotonAccion nombre="Calificar"/>
+                                                            </Link>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>12/02/2023</td>
                                                         <td>Ana, Torres Paredes</td>
                                                         <td>Psicología Familiar</td>
                                                         <td>Completado</td>
+                                                        <td>
+                                                            <Link to="/calificar-psicologo">
+                                                                <BotonAccion nombre="Calificar"/>
+                                                            </Link>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -74,7 +91,9 @@ export function MisCitas(){
                                     </div>
                                     <div className="row m-2">
                                         <div className="col-12 d-flex justify-content-end">
-                                            <BotonAccion nombre="Regresar"/>
+                                            <Link to="/principal">
+                                                <BotonAccion nombre="Regresar"/>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

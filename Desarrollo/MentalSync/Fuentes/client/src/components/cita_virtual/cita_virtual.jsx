@@ -1,7 +1,7 @@
 import cit from './cita_virtual.module.css';
 import styles from '../principales.module.css';
-
 import { BotonAccion, NavBarMental, NombrePantalla } from '../principales';
+import { Link } from 'react-router-dom';
 
 export function CardCitaReservada(){
     return(
@@ -41,7 +41,9 @@ export function CardCitaReservada(){
                 </div>
                 <div className="row m-2">
                     <div className="col-12 d-flex justify-content-end">
-                        <BotonAccion nombre="Asistir a cita online"/>
+                        <Link to="/principal">
+                            <BotonAccion nombre="Aceptar"/>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -27,7 +27,7 @@ export function Notificaciones(){
                     <div className="row ms-4 me-4">
                         <div className="col-12 d-flex justify-content-between">
                             <NombrePantalla nombre="Notificaciones"/>
-                            <div className='d-flex align-items-center'>
+                            <div className='d-flex align-items-center justify-content-end'>
                                 <button className='btn btn-primary'>Cerrar sesión</button>
                             </div>
                         </div>

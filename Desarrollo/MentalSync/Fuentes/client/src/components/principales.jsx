@@ -1,18 +1,24 @@
 import styles from './principales.module.css';
 import logoMental from '../assets/logo_mentalsync.png';
 import logoUsuario from '../assets/user.png';
+import { Link } from 'react-router-dom';
 
 export function NavBarMental(){
     return(
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid d-flex align-items-center">
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src={logoMental} alt="Logo" class={`d-inline-block align-text-top ${styles.logoNav}`}/>
-                MentalSync
-                </a>
-                <a href="">
-                    <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
-                </a>
+                <Link to="/principal">
+                    <a class="navbar-brand d-flex align-items-center" href="#">
+                        <img src={logoMental} alt="Logo" class={`d-inline-block align-text-top ${styles.logoNav}`}/>
+                    MentalSync
+                    </a>
+                </Link>
+                <Link to="/notificaciones">
+                    <a href="#">
+                        <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
+                    </a>
+                </Link>
+                
             </div>
         </nav>
     )
@@ -31,7 +37,9 @@ export function InfoPsicologo(props){
                     <div className="col-9 d-flex flex-column justify-content-between">
                         <p class="card-text">{props.descripcion}</p>
                         <div className='d-flex justify-content-end'>
-                           <BotonAccion nombre="Reservar cita"/>
+                            <Link to="/reserva-cita">
+                                <BotonAccion nombre="Reservar cita"/>
+                            </Link>
                         </div>
                     </div>
                 </div>

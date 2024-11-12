@@ -2,6 +2,7 @@ import met from './metodo_pago.module.css';
 import styles from '../principales.module.css';
 import MetPago from '../../assets/metodo_pago.png';
 import { BotonAccion, NavBarMental, NombrePantalla } from '../principales';
+import { Link } from 'react-router-dom';
 
 export function LabelMbTres(props){
     return(
@@ -27,7 +28,9 @@ export function CardPago(){
                     </div>
                     <div className="row m-2">
                         <div className="col-12 d-flex justify-content-end">
-                            <BotonAccion nombre="Realizar pago"/>
+                            <Link to="/cita-reservada">
+                                <BotonAccion nombre="Realizar pago"/>
+                            </Link>
                         </div>
                     </div>
                 </form>
