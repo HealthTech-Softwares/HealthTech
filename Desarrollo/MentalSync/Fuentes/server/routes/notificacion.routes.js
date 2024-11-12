@@ -12,5 +12,6 @@ const router = Router();
 router.post("/notificacion", createNotificacion);
 router.get("/notificaciones", verifyToken, isAdmin, getTodasNotificaciones);
 router.get("/notificaciones/:id", verifyToken, getNotificaciones);
+router.put("/notificacion/:id", updateNotificacion);
 
 export default router;
