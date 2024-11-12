@@ -1,6 +1,7 @@
 import styles from './principales.module.css';
 import logoMental from '../assets/logo_mentalsync.png';
-import logoUsuario from '../assets/bell.png';
+import logoUsuario from '../assets/user.png';
+import logoCampana from '../assets/bell.png';
 import { Link } from 'react-router-dom';
 
 export function NavBarMental(){
@@ -13,11 +14,20 @@ export function NavBarMental(){
                     MentalSync
                     </a>
                 </Link>
-                <Link to="/notificaciones">
-                    <a href="#">
-                        <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
-                    </a>
-                </Link>
+                
+                <div className="col-6 d-flex justify-content-end">
+                    <Link to="/notificaciones">
+                        <a href="#">
+                            <img src={logoCampana} alt="Campana" class={`${styles.logoNav}`} />
+                        </a>
+                    </Link>
+
+                    <Link to="/modificar-datos-paciente">
+                        <a href="#">
+                            <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
+                        </a>
+                    </Link>
+                </div>
                 
             </div>
         </nav>
