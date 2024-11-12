@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/pacientes", createPaciente);
 router.get("/pacientes", verifyToken, isAdmin, getPacientes);
-router.get("/perfil-pacientes", verifyToken, isPaciente, getPaciente);
-router.put("/pacientes/:id", verifyToken, isPaciente, updatePaciente);
+router.get("/pacientes/perfil", verifyToken, isPaciente, getPaciente);
+router.put("/pacientes", verifyToken, isPaciente, updatePaciente);
 
 export default router;

@@ -9,6 +9,6 @@ router.get("/psicologos", verifyToken, isAdmin, getPsicologos);
 router.get("/psicologo/:id", verifyToken, isAdmin, getPsicologo);
 router.get("/psicologo/perfil", verifyToken, isPsicologo, getPsicologo);
 router.delete("/psicologos/:id", verifyToken, isAdmin, deletePsicologo);
-router.put("/psicologos/:id", verifyToken, isPsicologo, updatePsicologo);
+router.put("/psicologos", verifyToken, isPsicologo, updatePsicologo);
 
 export default router;
