@@ -1,6 +1,4 @@
 import styles from './mis_citas.module.css';
-import logoMental from '../../assets/logo_mentalsync.png';
-import logoUsuario from '../../assets/user.png';
 import { BotonAccion, SelectInfo } from '../principales';
 import { Link } from 'react-router-dom';
 

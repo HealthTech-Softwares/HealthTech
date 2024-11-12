@@ -2,6 +2,7 @@ import { NavBarMental } from '../principales';
 import styles from '../principales.module.css';
 import his from '../generar_diagnostico/generar_diagnostico.module.css';
 import { NombrePantalla, PacienteConFoto, BotonAccion} from '../principales';
+import { Link } from 'react-router-dom';
 
 export function TablaHistClin(){
     return(
@@ -40,7 +41,9 @@ export function TablaHistClin(){
                         </table>
                         <div className="row m-2">
                             <div className="col-12 d-flex justify-content-end">
-                                <BotonAccion nombre="Regresar"/>
+                                <Link to="/mis-pacientes">
+                                    <BotonAccion nombre="Regresar"/>
+                                </Link>
                             </div>
                         </div>
                     </div>

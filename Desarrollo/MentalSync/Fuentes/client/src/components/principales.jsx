@@ -1,6 +1,6 @@
 import styles from './principales.module.css';
 import logoMental from '../assets/logo_mentalsync.png';
-import logoUsuario from '../assets/user.png';
+import logoUsuario from '../assets/bell.png';
 import { Link } from 'react-router-dom';
 
 export function NavBarMental(){

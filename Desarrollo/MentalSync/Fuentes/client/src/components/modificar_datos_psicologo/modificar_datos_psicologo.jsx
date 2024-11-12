@@ -2,6 +2,7 @@ import modi from './modificar_datos_psicologo.module.css';
 import styles from '../principales.module.css';
 import { BotonAccion, NavBarMental, NombrePantalla, PsicologoConFoto } from '../principales';
 import { LabelModifDatosSoloLectura, LabelModifDatosEditar } from '../modificar_datos_paciente/modificar_datos_paciente';
+import { Link } from 'react-router-dom';
 
 export function ModificarDatosPsicologo() {
     return(
@@ -52,7 +53,9 @@ export function ModificarDatosPsicologo() {
                                 </div>
                                 <div className="row m-2">
                                     <div className="col-10 d-flex justify-content-end">
-                                        <BotonAccion nombre="Guardar cambios"/>
+                                        <Link to="/mis-pacientes">
+                                            <BotonAccion nombre="Guardar cambios"/>
+                                        </Link>  
                                     </div>
                                 </div>
                             </form>
