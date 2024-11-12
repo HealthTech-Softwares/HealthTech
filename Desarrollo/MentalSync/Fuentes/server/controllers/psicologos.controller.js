@@ -126,13 +126,25 @@ export const deletePsicologo = async (req, res, next) => {
 
 export const updatePsicologo = async (req, res, next) => {
   try {
-    const id  = req.userId;
+    const idusuario  = req.userId;
     const { disponibilidad, foto, descripcion, consulta_online } = req.body;
+
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    if (!psicologo) {
+      return res.status(404).json({ message: "Psicologo no encontrado" });
+    }
+
+    const idpsicologo = psicologo.idpsicologo;
+
     const result = await db.result(
       `UPDATE psicologo
       SET disponiblidad = $1, foto = $2, descripcion = $3, consulta_online = $4
       WHERE idpsicologo = $5`,
-      [disponibilidad, foto, descripcion, consulta_online, id]
+      [disponibilidad, foto, descripcion, consulta_online, idpsicologo]
     );
     if (result.rowCount === 0)
       return res.status(404).json({ message: "Psicologo no encontrado" });
