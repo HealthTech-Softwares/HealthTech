@@ -1,6 +1,10 @@
 import { Router } from "express";
 
-import { createNotificacion, getTodasNotificaciones, getNotificaciones } from "../controllers/notificacion.controller";
+import {
+  createNotificacion,
+  getTodasNotificaciones,
+  getNotificaciones,
+} from "../controllers/notificacion.controller";
 import { verifyToken, isAdmin } from "../libs/auth.middleware";
 
 const router = Router();
