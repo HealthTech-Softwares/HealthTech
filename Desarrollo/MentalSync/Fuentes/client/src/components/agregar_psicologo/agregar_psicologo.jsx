@@ -1,5 +1,6 @@
 import styles from '../principales.module.css'
 import { BotonAccion, InputInfoConLabel, NavBarMental, NombrePantalla, SelectInfoConLabel } from '../principales'
+import { Link } from 'react-router-dom'
 
 export function AgregarPsicologo(){
     return(
@@ -42,7 +43,9 @@ export function AgregarPsicologo(){
                                                 </div>
                                                 <div className="row mb-4">
                                                     <div className="col-10 d-flex justify-content-end">
-                                                        <BotonAccion nombre="Crear psicólogo"/>
+                                                        <Link to="/lista-psicologos">
+                                                            <BotonAccion nombre="Crear psicólogo"/>
+                                                        </Link>   
                                                     </div>
                                                 </div>
                                             </form>
