@@ -1,5 +1,7 @@
-import styles from './generar_diagnostico.module.css';
+import gen from './generar_diagnostico.module.css';
+import styles from '../principales.module.css';
 import { BotonAccion, NavBarMental, NombrePantalla, PacienteConFoto } from '../principales';
+import { Link } from 'react-router-dom';
 
 export function TextosAreas(props){
     return(
@@ -26,12 +28,14 @@ export function GenerarDiagnostico() {
                     </div>
                     <div className="row justify-content-center ">
                         <div className="col-12">
-                            <div class={`card ${styles.myCard} mb-3`}>
+                            <div class={`card ${gen.myCard} mb-3`}>
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-3 text-center">
                                             <PacienteConFoto nombre="Santos Jiggets" identificador="ID: U0304" ultimaCita="23/09/24" />
-                                            <BotonAccion nombre="Ver historia clínica"/>
+                                            <Link to="/historia-clinica">
+                                                <BotonAccion nombre="Ver historia clínica"/>
+                                            </Link>
                                         </div>
                                         <div className="col-9">
                                             <form>
