@@ -1,0 +1,20 @@
+.logoNav{
+    height: 50px;
+    margin-right: 10px;
+}
+
+.logoPsico{
+    height: 150px;
+}
+
+.fondo{
+    background-color: rgb(228, 228, 227);
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.myCardInfoPsico{
+    background-color: #e6e8fe !important;
+    width: 60%;
+    margin: auto;
+}
