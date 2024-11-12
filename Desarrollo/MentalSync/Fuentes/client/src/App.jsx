@@ -19,7 +19,7 @@ import { AgregarPsicologo } from './components/agregar_psicologo/agregar_psicolo
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -30,19 +30,25 @@ function App() {
         <Route path="/notificaciones" element={<Notificaciones/>}/>
 
         {/* Pantallas Paciente */}
-        <Route path="/principal" element={<BuscarPsico/>}/>
-        <Route path="/reserva-cita" element={<ReservaCita/>}/>
-        <Route path="/metodo-pago" element={<MetodoPago/>}/>
-        <Route path="/calificar-psicologo" element={<CalificarPsico/>}/>
-        <Route path="/mis-citas" element={<MisCitas/>}/>
-        <Route path="/cita-reservada" element={<CitaVirtual/>}/>
-        <Route path="/modificar-datos-paciente" element={<ModificarDatosPaciente/>}/>
+        <Route path="/principal" element={<BuscarPsico />} />
+        <Route path="/reserva-cita" element={<ReservaCita />} />
+        <Route path="/metodo-pago" element={<MetodoPago />} />
+        <Route path="/calificar-psicologo" element={<CalificarPsico />} />
+        <Route path="/mis-citas" element={<MisCitas />} />
+        <Route path="/cita-reservada" element={<CitaVirtual />} />
+        <Route
+          path="/modificar-datos-paciente"
+          element={<ModificarDatosPaciente />}
+        />
 
         {/* Pantallas Psicólogo */}
-        <Route path='/generar-diagnostico' element={<GenerarDiagnostico/>}/>
-        <Route path='/modificar-datos-psicologo' element={<ModificarDatosPsicologo/>}/>
-        <Route path='/mis-pacientes' element={<MisPacientes/>}/>
-        <Route path='/historia-clinica' element={<HistoriaClinica/>}/>
+        <Route path="/generar-diagnostico" element={<GenerarDiagnostico />} />
+        <Route
+          path="/modificar-datos-psicologo"
+          element={<ModificarDatosPsicologo />}
+        />
+        <Route path="/mis-pacientes" element={<MisPacientes />} />
+        <Route path="/historia-clinica" element={<HistoriaClinica />} />
 
         {/* Pantallas Administrador */}
         <Route path='/lista-psicologos' element={<ListaPsicologos/>}/>
@@ -50,7 +56,7 @@ function App() {
         
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

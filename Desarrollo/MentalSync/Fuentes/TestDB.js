@@ -1,4 +1,4 @@
-import { db } from './server/src/db.js';
+import { db } from "./server/src/db.js";
 
 (async () => {
   try {

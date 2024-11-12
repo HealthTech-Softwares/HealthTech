@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+<<<<<<< HEAD
+=======
+    "axios": "^1.7.7",
+>>>>>>> 08ec90f989a517e6d5d407b9b9c5ede684b49caa
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
