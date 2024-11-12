@@ -22,7 +22,7 @@ export function ModificarDatosPsicologo() {
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PsicologoConFoto nombre="Richard Trejo" identificador="ID: P0005" especialidad="Psicología clínica"/>
+                                            <PsicologoConFoto nombre="Richard Trejo" identificador="12345678" especialidad="Psicología clínica"/>
                                         </div>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@ export function ModificarDatosPsicologo() {
                                         <LabelModifDatosEditar propiedad="Especialidad" ejemplo="Psicología clínica"/>
                                         
                                         <label for="exampleInputEmail1" class="form-label">Horario de atención</label>
-                                        <select className="form-select w-80 mb-4">
+                                        <select className="form-select w-80 mb-5">
                                             <option value="1">8:00 AM - 10:00 AM</option>
                                             <option value="2">10:00 AM - 12:00 PM</option>
                                             <option value="3">12:00 PM - 14:00 PM</option>
@@ -47,7 +47,7 @@ export function ModificarDatosPsicologo() {
                                     </div>
                                     <div className="col-5">
                                         <LabelModifDatosSoloLectura propiedad="Apellidos" ejemplo="Trejo Quispe"/>
-                                        <LabelModifDatosSoloLectura propiedad="Identificador" ejemplo="P0005"/>
+                                        <LabelModifDatosSoloLectura propiedad="DNI" ejemplo="12345678"/>
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 <input class="form-check-input me-3" type="checkbox" value="" id="firstCheckbox"/>

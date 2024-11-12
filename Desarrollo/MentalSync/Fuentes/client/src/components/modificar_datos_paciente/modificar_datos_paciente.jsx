@@ -39,7 +39,7 @@ export function ModificarDatosPaciente() {
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PacienteConFoto nombre="Santos Jiggets" identificador="ID: U0304" ultimaCita="23/09/2024"/>
+                                            <PacienteConFoto nombre="Santos Jiggets" identificador="12345678" ultimaCita="23/09/2024"/>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@ export function ModificarDatosPaciente() {
                                     </div>
                                     <div className="col-5">
                                         <LabelModifDatosSoloLectura propiedad="Apellidos" ejemplo="Jigget Rojas"/>
-                                        <LabelModifDatosSoloLectura propiedad="Identificador" ejemplo="U0304"/>
+                                        <LabelModifDatosSoloLectura propiedad="DNI" ejemplo="12345678"/>
                                         <LabelModifDatosEditar propiedad="Correo electrónico" ejemplo="@example.com"/>
                                     </div>
                                 </div>

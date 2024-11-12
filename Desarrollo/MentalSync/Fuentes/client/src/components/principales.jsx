@@ -139,7 +139,7 @@ export function PacienteConFoto(props){
         <div>
             <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
             <h5 class="card-title">{props.nombre}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">{props.identificador}</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">DNI: {props.identificador}</h6>
             <p><b>Última cita: </b>{props.ultimaCita}</p>
         </div>
     )
@@ -150,7 +150,7 @@ export function PsicologoConFoto(props){
         <div>
             <img src={logoUsuario} alt="Psicólogo" className={`mb-3 ${styles.logoPsico}`} />
             <h5 class="card-title">{props.nombre}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">{props.identificador}</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">DNI: {props.identificador}</h6>
             <p>{props.especialidad}</p>
         </div>
     )
