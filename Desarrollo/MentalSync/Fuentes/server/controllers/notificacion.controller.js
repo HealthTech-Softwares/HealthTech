@@ -41,3 +41,21 @@ export const getNotificaciones = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateNotificacion = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const result = await db.one(
+      `UPDATE notificacion
+      SET leido = true
+      WHERE id = $2
+      RETURNING *`,
+      [id]
+    );
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+}
