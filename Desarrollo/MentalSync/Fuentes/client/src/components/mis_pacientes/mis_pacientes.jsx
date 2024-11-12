@@ -35,11 +35,6 @@ export function MisPacientes(){
                                     <div className="col-1">
                                         <BotonAccion nombre="Buscar"/>
                                     </div>
-                                    <div className="col-2">
-                                        <Link to="/modificar-datos-psicologo">
-                                            <BotonAccion nombre="Editar datos"/>
-                                        </Link>
-                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -50,7 +45,7 @@ export function MisPacientes(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PacienteConFoto nombre="Santos Jiggets" identificador="ID: U0304" ultimaCita="23/09/2024"/>
+                                            <PacienteConFoto nombre="Santos Jiggets" identificador="12345678" ultimaCita="23/09/2024"/>
                                             <Link to="/generar-diagnostico">
                                                 <BotonAccion nombre="Generar diagnóstico"/>
                                             </Link>
@@ -64,7 +59,7 @@ export function MisPacientes(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PacienteConFoto nombre="Olivia Zacarias" identificador="ID: U0215" ultimaCita="17/07/2024"/>
+                                            <PacienteConFoto nombre="Olivia Zacarias" identificador="12345678" ultimaCita="17/07/2024"/>
                                             <Link to="/historia-clinica">
                                                 <BotonAccion nombre="Ver historia clínica"/>
                                             </Link>
@@ -78,7 +73,7 @@ export function MisPacientes(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PacienteConFoto nombre="Charlotte Abonza" identificador="ID: U0321" ultimaCita="20/06/2024"/>
+                                            <PacienteConFoto nombre="Charlotte Abonza" identificador="12345678" ultimaCita="20/06/2024"/>
                                             <Link to="/historia-clinica">
                                                 <BotonAccion nombre="Ver historia clínica"/>
                                             </Link>
@@ -92,7 +87,7 @@ export function MisPacientes(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PacienteConFoto nombre="Daniel Shivley" identificador="ID: U0123" ultimaCita="14/02/2024"/>
+                                            <PacienteConFoto nombre="Daniel Shivley" identificador="12345678" ultimaCita="14/02/2024"/>
                                             <Link to="/historia-clinica">
                                                 <BotonAccion nombre="Ver historia clínica"/>
                                             </Link>

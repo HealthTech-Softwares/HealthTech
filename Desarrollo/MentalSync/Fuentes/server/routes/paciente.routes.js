@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createPaciente, getPacientes, getPaciente, updatePaciente } from "../controllers/paciente.controller.js";
+import {
+  createPaciente,
+  getPacientes,
+  getPaciente,
+  updatePaciente,
+} from "../controllers/paciente.controller.js";
 import { verifyToken, isAdmin, isPaciente } from "../libs/auth.middleware.js";
 
 const router = Router();

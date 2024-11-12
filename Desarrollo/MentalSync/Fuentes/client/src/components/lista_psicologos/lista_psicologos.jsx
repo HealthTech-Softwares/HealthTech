@@ -55,7 +55,7 @@ export function ListaPsicologos(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PsicologoConFoto nombre="Richard Trejo" identificador="ID: P0005" especialidad="Psicología clínica"/>
+                                            <PsicologoConFoto nombre="Richard Trejo" identificador="12345678" especialidad="Psicología clínica"/>
                                             <BotonesOpciones/>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@ export function ListaPsicologos(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PsicologoConFoto nombre="Darni Cotrina" identificador="ID: P0013" especialidad="Terapia Familiar"/>
+                                            <PsicologoConFoto nombre="Darni Cotrina" identificador="12345678" especialidad="Terapia Familiar"/>
                                             <BotonesOpciones/>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@ export function ListaPsicologos(){
                                 <div class="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-12 text-center">
-                                            <PsicologoConFoto nombre="Ana Coelho" identificador="ID: P0021" especialidad="Ansiedad"/>
+                                            <PsicologoConFoto nombre="Ana Coelho" identificador="12345678" especialidad="Ansiedad"/>
                                             <BotonesOpciones/>
                                         </div>
                                     </div>

@@ -16,6 +16,13 @@ export function FormInicioSesion(){
               <label htmlFor="inputPassword4" className="form-label">Contraseña</label>
               <input type="password" className="form-control" id="inputPassword4"/>
           </div>
+          <div className="col-6">
+              <label htmlFor="inputPassword4" className="form-label">¿No tiene una cuenta?
+                <Link to="/crear-cuenta">
+                  <a href="#" className='ms-2'><b>Cree una</b></a> 
+                </Link> 
+              </label>
+          </div>
           <div className="col-12 text-center">
               <Link to="/principal">
                 <BotonAccion nombre="Ingresar"/>

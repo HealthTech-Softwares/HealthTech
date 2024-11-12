@@ -10,7 +10,7 @@ export function TablaHistClin(){
             <div class="card-body">
                 <div className="row align-items-center">
                     <div className="col-3 text-center">
-                        <PacienteConFoto nombre="Santos Jiggets" identificador="ID: U0304" ultimaCita="23/09/24" />
+                        <PacienteConFoto nombre="Santos Jiggets" identificador="12345678" ultimaCita="23/09/24" />
                     </div>
                     <div className="col-9">
                         <table className="table w-90">

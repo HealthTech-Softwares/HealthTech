@@ -16,6 +16,7 @@ import { ListaPsicologos } from './components/lista_psicologos/lista_psicologos'
 import { HistoriaClinica } from './components/historia_clinica/historia_clinica'
 import { Notificaciones } from './components/notificaciones/notificaciones'
 import { AgregarPsicologo } from './components/agregar_psicologo/agregar_psicologo'
+import { CrearCuenta } from './components/inicio_sesion/crear_cuenta'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         {/* Pantalla Inicial */}
         <Route path="/" element={<Inicio/>}/>
+        <Route path='/crear-cuenta' element={<CrearCuenta/>}/>
         <Route path="*" element={<Inicio/>}/>
         <Route path="/notificaciones" element={<Notificaciones/>}/>
 
