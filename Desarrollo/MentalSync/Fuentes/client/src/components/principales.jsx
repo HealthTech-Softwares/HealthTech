@@ -63,9 +63,33 @@ export function InputInfoConLabel(props){
     )
 }
 
+export function InputInfoConLabelDoce(props){
+    return(
+        <div className="col-12 mb-3">
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <input type="text" className={`form-control w-75`} placeholder={`${props.ejemplo}`}/>
+        </div>
+    )
+}
+
 export function SelectInfoConLabel(props){
     return(
         <div className="col-5 ms-5">
+            <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
+            <select className="form-select w-75">
+                <option value="1">{props.valor1}</option>
+                <option value="2">{props.valor2}</option>
+                <option value="3">{props.valor3}</option>
+                <option value="4">{props.valor4}</option>
+                <option value="5">{props.valor5}</option>
+            </select>
+        </div>
+    )
+}
+
+export function SelectInfoConLabelDoce(props){
+    return(
+        <div className="col-12 mb-3">
             <label for="exampleInputEmail1" class="form-label">{props.propiedad}</label>
             <select className="form-select w-75">
                 <option value="1">{props.valor1}</option>

@@ -1,5 +1,5 @@
 import styles from '../principales.module.css'
-import { BotonAccion, InputInfoConLabel, NavBarMental, NombrePantalla, SelectInfoConLabel } from '../principales'
+import { BotonAccion, InputInfoConLabel, InputInfoConLabelDoce, NavBarMental, NombrePantalla, SelectInfoConLabel, SelectInfoConLabelDoce } from '../principales'
 import { Link } from 'react-router-dom'
 
 export function AgregarPsicologo(){
@@ -26,20 +26,25 @@ export function AgregarPsicologo(){
                                         <div className="col-8">
                                             <form>
                                                 <div className="row mb-3 d-flex justify-content-center">
-                                                    <InputInfoConLabel propiedad="Nombre" ejemplo="Nombres"/>
-                                                    <InputInfoConLabel propiedad="Apellidos" ejemplo="Apellidos"/>
-                                                </div>
-                                                <div className="row mb-3 d-flex justify-content-center">
-                                                    <InputInfoConLabel propiedad="Fecha de nacimiento" ejemplo="DD/MM/YYYY"/>
-                                                    <InputInfoConLabel propiedad="Identificador" ejemplo="P0000"/>
-                                                </div>
-                                                <div className="row mb-3 d-flex justify-content-center">
-                                                    <SelectInfoConLabel propiedad="Especialidad" valor1="Especialidad" valor2="Psicología infantil" valor3="Psicología clínica" valor4="Psicología familiar" valor5="Psicología de pareja"/>
-                                                    
-                                                    <InputInfoConLabel propiedad="Disponibilidad" ejemplo="Lunes, Miércoles,Viernes"/>
-                                                </div>
-                                                <div className="row mb-3 d-flex justify-content-center">
-                                                    <SelectInfoConLabel propiedad="Seleccionar horario" valor1="8:00 AM - 10:00 AM" valor2="10:00 AM - 12:00 PM" valor3="12:00 PM - 14:00 PM" valor4="14:00 PM - 16:00 PM" valor5="16:00 PM - 18:00 PM"/>
+                                                    <div className="col-6">
+                                                        <InputInfoConLabelDoce propiedad="Nombre" ejemplo="Nombres"/>
+
+                                                        <InputInfoConLabelDoce propiedad="Fecha de nacimiento" ejemplo="DD/MM/YYYY"/>
+
+                                                        <SelectInfoConLabelDoce propiedad="Especialidad" valor1="Especialidad" valor2="Psicología infantil" valor3="Psicología clínica" valor4="Psicología familiar" valor5="Psicología de pareja"/>
+
+                                                        <SelectInfoConLabelDoce propiedad="Seleccionar horario" valor1="8:00 AM - 10:00 AM" valor2="10:00 AM - 12:00 PM" valor3="12:00 PM - 14:00 PM" valor4="14:00 PM - 16:00 PM" valor5="16:00 PM - 18:00 PM"/>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <InputInfoConLabelDoce propiedad="Apellidos" ejemplo="Apellidos"/>
+                                                        <InputInfoConLabelDoce propiedad="Identificador" ejemplo="P0000"/>
+                                                        <ul class="list-group w-75">
+                                                            <li class="list-group-item">
+                                                                <input class="form-check-input me-3" type="checkbox" value="" id="firstCheckbox"/>
+                                                                <label class="form-check-label" for="firstCheckbox">Disponibilidad</label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                                 <div className="row mb-4">
                                                     <div className="col-10 d-flex justify-content-end">

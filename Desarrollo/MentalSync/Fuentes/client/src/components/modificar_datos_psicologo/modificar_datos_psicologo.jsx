@@ -48,7 +48,12 @@ export function ModificarDatosPsicologo() {
                                     <div className="col-5">
                                         <LabelModifDatosSoloLectura propiedad="Apellidos" ejemplo="Trejo Quispe"/>
                                         <LabelModifDatosSoloLectura propiedad="Identificador" ejemplo="P0005"/>
-                                        <LabelModifDatosEditar propiedad="Disponibilidad" ejemplo="Disponibilidad"/>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <input class="form-check-input me-3" type="checkbox" value="" id="firstCheckbox"/>
+                                                <label class="form-check-label" for="firstCheckbox">Disponibilidad</label>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div className="row m-2">
