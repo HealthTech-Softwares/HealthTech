@@ -46,15 +46,29 @@ export const updateNotificacion = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await db.one(
-      `UPDATE notificacion
-      SET leido = true
-      WHERE id = $2
-      RETURNING *`,
+    const notificacion = await db.oneOrNone(
+      `SELECT *
+      FROM notificacion
+      WHERE idnotificacion = $1`,
       [id]
     );
 
-    res.json(result);
+    if (!notificacion) {
+      return res.status(404).json({ message: "Notificacion no encontrada" });
+    }
+
+    const result = await db.result(
+      `UPDATE notificacion
+      SET leido = true
+      WHERE idnotificacion = $2`,
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Notificacion no encontrada" });
+    }
+
+    return res.sendStatus(204);
   } catch (error) {
     next(error);
   }
