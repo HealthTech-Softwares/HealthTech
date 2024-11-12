@@ -27,11 +27,6 @@ export function BuscarPsico(){
                                             <button type="submit" className="btn btn-dark">Mis citas</button>
                                         </Link>
                                     </div>
-                                    <div className="col-2">
-                                        <Link to="/modificar-datos-paciente">
-                                            <BotonAccion nombre="Editar datos"/>
-                                        </Link>
-                                    </div>
                                 </div>
                             </form>
                         </div>

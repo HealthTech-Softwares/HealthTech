@@ -35,11 +35,6 @@ export function MisPacientes(){
                                     <div className="col-1">
                                         <BotonAccion nombre="Buscar"/>
                                     </div>
-                                    <div className="col-2">
-                                        <Link to="/modificar-datos-psicologo">
-                                            <BotonAccion nombre="Editar datos"/>
-                                        </Link>
-                                    </div>
                                 </div>
                             </form>
                         </div>
