@@ -51,7 +51,7 @@ export const getTurnoPsicologo = async (req, res, next) => {
   }
 };
 
-export const getTurnosFaltantesPricologo = async (req, res, next) => {
+export const getTurnosFaltantesPsicologo = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { dia } = req.body;

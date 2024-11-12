@@ -2,20 +2,9 @@ import db from "../src/db.js";
 
 export const createPsicologo = async (req, res, next) => {
   try {
-    const {
-      correo,
-      contrasenia,
-      nombre,
-      apellidop,
-      apellidom,
-      dni,
-      foto,
-      firma,
-      sede,
-    } = req.body;
+    const { correo, contrasenia, nombre, apellidop, apellidom, dni, foto, firma, sede } = req.body;
 
     const result = await db.tx(async (t) => {
-      // Verificamos si existe el correo y el DNI
       const existeCorreo = await t.oneOrNone(
         "SELECT 1 FROM usuario WHERE correo = $1",
         [correo]
@@ -25,7 +14,6 @@ export const createPsicologo = async (req, res, next) => {
         [dni]
       );
 
-      // Si existe el correo o el DNI, retornamos un mensaje de error
       if (existeCorreo || existeDni) {
         throw new Error(
           existeCorreo
@@ -34,7 +22,6 @@ export const createPsicologo = async (req, res, next) => {
         );
       }
 
-      // Insertamos en la tabla usuario y obtenemos el id generado
       const usuario = await t.one(
         `INSERT INTO usuario (rol, correo, contrasenia)
          VALUES ('Psicologo', $1, $2)
@@ -42,7 +29,6 @@ export const createPsicologo = async (req, res, next) => {
         [correo, contrasenia]
       );
 
-      // Insertamos en la tabla psicologo usando el id de usuario recién generado
       const psicologo = await t.one(
         `INSERT INTO psicologo (idusuario, nombre, apellidop, apellidom, dni, foto, firma, sede)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -59,11 +45,9 @@ export const createPsicologo = async (req, res, next) => {
         ]
       );
 
-      // Retornamos el ID del psicólogo
       return psicologo;
     });
 
-    // Respondemos con los datos del nuevo psicólogo
     res.json(result);
   } catch (error) {
     next(error);
@@ -73,9 +57,7 @@ export const createPsicologo = async (req, res, next) => {
 export const getPsicologos = async (req, res, next) => {
   try {
     const result = await db.any(
-      `SELECT idpsicologo, foto, nombre, apellidop, apellidom, dni
-      FROM psicologo
-      LIMIT 100;`
+      `SELECT * FROM psicologo LIMIT 100;`
     );
     res.json(result);
   } catch (error) {
@@ -87,9 +69,7 @@ export const getPsicologo = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await db.oneOrNone(
-      `SELECT foto, nombre, apellidop, apellidom, dni
-      FROM psicologo
-      WHERE idpsicologo = $1`,
+      `SELECT * FROM psicologo WHERE idpsicologo = $1`,
       [id]
     );
     if (!result) {
@@ -100,6 +80,22 @@ export const getPsicologo = async (req, res, next) => {
     next(error);
   }
 };
+
+export const perfilPsicologo = async (req, res, next) => {
+  try {
+    const id  = req.userId;
+    const result = await db.oneOrNone(
+      `SELECT * FROM psicologo WHERE idpsicologo = $1`,
+      [id]
+    );
+    if (!result) {
+      return res.status(404).json({ message: "Psicologo no encontrado" });
+    }
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export const deletePsicologo = async (req, res, next) => {
   try {
@@ -116,3 +112,35 @@ export const deletePsicologo = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updatePsicologo = async (req, res, next) => {
+  try {
+    const id  = req.userId;
+    const { disponibilidad, foto, descripcion, consulta_online } = req.body;
+    const result = await db.result(
+      `UPDATE psicologo
+      SET disponiblidad = $1, foto = $2, descripcion = $3, consulta_online = $4
+      WHERE idpsicologo = $5`,
+      [disponibilidad, foto, descripcion, consulta_online, id]
+    );
+    if (result.rowCount === 0)
+      return res.status(404).json({ message: "Psicologo no encontrado" });
+    return res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const updateAllPsicologos = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await db.result(
+      `UPDATE psicologo
+      SET ? WHERE idpsicologo = $8`,
+      [id] 
+    );
+    return res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+}

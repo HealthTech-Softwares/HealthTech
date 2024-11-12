@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import pruebaRouter from "../routes/prueba.routes.js";
 import psicologoRouter from "../routes/psicologos.routes.js";
 import turnoRouter from "../routes/turnos.routes.js";
 import especialidadRouter from "../routes/especialidad.routes.js";
@@ -12,14 +11,13 @@ const app = express();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(pruebaRouter);
-app.use(authRouter);
 
 // Routes
 app.get("/", (req, res) => {
   res.send("¡Servidor funcionando!");
 });
 
+app.use("/api", authRouter);
 app.use("/api", psicologoRouter);
 app.use("/api", turnoRouter);
 app.use("/api", especialidadRouter);

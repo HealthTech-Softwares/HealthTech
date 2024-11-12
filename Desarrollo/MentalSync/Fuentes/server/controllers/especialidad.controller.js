@@ -1,6 +1,6 @@
 import db from "../src/db.js";
 
-export const createEspecialidadPsicologo = async (req, res, next) => {
+export const createEspPsicologo = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { idespecialidad } = req.body;
@@ -44,7 +44,7 @@ export const getEspecialidades = async (req, res, next) => {
   }
 };
 
-export const getEspecialidadesPsicologo = async (req, res, next) => {
+export const getEspsPsicologo = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await db.any(
@@ -64,7 +64,7 @@ export const getEspecialidadesPsicologo = async (req, res, next) => {
   }
 };
 
-export const getEspecialidadesFaltantesPsicologo = async (req, res, next) => {
+export const getEspFaltantesPsicologo = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await db.any(
