@@ -6,6 +6,7 @@ import psicologoRouter from "../routes/psicologos.routes.js";
 import turnoRouter from "../routes/turnos.routes.js";
 import especialidadRouter from "../routes/especialidad.routes.js";
 import authRouter from "../routes/auth.routes.js";
+import pacienteRouter from "../routes/paciente.routes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(pruebaRouter);
 app.use(authRouter);
+app.use(pacienteRouter);
 
 // Routes
 app.get("/", (req, res) => {
@@ -23,6 +25,7 @@ app.get("/", (req, res) => {
 app.use("/api", psicologoRouter);
 app.use("/api", turnoRouter);
 app.use("/api", especialidadRouter);
+app.use("/api", pacienteRouter);
 
 // Handling errors
 app.use((err, req, res, next) => {
