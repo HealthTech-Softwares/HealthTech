@@ -83,10 +83,21 @@ export const getPsicologo = async (req, res, next) => {
 
 export const perfilPsicologo = async (req, res, next) => {
   try {
-    const id  = req.userId;
+    const idusuario  = req.userId;
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    if (!psicologo) {
+      return res.status(404).json({ message: "Psicologo no encontrado" });
+    }
+
+    const idpsicologo = psicologo.idpsicologo;
+    
     const result = await db.oneOrNone(
       `SELECT * FROM psicologo WHERE idpsicologo = $1`,
-      [id]
+      [idpsicologo]
     );
     if (!result) {
       return res.status(404).json({ message: "Psicologo no encontrado" });
