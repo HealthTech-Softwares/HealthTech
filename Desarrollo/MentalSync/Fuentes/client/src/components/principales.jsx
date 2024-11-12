@@ -7,10 +7,12 @@ export function NavBarMental(){
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid d-flex align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src={logoMental} alt="Logo" class={`d-inline-block align-text-top ${styles.logoNav}`}/>
+                    <img src={logoMental} alt="Logo" class={`d-inline-block align-text-top ${styles.logoNav}`}/>
                 MentalSync
                 </a>
-                <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
+                <a href="">
+                    <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
+                </a>
             </div>
         </nav>
     )

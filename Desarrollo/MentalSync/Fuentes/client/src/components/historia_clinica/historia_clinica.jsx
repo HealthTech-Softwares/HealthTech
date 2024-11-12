@@ -11,7 +11,7 @@ export function TablaHistClin(){
                     <div className="col-3 text-center">
                         <PacienteConFoto nombre="Santos Jiggets" identificador="ID: U0304" ultimaCita="23/09/24" />
                     </div>
-                    <div className="col-8">
+                    <div className="col-9">
                         <table className="table w-90">
                             <thead>
                                 <tr>

@@ -1,6 +1,4 @@
 import styles from '../principales.module.css'
-import logoMental from '../../assets/logo_mentalsync.png'
-import logoUsuario from '../../assets/user.png'
 import { BotonAccion, InputInfoConLabel, NavBarMental, NombrePantalla, SelectInfoConLabel } from '../principales'
 
 export function ReservaCita(){

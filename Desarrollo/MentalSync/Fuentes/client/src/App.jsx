@@ -14,6 +14,8 @@ import { ModificarDatosPsicologo } from './components/modificar_datos_psicologo/
 import { MisPacientes } from './components/mis_pacientes/mis_pacientes'
 import { ListaPsicologos } from './components/lista_psicologos/lista_psicologos'
 import { HistoriaClinica } from './components/historia_clinica/historia_clinica'
+import { Notificaciones } from './components/notificaciones/notificaciones'
+import { AgregarPsicologo } from './components/agregar_psicologo/agregar_psicologo'
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         {/* Pantalla Inicial */}
         <Route path="/" element={<Inicio/>}/>
         <Route path="*" element={<Inicio/>}/>
+        <Route path="/notificaciones" element={<Notificaciones/>}/>
 
         {/* Pantallas Paciente */}
         <Route path="/principal" element={<BuscarPsico/>}/>
@@ -43,6 +46,7 @@ function App() {
 
         {/* Pantallas Administrador */}
         <Route path='/lista-psicologos' element={<ListaPsicologos/>}/>
+        <Route path='/agregar-psicologo' element={<AgregarPsicologo/>}/>
         
       </Routes>
     </>
