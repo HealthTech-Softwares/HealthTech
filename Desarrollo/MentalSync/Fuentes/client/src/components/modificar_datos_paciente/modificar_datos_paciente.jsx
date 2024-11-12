@@ -1,6 +1,7 @@
 import modi from '../modificar_datos_paciente/modificar_datos_paciente.module.css';
 import styles from '../principales.module.css';
 import { BotonAccion, NavBarMental, NombrePantalla, PacienteConFoto } from '../principales';
+import { Link } from 'react-router-dom';
 
 export function LabelModifDatosSoloLectura(props){
     return(
@@ -60,7 +61,9 @@ export function ModificarDatosPaciente() {
                                 </div>
                                 <div className="row m-2">
                                     <div className="col-10 d-flex justify-content-end">
-                                        <BotonAccion nombre="Guardar cambios"/>
+                                        <Link to="/principal">
+                                            <BotonAccion nombre="Guardar cambios"/>
+                                        </Link>
                                     </div>
                                 </div>
                             </form>

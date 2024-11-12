@@ -1,5 +1,7 @@
 import logoMental from '../../assets/logo_mentalsync.png';
+import { BotonAccion } from '../principales';
 import styles from './inicio.module.css';
+import { Link } from 'react-router-dom';
 
 export function FormInicioSesion(){
   return (
@@ -15,7 +17,9 @@ export function FormInicioSesion(){
               <input type="password" className="form-control" id="inputPassword4"/>
           </div>
           <div className="col-12 text-center">
-              <button type="submit" className="btn btn-primary">Ingresar</button>
+              <Link to="/principal">
+                <BotonAccion nombre="Ingresar"/>
+              </Link>
           </div>
       </form>
     </div>

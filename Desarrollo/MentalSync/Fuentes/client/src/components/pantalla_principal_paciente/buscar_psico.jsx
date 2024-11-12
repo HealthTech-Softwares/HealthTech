@@ -1,5 +1,6 @@
 import { BotonAccion, NavBarMental, NombrePantalla, SelectInfo, InfoPsicologo, InputInfoSinLabel } from '../principales'
 import styles from '../principales.module.css'
+import { Link } from 'react-router-dom'
 
 export function BuscarPsico(){
     return (
@@ -18,8 +19,18 @@ export function BuscarPsico(){
                                     <div className="col-3">
                                         <SelectInfo valor1="Especialidad" valor2="Psicología clínica" valor3="Psicología infantil" valor4="Psicología de pareja"/>
                                     </div>
-                                    <div className="col-2">
+                                    <div className="col-1 text-center">
                                         <BotonAccion nombre="Buscar"/>
+                                    </div>
+                                    <div className="col-1">
+                                        <Link to="/mis-citas">
+                                            <button type="submit" className="btn btn-dark">Mis citas</button>
+                                        </Link>
+                                    </div>
+                                    <div className="col-2">
+                                        <Link to="/modificar-datos-paciente">
+                                            <BotonAccion nombre="Editar datos"/>
+                                        </Link>
                                     </div>
                                 </div>
                             </form>

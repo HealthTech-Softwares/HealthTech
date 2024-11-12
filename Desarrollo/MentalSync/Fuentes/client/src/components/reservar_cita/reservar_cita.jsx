@@ -1,7 +1,6 @@
 import styles from '../principales.module.css'
-import logoMental from '../../assets/logo_mentalsync.png'
-import logoUsuario from '../../assets/user.png'
 import { BotonAccion, InputInfoConLabel, NavBarMental, NombrePantalla, SelectInfoConLabel } from '../principales'
+import { Link } from 'react-router-dom'
 
 export function ReservaCita(){
     return(
@@ -24,7 +23,9 @@ export function ReservaCita(){
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-10 d-flex justify-content-end">
-                                        <BotonAccion nombre="Completar cita"/>
+                                        <Link to="/metodo-pago">
+                                            <BotonAccion nombre="Completar cita"/>
+                                        </Link>
                                     </div>
                                 </div>
                             </form>

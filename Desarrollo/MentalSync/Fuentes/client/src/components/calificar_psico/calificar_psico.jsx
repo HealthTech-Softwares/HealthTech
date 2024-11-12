@@ -2,6 +2,7 @@ import cali from './calificar_psico.module.css';
 import styles from '../principales.module.css';
 import logoUsuario from '../../assets/user.png';
 import { BotonAccion, EnlaceLabel, NavBarMental, NombrePantalla } from '../principales';
+import { Link } from 'react-router-dom';
 
 export function CalificarPsico() {
     return(
@@ -35,7 +36,9 @@ export function CalificarPsico() {
                                                 </div>
                                                 <div className="row m-2">
                                                     <div className="col-12 d-flex justify-content-end">
-                                                        <BotonAccion nombre="Aceptar"/>
+                                                        <Link to="/mis-citas">
+                                                            <BotonAccion nombre="Aceptar"/>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </form>
