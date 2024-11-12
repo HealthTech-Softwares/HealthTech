@@ -1,12 +1,52 @@
 import { BotonAccion, NavBarMental, NombrePantalla, SelectInfo, InfoPsicologo, InputInfoSinLabel } from '../principales'
 import styles from '../principales.module.css'
 import { Link } from 'react-router-dom'
+import { especialidesRequest } from '../../api/especialidades'
+import { psicologosRequest } from '../../api/test.buscar.psico'
+import React, { useState, useEffect } from 'react'
 
-export function BuscarPsico(){
+export function BuscarPsico() {
+    const [especialidades, setEspecialidades] = useState([]);
+    const [psicolgos, setPsicologos] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+    let isMounted = true; // Bandera para asegurar que el componente está montado
+
+    const obtenerDatos = async () => {
+        try {
+            setLoading(true);
+            const [especialidadesResponse, psicologosResponse] = await Promise.all([
+                especialidesRequest(),
+                psicologosRequest()
+            ]);
+            if (isMounted) { // Solo actualizamos el estado si el componente sigue montado
+                setEspecialidades(especialidadesResponse.data);
+                setPsicologos(psicologosResponse.data);
+            }
+        } catch (error) {
+            console.error("Error al cargar los datos: ", error);
+            // setError(true);
+        } finally {
+            if (isMounted) {
+                setLoading(false);
+            }
+        }
+    };
+
+    obtenerDatos();
+
+    return () => {
+        isMounted = false; // Limpiar cuando el componente se desmonte
+    };
+}, []);
+
     return (
-        <body className={`${styles.fondo}`}>
-            <NavBarMental/>
-            <section>
+        <div className={`${styles.fondo}`}>
+            <NavBarMental />
+            {loading ? (<div>Cargando...</div>) : (
+                <>
+                    <section>
                 <div className="container-fluid">
                     <div className="row ms-4">
                         <div className="col-12">
@@ -17,7 +57,7 @@ export function BuscarPsico(){
                                         <InputInfoSinLabel/>
                                     </div>
                                     <div className="col-3">
-                                        <SelectInfo valor1="Especialidad" valor2="Psicología clínica" valor3="Psicología infantil" valor4="Psicología de pareja"/>
+                                        <SelectInfo props={especialidades} />
                                     </div>
                                     <div className="col-1 text-center">
                                         <BotonAccion nombre="Buscar"/>
@@ -32,16 +72,22 @@ export function BuscarPsico(){
                         </div>
                     </div>
                     <div className={`row justify-content-center`}>
-                        <div className="col-12">
-                            <InfoPsicologo nombre="Ruperta Matinez Obergon" especialidad="Psicología clínica" descripcion="Soy un psicólogo especializado en terapia de pareja, dedicado a ayudar a las personas a mejorar la comunicación, resolver conflictos y fortalecer su relación. Mi enfoque se centra en crear un espacio seguro y de confianza donde ambas partes puedan expresar sus emociones y preocupaciones, y trabajar juntos para encontrar soluciones que promuevan el bienestar emocional y la armonía en la relación."/>
-
-                            <InfoPsicologo nombre="Juanito Perez Gutierrez" especialidad="Psicología infantil" descripcion="Soy un psicólogo especializado en terapia de pareja, dedicado a ayudar a las personas a mejorar la comunicación, resolver conflictos y fortalecer su relación. Mi enfoque se centra en crear un espacio seguro y de confianza donde ambas partes puedan expresar sus emociones y preocupaciones, y trabajar juntos para encontrar soluciones que promuevan el bienestar emocional y la armonía en la relación."/>
-
-                            <InfoPsicologo nombre="Betzabeth Coronación Musayón" especialidad="Psicología de pareja" descripcion="Soy un psicólogo especializado en terapia de pareja, dedicado a ayudar a las personas a mejorar la comunicación, resolver conflictos y fortalecer su relación. Mi enfoque se centra en crear un espacio seguro y de confianza donde ambas partes puedan expresar sus emociones y preocupaciones, y trabajar juntos para encontrar soluciones que promuevan el bienestar emocional y la armonía en la relación."/>
+                                <div className="col-12">
+                                    {psicolgos.map((psico) => (
+                                        <InfoPsicologo
+                                            key={psico.idpsicologo}
+                                            dni={psico.dni}
+                                            nombre={psico.nombre}
+                                            descripcion={psico.descripcion}
+                                            foto={psico.foto}
+                                        />
+                                    ))}
                         </div>
                     </div>
                 </div>
             </section>
-        </body>
+                </>)}
+            
+        </div>
     )
 }
