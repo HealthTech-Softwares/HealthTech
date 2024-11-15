@@ -1,7 +1,7 @@
-import logoMental from '../../assets/logo_mentalsync.png';
-import { BotonAccion } from '../principales';
-import styles from './inicio.module.css';
-import { Link } from 'react-router-dom';
+import logoMental from "../../assets/logo_mentalsync.png";
+import { BotonAccion } from "../principales";
+import styles from "./inicio.module.css";
+import { Link } from "react-router-dom";
 
 export function FormInicioSesion() {
   return (
@@ -9,11 +9,15 @@ export function FormInicioSesion() {
       <h2 className={`text-center mb-4 ${styles.subtitle}`}>Iniciar sesión</h2>
       <form className="row g-3 d-flex flex-column align-items-center">
         <div className="col-6">
-          <label htmlFor="inputEmail4" className="form-label">Correo electrónico</label>
+          <label htmlFor="inputEmail4" className="form-label">
+            Correo electrónico
+          </label>
           <input type="email" className="form-control" id="inputEmail4" />
         </div>
         <div className="col-6">
-          <label htmlFor="inputPassword4" className="form-label">Contraseña</label>
+          <label htmlFor="inputPassword4" className="form-label">
+            Contraseña
+          </label>
           <input type="password" className="form-control" id="inputPassword4" />
         </div>
         <div className="col-6">
@@ -39,11 +43,11 @@ export function Inicio() {
     <div className={`container-fluid ${styles.containerFluid}`}>
       <div className="row align-items-center justify-content-center vh-100">
         <div className="col-6 text-center">
-            <img src={logoMental} alt="Logo" className={styles.logo} />
-            <h1 className={styles.title}>MentalSync</h1>
+          <img src={logoMental} alt="Logo" className={styles.logo} />
+          <h1 className={styles.title}>MentalSync</h1>
         </div>
-        <FormInicioSesion/>
+        <FormInicioSesion />
       </div>
     </div>
-  )
+  );
 }
