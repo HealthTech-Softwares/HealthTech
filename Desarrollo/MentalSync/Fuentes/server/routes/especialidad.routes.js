@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createEspPsicologo, getEspecialidades, getEspsPsicologo, getEspFaltantesPsicologo, } from "../controllers/especialidad.controller.js";
+import {
+  createEspPsicologo,
+  getEspecialidades,
+  getEspsPsicologo,
+  getEspFaltantesPsicologo,
+} from "../controllers/especialidad.controller.js";
 import { verifyToken, isAdmin, isPaciente } from "../libs/auth.middleware.js";
 
 const router = Router();
