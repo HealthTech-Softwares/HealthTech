@@ -1,6 +1,6 @@
-import styles from '../principales.module.css';
-import { NavBarMental, NombrePantalla } from '../principales';
-import { Link } from 'react-router-dom';
+import styles from "../principales.module.css";
+import { NavBarMental, NombrePantalla } from "../principales";
+import { Link } from "react-router-dom";
 
 export function PopNotif(props) {
   return (
