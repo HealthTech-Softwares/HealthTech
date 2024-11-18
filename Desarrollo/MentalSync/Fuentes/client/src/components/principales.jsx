@@ -145,7 +145,7 @@ export function SelectInfoConLabelDoce(props) {
 export function SelectInfo({ props }) {
   return (
     <select className="form-select">
-      {props.map((prop, index) => (
+      {props?.map((prop, index) => (
         <option key={index} value={prop.key}>
           {prop.nombre}
         </option>

@@ -22,7 +22,7 @@ export default function Rutas() {
         <Route element={<PrivateRoute requiredRole="Psicologo"/>} >
           {RutasPsicologo()}
         </Route>
-        <Route element={<PrivateRoute requiredRole="Admin"/>} >
+        <Route element={<PrivateRoute requiredRole="Administrador"/>} >
           {RutasAdmin()}
         </Route>
 

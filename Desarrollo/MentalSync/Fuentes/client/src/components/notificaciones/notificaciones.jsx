@@ -1,6 +1,7 @@
 import styles from "../principales.module.css";
 import { NavBarMental, NombrePantalla } from "../principales";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export function PopNotif(props) {
   return (
@@ -19,6 +20,7 @@ export function PopNotif(props) {
 }
 
 export function Notificaciones() {
+  const { logout } = useAuth();
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
@@ -28,8 +30,8 @@ export function Notificaciones() {
             <div className="col-12 d-flex justify-content-between">
               <NombrePantalla nombre="Notificaciones" />
               <div className="d-flex align-items-center justify-content-end">
-                <Link to="/">
-                  <button className="btn btn-primary">Cerrar sesión</button>
+                <Link className="btn btn-primary" to="/" onClick={() => logout()}>
+                  Cerrar sesión
                 </Link>
               </div>
             </div>
