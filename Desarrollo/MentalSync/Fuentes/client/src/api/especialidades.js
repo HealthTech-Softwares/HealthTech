@@ -1,6 +1,4 @@
-import axios from "axios";
-import { API } from "./const.js";
+import axios from "./axios";
 
 // Buscar Especialidades
-export const especialidesRequest = async () =>
-  await axios.get(`${API}/especialidades`);
+export const especialidesRequest = async () => await axios.get("/especialidades");

@@ -1,6 +1,4 @@
-import axios from "axios";
-import { API } from "./const.js";
+import axios from "./axios";
 
 // Buscar Psicologo
-export const psicologosRequest = async () =>
-  await axios.get(`${API}/psicologos`);
+export const psicologosRequest = async () => await axios.get("/psicologos");
