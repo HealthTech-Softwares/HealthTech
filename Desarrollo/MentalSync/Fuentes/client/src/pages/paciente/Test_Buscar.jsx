@@ -38,7 +38,7 @@ const CardPsicologo = ({ id, nombre, foto, descripcion }) => {
 };
 
 // Funcion para retornar datos
-function verPsicologos() {
+function VerPsicologos() {
   const [psicologos, setPsicologos] = useState([]);
   const [loading, setLoading] = useState(true);
   // tambien se puede agregar si hay un error
@@ -62,7 +62,7 @@ function verPsicologos() {
 }
 // Pagina principal
 const Test_Buscar = () => {
-  const { psicologos, loading } = verPsicologos();
+  const { psicologos, loading } = VerPsicologos();
   return (
     <div className={`row justify-content-center`}>
       <div className="col-12">
