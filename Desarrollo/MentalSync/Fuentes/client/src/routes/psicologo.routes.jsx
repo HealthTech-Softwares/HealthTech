@@ -1,9 +1,9 @@
 import { Route } from "react-router-dom";
-import { GenerarDiagnostico } from "../components/generar_diagnostico/generar_diagnostico"
-import { ModificarDatosPsicologo } from "../components/modificar_datos_psicologo/modificar_datos_psicologo"
-import { MisPacientes } from "../components/mis_pacientes/mis_pacientes"
-import { HistoriaClinica } from "../components/historia_clinica/historia_clinica"
-import { Notificaciones } from "../components/notificaciones/notificaciones"
+import { GenerarDiagnostico } from "../components/psicologo/generar_diagnostico/generar_diagnostico"
+import { ModificarDatosPsicologo } from "../components/psicologo/modificar_datos_psicologo/modificar_datos_psicologo"
+import { MisPacientes } from "../components/psicologo/mis_pacientes/mis_pacientes"
+import { HistoriaClinica } from "../components/psicologo/historia_clinica/historia_clinica"
+import { Notificaciones } from "../components/general/notificaciones/notificaciones"
 
 export default function RutasPsicologo() {
   return (
