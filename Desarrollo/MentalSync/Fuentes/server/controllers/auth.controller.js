@@ -20,7 +20,7 @@ export const login = async (req, res) => {
 
     const token = await createAccesToken({ id: user.idusuario, rol: user.rol });
 
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token);
 
     res.json({
       idusuario: user.idusuario,
