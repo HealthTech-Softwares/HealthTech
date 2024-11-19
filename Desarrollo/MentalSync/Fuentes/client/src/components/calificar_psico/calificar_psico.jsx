@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export function CalificarPsico() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
 
       <section>
@@ -62,6 +62,6 @@ export function CalificarPsico() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }

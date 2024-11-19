@@ -53,7 +53,7 @@ export function CardCitaReservada() {
 
 export function CitaVirtual() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
 
       <section
@@ -81,6 +81,6 @@ export function CitaVirtual() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }
