@@ -23,104 +23,104 @@ export function SelectEstado() {
 export function MisPacientes() {
   return (
     <div className={`${styles.fondo}`}>
-        <NavBarMental />
+      <NavBarMental />
 
-        <section>
-            <div className="container-fluid">
-                <div className="row ms-4">
-                <div className="col-12">
-                    <NombrePantalla nombre="Mis pacientes" />
-                    <form>
-                    <div className="row mb-4">
-                        <div className="col-3">
-                        <InputInfoSinLabel />
-                        </div>
-                        <div className="col-3">
-                        <SelectEstado />
-                        </div>
-                        <div className="col-1">
-                        <BotonAccion nombre="Buscar" />
-                        </div>
-                    </div>
-                    </form>
+      <section>
+        <div className="container-fluid">
+          <div className="row ms-4">
+            <div className="col-12">
+              <NombrePantalla nombre="Mis pacientes" />
+              <form>
+                <div className="row mb-4">
+                  <div className="col-3">
+                    <InputInfoSinLabel />
+                  </div>
+                  <div className="col-3">
+                    <SelectEstado />
+                  </div>
+                  <div className="col-1">
+                    <BotonAccion nombre="Buscar" />
+                  </div>
                 </div>
-                </div>
-                <div className={`row justify-content-center`}>
-                <div className="col-3">
-                    <div class={`card ${mis.myCard} mb-3`}>
-                    <div class="card-body">
-                        <div className="row align-items-center">
-                        <div className="col-12 text-center">
-                            <PacienteConFoto
-                            nombre="Santos Jiggets"
-                            identificador="12345678"
-                            ultimaCita="23/09/2024"
-                            />
-                            <Link to="/generar-diagnostico">
-                            <BotonAccion nombre="Generar diagnóstico" />
-                            </Link>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div class={`card ${mis.myCard} mb-3`}>
-                    <div class="card-body">
-                        <div className="row align-items-center">
-                        <div className="col-12 text-center">
-                            <PacienteConFoto
-                            nombre="Olivia Zacarias"
-                            identificador="12345678"
-                            ultimaCita="17/07/2024"
-                            />
-                            <Link to="/historia-clinica">
-                            <BotonAccion nombre="Ver historia clínica" />
-                            </Link>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div class={`card ${mis.myCard} mb-3`}>
-                    <div class="card-body">
-                        <div className="row align-items-center">
-                        <div className="col-12 text-center">
-                            <PacienteConFoto
-                            nombre="Charlotte Abonza"
-                            identificador="12345678"
-                            ultimaCita="20/06/2024"
-                            />
-                            <Link to="/historia-clinica">
-                            <BotonAccion nombre="Ver historia clínica" />
-                            </Link>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div class={`card ${mis.myCard} mb-3`}>
-                    <div class="card-body">
-                        <div className="row align-items-center">
-                        <div className="col-12 text-center">
-                            <PacienteConFoto
-                            nombre="Daniel Shivley"
-                            identificador="12345678"
-                            ultimaCita="14/02/2024"
-                            />
-                            <Link to="/historia-clinica">
-                            <BotonAccion nombre="Ver historia clínica" />
-                            </Link>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
+              </form>
             </div>
-        </section>
+          </div>
+          <div className={`row justify-content-center`}>
+            <div className="col-3">
+              <div class={`card ${mis.myCard} mb-3`}>
+                <div class="card-body">
+                  <div className="row align-items-center">
+                    <div className="col-12 text-center">
+                      <PacienteConFoto
+                        nombre="Santos Jiggets"
+                        identificador="12345678"
+                        ultimaCita="23/09/2024"
+                      />
+                      <Link to="/generar-diagnostico">
+                        <BotonAccion nombre="Generar diagnóstico" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-3">
+              <div class={`card ${mis.myCard} mb-3`}>
+                <div class="card-body">
+                  <div className="row align-items-center">
+                    <div className="col-12 text-center">
+                      <PacienteConFoto
+                        nombre="Olivia Zacarias"
+                        identificador="12345678"
+                        ultimaCita="17/07/2024"
+                      />
+                      <Link to="/historia-clinica">
+                        <BotonAccion nombre="Ver historia clínica" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-3">
+              <div class={`card ${mis.myCard} mb-3`}>
+                <div class="card-body">
+                  <div className="row align-items-center">
+                    <div className="col-12 text-center">
+                      <PacienteConFoto
+                        nombre="Charlotte Abonza"
+                        identificador="12345678"
+                        ultimaCita="20/06/2024"
+                      />
+                      <Link to="/historia-clinica">
+                        <BotonAccion nombre="Ver historia clínica" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-3">
+              <div class={`card ${mis.myCard} mb-3`}>
+                <div class="card-body">
+                  <div className="row align-items-center">
+                    <div className="col-12 text-center">
+                      <PacienteConFoto
+                        nombre="Daniel Shivley"
+                        identificador="12345678"
+                        ultimaCita="14/02/2024"
+                      />
+                      <Link to="/historia-clinica">
+                        <BotonAccion nombre="Ver historia clínica" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

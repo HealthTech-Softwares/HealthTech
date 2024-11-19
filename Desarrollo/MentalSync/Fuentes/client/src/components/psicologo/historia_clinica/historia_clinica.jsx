@@ -1,7 +1,11 @@
 import { NavBarMental } from "../../principales";
 import styles from "../../principales.module.css";
 import his from "../generar_diagnostico/generar_diagnostico.module.css";
-import { NombrePantalla, PacienteConFoto, BotonAccion } from "../../principales";
+import {
+  NombrePantalla,
+  PacienteConFoto,
+  BotonAccion,
+} from "../../principales";
 import { Link } from "react-router-dom";
 
 export function TablaHistClin() {
