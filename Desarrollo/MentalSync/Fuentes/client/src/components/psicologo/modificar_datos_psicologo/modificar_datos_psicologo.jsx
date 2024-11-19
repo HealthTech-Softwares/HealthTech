@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 export function ModificarDatosPsicologo() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
 
       <section>
@@ -104,6 +104,6 @@ export function ModificarDatosPsicologo() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }

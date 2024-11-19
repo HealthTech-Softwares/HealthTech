@@ -59,7 +59,7 @@ export function TablaHistClin() {
 
 export function HistoriaClinica() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
 
       <section>
@@ -76,6 +76,6 @@ export function HistoriaClinica() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }

@@ -1,23 +1,11 @@
 import styles from "./mis_citas.module.css";
-import { BotonAccion, SelectInfo } from "../../principales";
+import { BotonAccion, NavBarMental, SelectInfo } from "../../principales";
 import { Link } from "react-router-dom";
 
 export function MisCitas() {
   return (
-    <body className={`${styles.fondo}`}>
-      <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid d-flex align-items-center">
-          <a class="navbar-brand d-flex align-items-center" href="#">
-            <img
-              src={logoMental}
-              alt="Logo"
-              class={`d-inline-block align-text-top ${styles.logoNav}`}
-            />
-            MentalSync
-          </a>
-          <img src={logoUsuario} alt="Usuario" class={`${styles.logoNav}`} />
-        </div>
-      </nav>
+    <div className={`${styles.fondo}`}>
+      <NavBarMental />
 
       <section>
         <div className="container-fluid">
@@ -119,6 +107,6 @@ export function MisCitas() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }

@@ -59,8 +59,9 @@ export function CardPago() {
 
 export function MetodoPago() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
+
       <section>
         <div className="container-fluid">
           <div className="row ms-4">
@@ -82,6 +83,6 @@ export function MetodoPago() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }

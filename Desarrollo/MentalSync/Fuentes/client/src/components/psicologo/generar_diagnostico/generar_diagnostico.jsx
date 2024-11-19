@@ -23,7 +23,7 @@ export function TextosAreas(props) {
 
 export function GenerarDiagnostico() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
 
       <section>
@@ -73,6 +73,6 @@ export function GenerarDiagnostico() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export function ReservaCita() {
   return (
-    <body className={`${styles.fondo}`}>
+    <div className={`${styles.fondo}`}>
       <NavBarMental />
 
       <section>
@@ -52,6 +52,6 @@ export function ReservaCita() {
           </div>
         </div>
       </section>
-    </body>
+    </div>
   );
 }
