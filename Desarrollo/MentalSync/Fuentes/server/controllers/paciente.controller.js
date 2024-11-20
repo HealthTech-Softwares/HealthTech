@@ -11,18 +11,19 @@ export const createPaciente = async (req, res, next) => {
         "SELECT 1 FROM usuario WHERE correo = $1",
         [correo]
       );
+
+      if (existeCorreo) {
+        return res.status(400).json({ message: "El correo ingresado ya existe" });
+      }
+
       const existeDni = await t.oneOrNone(
         "SELECT 1 FROM paciente WHERE dni = $1",
         [dni]
       );
 
       // Si existe el correo o el DNI, retornamos un mensaje de error
-      if (existeCorreo || existeDni) {
-        throw new Error(
-          existeCorreo
-            ? "El correo ingresado ya existe"
-            : "El DNI ingresado ya existe"
-        );
+      if (existeDni) {
+        return res.status(400).json({ message: "El DNI ingresado ya existe" });
       }
 
       // Insertamos en la tabla usuario y obtenemos el id generado
