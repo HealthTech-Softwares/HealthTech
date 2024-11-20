@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 export function CardCitaReservada() {
   return (
-    <div class={`card ${cit.myCard}`}>
-      <div class="card-body">
+    <div className={`card ${cit.myCard}`}>
+      <div className="card-body">
         <div className="text-center">
           <NombrePantalla nombre="Cita reservada" />
         </div>
@@ -68,7 +68,7 @@ export function CitaVirtual() {
           </div>
           <div className="row justify-content-center">
             <div className="col-12 d-flex flex-column align-items-center mt-5">
-              <label for="exampleInputEmail1" class="form-label">
+              <label for="exampleInputEmail1" className="form-label">
                 Enlace de la reunión:
               </label>
               <input

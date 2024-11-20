@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 
 export function TablaHistClin() {
   return (
-    <div class={`card ${his.myCard} mb-3`}>
-      <div class="card-body">
+    <div className={`card ${his.myCard} mb-3`}>
+      <div className="card-body">
         <div className="row align-items-center">
           <div className="col-3 text-center">
             <PacienteConFoto

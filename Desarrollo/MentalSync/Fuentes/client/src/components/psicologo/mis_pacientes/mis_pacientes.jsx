@@ -47,8 +47,8 @@ export function MisPacientes() {
           </div>
           <div className={`row justify-content-center`}>
             <div className="col-3">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PacienteConFoto
@@ -65,8 +65,8 @@ export function MisPacientes() {
               </div>
             </div>
             <div className="col-3">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PacienteConFoto
@@ -83,8 +83,8 @@ export function MisPacientes() {
               </div>
             </div>
             <div className="col-3">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PacienteConFoto
@@ -101,8 +101,8 @@ export function MisPacientes() {
               </div>
             </div>
             <div className="col-3">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PacienteConFoto

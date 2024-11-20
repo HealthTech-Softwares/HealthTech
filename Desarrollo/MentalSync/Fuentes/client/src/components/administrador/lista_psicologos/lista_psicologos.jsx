@@ -70,8 +70,8 @@ export function ListaPsicologos() {
           </div>
           <div className={`row justify-content-center`}>
             <div className="col-4">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PsicologoConFoto
@@ -86,8 +86,8 @@ export function ListaPsicologos() {
               </div>
             </div>
             <div className="col-4">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PsicologoConFoto
@@ -102,8 +102,8 @@ export function ListaPsicologos() {
               </div>
             </div>
             <div className="col-4">
-              <div class={`card ${mis.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${mis.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PsicologoConFoto

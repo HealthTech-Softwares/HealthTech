@@ -22,8 +22,8 @@ export function CalificarPsico() {
           </div>
           <div className="row justify-content-center ">
             <div className="col-12">
-              <div class={`card ${cali.myCardCalificarPsico} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${cali.myCardCalificarPsico} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-4 text-center">
                       <img
@@ -31,8 +31,8 @@ export function CalificarPsico() {
                         alt="Psicólogo"
                         className={`mb-3 ${styles.logoPsico}`}
                       />
-                      <h5 class="card-title">Ruperta Martinez Orbegón</h5>
-                      <h6 class="card-subtitle mb-2 text-body-secondary">
+                      <h5 className="card-title">Ruperta Martinez Orbegón</h5>
+                      <h6 className="card-subtitle mb-2 text-body-secondary">
                         Terapeuta
                       </h6>
                       <p className="m-0">

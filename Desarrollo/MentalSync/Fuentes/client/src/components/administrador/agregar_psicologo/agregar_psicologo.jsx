@@ -24,15 +24,15 @@ export function AgregarPsicologo() {
           </div>
           <div className="row ms-4 me-4">
             <div className="col-12">
-              <div class={`card ${styles.myCardAgregar} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${styles.myCardAgregar} mb-3`}>
+                <div className="card-body">
                   <div className="row">
                     <div className="col-4 d-flex flex-column justify-content-center align-items-center">
-                      <label for="formFileLg" class="form-label">
+                      <label for="formFileLg" className="form-label">
                         Seleccione foto de perfil
                       </label>
                       <input
-                        class="form-control form-control-lg"
+                        className="form-control form-control-lg"
                         id="formFileLg"
                         type="file"
                         accept="image/*"
@@ -79,16 +79,16 @@ export function AgregarPsicologo() {
                               propiedad="Identificador"
                               ejemplo="P0000"
                             />
-                            <ul class="list-group w-75">
-                              <li class="list-group-item">
+                            <ul className="list-group w-75">
+                              <li className="list-group-item">
                                 <input
-                                  class="form-check-input me-3"
+                                  className="form-check-input me-3"
                                   type="checkbox"
                                   value=""
                                   id="firstCheckbox"
                                 />
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="firstCheckbox"
                                 >
                                   Disponibilidad

@@ -16,7 +16,8 @@ import {
 const router = Router();
 
 router.post("/psicologos", verifyToken, isAdmin, createPsicologo); //Crear psicologo por el admin
-router.get("/psicologos", verifyToken, isAdmin, isPaciente, getPsicologos); //Ver todos los psicologos
+router.get("/psicologos", verifyToken, isAdmin, getPsicologos); //Ver todos los psicologos (para el admin)
+router.get("/psicologos", verifyToken, isPaciente, getPsicologos); //Ver todos los psicologos (para el paciente)
 router.get("/psicologo/:id", verifyToken, isAdmin, getPsicologo); //Ver psicologo especifico
 router.get("/psicologo/perfil", verifyToken, isPsicologo, getPsicologo); //Ver el psicologo, mientras esta logeado
 router.delete("/psicologos/:id", verifyToken, isAdmin, deletePsicologo); //Elimnar psicologo por el admin

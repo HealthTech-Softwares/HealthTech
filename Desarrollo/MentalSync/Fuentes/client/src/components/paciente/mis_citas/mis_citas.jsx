@@ -16,8 +16,8 @@ export function MisCitas() {
           </div>
           <div className="row justify-content-center ">
             <div className="col-12">
-              <div class={`card ${styles.myCard} mb-3`}>
-                <div class="card-body m-3">
+              <div className={`card ${styles.myCard} mb-3`}>
+                <div className="card-body m-3">
                   <div className="row align-items-center mb-4">
                     <div className="col-3">
                       <SelectInfo
@@ -46,7 +46,7 @@ export function MisCitas() {
                   </div>
                   <div className="row align-items-center">
                     <div className="col-12">
-                      <table class="table">
+                      <table className="table">
                         <thead>
                           <tr>
                             <th scope="col">Fecha</th>

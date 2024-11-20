@@ -26,8 +26,8 @@ export function ModificarDatosPsicologo() {
           </div>
           <div className="row justify-content-center ">
             <div className="col-3">
-              <div class={`card ${modi.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${modi.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PsicologoConFoto
@@ -57,7 +57,7 @@ export function ModificarDatosPsicologo() {
                       ejemplo="Psicología clínica"
                     />
 
-                    <label for="exampleInputEmail1" class="form-label">
+                    <label for="exampleInputEmail1" className="form-label">
                       Horario de atención
                     </label>
                     <select className="form-select w-80 mb-5">
@@ -77,15 +77,15 @@ export function ModificarDatosPsicologo() {
                       propiedad="DNI"
                       ejemplo="12345678"
                     />
-                    <ul class="list-group">
-                      <li class="list-group-item">
+                    <ul className="list-group">
+                      <li className="list-group-item">
                         <input
-                          class="form-check-input me-3"
+                          className="form-check-input me-3"
                           type="checkbox"
                           value=""
                           id="firstCheckbox"
                         />
-                        <label class="form-check-label" for="firstCheckbox">
+                        <label className="form-check-label" for="firstCheckbox">
                           Disponibilidad
                         </label>
                       </li>

@@ -11,11 +11,11 @@ import { Link } from "react-router-dom";
 export function TextosAreas(props) {
   return (
     <div>
-      <label for="exampleInputEmail1" class="form-label">
+      <label for="exampleInputEmail1" className="form-label">
         {props.propiedad}
       </label>
-      <div class="form-floating mb-4">
-        <textarea class="form-control h-50" id="floatingTextarea"></textarea>
+      <div className="form-floating mb-4">
+        <textarea className="form-control h-50" id="floatingTextarea"></textarea>
       </div>
     </div>
   );
@@ -35,8 +35,8 @@ export function GenerarDiagnostico() {
           </div>
           <div className="row justify-content-center ">
             <div className="col-12">
-              <div class={`card ${gen.myCard} mb-3`}>
-                <div class="card-body">
+              <div className={`card ${gen.myCard} mb-3`}>
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-3 text-center">
                       <PacienteConFoto

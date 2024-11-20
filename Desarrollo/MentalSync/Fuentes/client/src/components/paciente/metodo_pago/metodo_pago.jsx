@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export function LabelMbTres(props) {
   return (
     <div>
-      <label for="exampleInputEmail1" class="form-label">
+      <label for="exampleInputEmail1" className="form-label">
         {props.propiedad}
       </label>
       <input
@@ -21,8 +21,8 @@ export function LabelMbTres(props) {
 
 export function CardPago() {
   return (
-    <div class={`card ${met.myCard}`}>
-      <div class="card-body">
+    <div className={`card ${met.myCard}`}>
+      <div className="card-body">
         <form>
           <div className="row m-2">
             <div className="col-12">
