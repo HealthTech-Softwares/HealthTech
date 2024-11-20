@@ -1,8 +1,6 @@
 import {
-  BotonAccion,
   NavBarMental,
   NombrePantalla,
-  SelectInfo,
   InfoPsicologo,
   InputInfoSinLabel,
 } from "../principales";
@@ -14,8 +12,20 @@ import React, { useState, useEffect } from "react";
 
 export function BuscarPsico() {
   const [especialidades, setEspecialidades] = useState([]);
-  const [psicolgos, setPsicologos] = useState([]);
+  const [psicologos, setPsicologos] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Filtracion de datos
+  const [filtroNombre, setFiltroNombre] = useState("");
+  const [filtroEspecialidad, setFiltroEspecialidad] = useState("");
+
+  const handleFiltroNombreChange = (e) => {
+    setFiltroNombre(e.target.value);
+  }
+
+  const handleFiltroEspecialidadChange = (e) => {
+    setFiltroEspecialidad(e.target.value);
+  }
 
   useEffect(() => {
     let isMounted = true; // Bandera para asegurar que el componente está montado
@@ -49,6 +59,12 @@ export function BuscarPsico() {
     };
   }, []);
 
+  const datosFiltrados = psicologos.filter((psico) => {
+    const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
+    const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
+    return coincideNombre && coincideEspecialidad;
+  });
+
   // Valores para la paginacion
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
@@ -56,10 +72,10 @@ export function BuscarPsico() {
   // Calculo de la paginacion
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = psicolgos.slice(startIndex, endIndex);
+  const currentData = datosFiltrados.slice(startIndex, endIndex);
 
   const handleNextPage = () => {
-    if (endIndex < psicolgos.length) setPage(page + 1);
+    if (endIndex < psicologos.length) setPage(page + 1);
   };
 
   const handlePreviousPage = () => {
@@ -80,15 +96,32 @@ export function BuscarPsico() {
                   <NombrePantalla nombre="Buscar psicólogo" />
                   <form>
                     <div className="row mb-4">
+                      {/* Filtro por nombre */}
                       <div className="col-3">
-                        <InputInfoSinLabel />
+                        <InputInfoSinLabel 
+                          value={filtroNombre} 
+                          onChange={handleFiltroNombreChange} 
+                          placeholder="Buscar por nombre"
+                        />
                       </div>
+
+                      {/* Filtro por especialidad */}
                       <div className="col-3">
-                        <SelectInfo props={especialidades} />
+                        <select 
+                          className="form-select" 
+                          value={filtroEspecialidad} 
+                          onChange={handleFiltroEspecialidadChange}
+                        >
+                          <option value="">Todas las especialidades</option>
+                          {especialidades.map((esp) => (
+                            <option key={esp.idespecialidad} value={esp.nombre}>
+                              {esp.nombre}
+                            </option>
+                          ))}
+                        </select>
                       </div>
-                      <div className="col-1 text-center">
-                        <BotonAccion nombre="Buscar" />
-                      </div>
+
+                      {/* Enlace a "Mis citas" */}
                       <div className="col-1">
                         <Link to="/mis-citas">
                           <button type="submit" className="btn btn-dark">
@@ -105,10 +138,13 @@ export function BuscarPsico() {
                   {currentData.map((psico) => (
                     <InfoPsicologo
                       key={psico.idpsicologo}
+                      idpsicologo={psico.idpsicologo}
                       dni={psico.dni}
-                      nombre={psico.nombre}
+                      nombre={`${psico.nombre} ${psico.apellidop}`}
                       descripcion={psico.descripcion}
                       foto={psico.foto}
+                      especialidades={psico.especialidades} // Pasa el array completo de especialidades
+                      consulta_online={psico.consulta_online} // Pasa el valor booleano
                     />
                   ))}
                 </div>
@@ -123,7 +159,7 @@ export function BuscarPsico() {
                   <button
                     className="btn btn-light"
                     onClick={handleNextPage}
-                    disabled={endIndex >= psicolgos.length}
+                    disabled={endIndex >= currentData.length}
                   >
                     Siguiente
                   </button>

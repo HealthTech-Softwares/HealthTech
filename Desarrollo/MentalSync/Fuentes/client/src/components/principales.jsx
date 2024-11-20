@@ -47,6 +47,7 @@ export function InfoPsicologo(props) {
     <div className={`card ${styles.myCardInfoPsico} mb-3`}>
       <div className="card-body">
         <div className="row">
+          {/* Imagen y datos básicos */}
           <div className="col-3 text-center">
             <img
               src={props.foto}
@@ -58,10 +59,30 @@ export function InfoPsicologo(props) {
               {props.dni}
             </h6>
           </div>
+          
+          {/* Detalles del psicólogo */}
           <div className="col-9 d-flex flex-column justify-content-between">
             <p className="card-text">{props.descripcion}</p>
+            
+            {/* Listado de especialidades */}
+            <p className="card-text">
+              <strong>Especialidades:</strong>{" "}
+              {props.especialidades.length > 0 ? (
+                props.especialidades.map((especialidad) => especialidad.nombre).join(', ')
+              ) : (
+                "No especificadas"
+              )}
+            </p>
+            
+            {/* Consulta Online */}
+            <p className="card-text">
+              <strong>Consulta Online:</strong>{" "}
+              {props.consulta_online ? "Sí" : "No"}
+            </p>
+            
+            {/* Botón para reservar cita */}
             <div className="d-flex justify-content-end">
-              <Link to="/reserva-cita">
+              <Link to={`/reserva-cita/${props.idpsicologo}`}>
                 <BotonAccion nombre="Reservar cita" />
               </Link>
             </div>
@@ -72,9 +93,10 @@ export function InfoPsicologo(props) {
   );
 }
 
-export function InputInfoSinLabel() {
+
+export function InputInfoSinLabel(props) {
   return (
-    <input type="text" className="form-control" placeholder="Código/Nombre" />
+    <input type="text" className="form-control" placeholder={props.placeholder} onChange={props.onChange} />
   );
 }
 
