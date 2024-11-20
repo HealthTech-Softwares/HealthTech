@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { loginRequest, verifyTokenRequest } from '../api/auth'
+import { loginRequest, registerRequest, verifyTokenRequest } from '../api/auth'
 import Cookies from 'js-cookie'
 
 const AuthContext = createContext();
@@ -17,6 +17,16 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  // Registrar paciente
+  const signup = async (user) => {
+    try {
+      const res = await registerRequest(user);
+      setError("Registro exitoso")
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  }
 
   // Iniciar sesion
   const signin = async (user) => {
@@ -75,6 +85,7 @@ export const AuthProvider = ({ children }) => {
   
   return (
     <AuthContext.Provider value={{
+      signup,
       signin,
       user,
       isAuthenticated,
