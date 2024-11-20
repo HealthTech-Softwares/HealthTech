@@ -1,4 +1,4 @@
-import logoMental from "../../assets/logo_mentalsync.png";
+import logoMental from "../../../assets/logo_mentalsync.png";
 import { BotonAccion } from "../../principales";
 import styles from "./inicio.module.css";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ export function FormCrearCuenta({ error, onSubmit, register,  errors }) {
           {errors.dni && <p className="text-danger">{errors.dni.message}</p>}
         </div>
         <div className="col-6 mb-2">
-          <label for="exampleInputEmail1" class="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Género
           </label>
           <select className="form-select" {...register("genero", { required: true })}>
