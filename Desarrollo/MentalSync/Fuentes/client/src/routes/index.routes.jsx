@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Inicio } from '../components/inicio_sesion/inicio'
-import { CrearCuenta } from '../components/inicio_sesion/crear_cuenta'
+import { Inicio } from '../components/general/inicio_sesion/inicio'
+import { CrearCuenta } from '../components/general/inicio_sesion/crear_cuenta'
 import { PrivateRoute } from './private.routes'
 import RutasPaciente from './paciente.routes'
 import RutasPsicologo from './psicologo.routes'
