@@ -72,3 +72,23 @@ export const getCitasPsicologo = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getCita = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await db.one(
+      `SELECT *
+      FROM cita
+      WHERE idcita = $1`,
+      [id]
+    );
+
+    if (!result) {
+      return res.status(404).json({ message: "Cita no encontrada" });
+    }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
