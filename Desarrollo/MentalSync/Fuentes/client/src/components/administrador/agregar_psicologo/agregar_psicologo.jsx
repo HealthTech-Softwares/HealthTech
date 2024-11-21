@@ -3,6 +3,7 @@ import {
   BotonAccion,
   InputInfoConLabel,
   InputInfoConLabelDoce,
+  NavBarAdmin,
   NavBarMental,
   NombrePantalla,
   SelectInfoConLabel,
@@ -13,7 +14,7 @@ import { Link } from "react-router-dom";
 export function AgregarPsicologo() {
   return (
     <div className={`${styles.fondo}`}>
-      <NavBarMental />
+      <NavBarAdmin />
 
       <section>
         <div className="container-fluid">

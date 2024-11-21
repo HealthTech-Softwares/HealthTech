@@ -2,7 +2,7 @@ import mis from "../../psicologo/mis_pacientes/mis_pacientes.module.css";
 import styles from "../../principales.module.css";
 import {
   BotonAccion,
-  NavBarMental,
+  NavBarAdmin,
   NombrePantalla,
   PsicologoConFoto,
   SelectInfo,
@@ -30,7 +30,7 @@ export function BotonesOpciones() {
 export function ListaPsicologos() {
   return (
     <div className={`${styles.fondo}`}>
-      <NavBarMental />
+      <NavBarAdmin />
 
       <section>
         <div className="container-fluid">
