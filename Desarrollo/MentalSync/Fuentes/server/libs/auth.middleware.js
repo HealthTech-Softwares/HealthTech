@@ -39,3 +39,12 @@ export const isPsicologo = (req, res, next) => {
   }
   next();
 };
+
+export const hasRole = (...role) => {
+  return (req, res, next) => {
+    if (!role.includes(req.userRole)) {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    next();
+  };
+}
