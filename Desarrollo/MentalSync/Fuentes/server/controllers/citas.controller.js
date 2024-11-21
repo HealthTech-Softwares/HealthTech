@@ -92,3 +92,47 @@ export const getCita = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateCita = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      idpsicologo,
+      idhorario,
+      iddiagnostico,
+      fecha,
+      hora,
+      online,
+      url,
+      comentario,
+      estado,
+    } = req.body;
+
+    const result = await db.one(
+      `UPDATE cita
+      SET idpsicologo = $1, idhorario = $2, iddiagnostico = $3, fecha = $4, hora = $5, online = $6, url = $7, comentario = $8, estado = $9
+      WHERE idcita = $10
+      RETURNING *`,
+      [
+        idpsicologo,
+        idhorario,
+        iddiagnostico,
+        fecha,
+        hora,
+        online,
+        url,
+        comentario,
+        estado,
+        id,
+      ]
+    );
+
+    if (!result) {
+      return res.status(404).json({ message: "Cita no encontrada" });
+    }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
