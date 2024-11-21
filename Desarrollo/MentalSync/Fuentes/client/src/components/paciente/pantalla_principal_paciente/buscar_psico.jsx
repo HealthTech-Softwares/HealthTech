@@ -18,6 +18,7 @@ export function BuscarPsico() {
   // Filtracion de datos
   const [filtroNombre, setFiltroNombre] = useState("");
   const [filtroEspecialidad, setFiltroEspecialidad] = useState("");
+  const [filtroConsultaOnline, setFiltroConsultaOnline] = useState(false);
 
   const handleFiltroNombreChange = (e) => {
     setFiltroNombre(e.target.value);
@@ -25,6 +26,10 @@ export function BuscarPsico() {
 
   const handleFiltroEspecialidadChange = (e) => {
     setFiltroEspecialidad(e.target.value);
+  }
+
+  const handleFiltroConsultaOnlineChange = (e) => {
+    setFiltroConsultaOnline(e.target.checked);
   }
 
   useEffect(() => {
@@ -62,7 +67,8 @@ export function BuscarPsico() {
   const datosFiltrados = psicologos.filter((psico) => {
     const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
     const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
-    return coincideNombre && coincideEspecialidad;
+    const coincideConsultaOnline = !filtroConsultaOnline || psico.consulta_online === filtroConsultaOnline;
+    return coincideNombre && coincideEspecialidad && coincideConsultaOnline;
   });
 
   // Valores para la paginacion
@@ -75,7 +81,7 @@ export function BuscarPsico() {
   const currentData = datosFiltrados.slice(startIndex, endIndex);
 
   const handleNextPage = () => {
-    if (endIndex < psicologos.length) setPage(page + 1);
+    if (endIndex < datosFiltrados.length) setPage(page + 1);
   };
 
   const handlePreviousPage = () => {
@@ -121,6 +127,20 @@ export function BuscarPsico() {
                         </select>
                       </div>
 
+                        {/* Filtro por consulta online */}
+                        <div className="col-2 mt-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="online"
+                            checked={filtroConsultaOnline}
+                            onChange={handleFiltroConsultaOnlineChange}
+                          />
+                          <label className="form-check-label" htmlFor="online">
+                            Consulta online
+                          </label>
+                        </div>
+
                       {/* Enlace a "Mis citas" */}
                       <div className="col-1">
                         <Link to="/mis-citas">
@@ -159,7 +179,7 @@ export function BuscarPsico() {
                   <button
                     className="btn btn-light"
                     onClick={handleNextPage}
-                    disabled={endIndex >= currentData.length}
+                    disabled={endIndex >= datosFiltrados.length}
                   >
                     Siguiente
                   </button>
