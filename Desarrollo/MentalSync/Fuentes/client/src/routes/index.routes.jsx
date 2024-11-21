@@ -6,6 +6,7 @@ import RutasPaciente from './paciente.routes'
 import RutasPsicologo from './psicologo.routes'
 import RutasAdmin from './admin.routes'
 import ErrorPage from '../pages/ErrorPage'
+import { Notificaciones } from '../components/general/notificaciones/notificaciones'
 
 export default function Rutas() {
   return (
@@ -14,6 +15,7 @@ export default function Rutas() {
         {/* Ruta pública */}
         <Route path='/' element={<Inicio />} />
         <Route path="/crear-cuenta" element={<CrearCuenta />} />
+        <Route path='/notificaciones' element={ <Notificaciones/> } />
 
         {/* Rutas protegidas por rol */}
         <Route element={<PrivateRoute requiredRole="Paciente"/>} >

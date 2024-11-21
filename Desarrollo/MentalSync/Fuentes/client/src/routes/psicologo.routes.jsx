@@ -3,7 +3,7 @@ import { GenerarDiagnostico } from "../components/psicologo/generar_diagnostico/
 import { ModificarDatosPsicologo } from "../components/psicologo/modificar_datos_psicologo/modificar_datos_psicologo"
 import { MisPacientes } from "../components/psicologo/mis_pacientes/mis_pacientes"
 import { HistoriaClinica } from "../components/psicologo/historia_clinica/historia_clinica"
-import { Notificaciones } from "../components/general/notificaciones/notificaciones"
+// import { Notificaciones } from "../components/general/notificaciones/notificaciones"
 
 export default function RutasPsicologo() {
   return (
@@ -12,7 +12,7 @@ export default function RutasPsicologo() {
       <Route path="/modificar-datos-psicologo" element={<ModificarDatosPsicologo />} />
       <Route path="/mis-pacientes" element={<MisPacientes />} />
       <Route path="/historia-clinica" element={<HistoriaClinica />} />
-      <Route path='/notificaciones' element={ <Notificaciones /> } />
+      {/* <Route path='/notificaciones' element={ <Notificaciones /> } /> */}
     </>
   )
 }
