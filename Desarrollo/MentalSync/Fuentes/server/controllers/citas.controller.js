@@ -2,29 +2,24 @@ import db from "../src/db.js";
 
 export const createCita = async (req, res, next) => {
   try {
-    const { idusuario } = req.userId;
     const {
+      idpaciente,
       idpsicologo,
       idhorario,
+      iddiagnostico,
       fecha,
       hora,
       online,
       motivo,
     } = req.body;
 
-    const paciente = await db.oneOrNone(
-      `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
-      [idusuario]
-    );
-
-    const idpaciente = paciente.idpaciente;
-
     const result = await db.one(
-      `INSERT INTO cita (idpaciente, idpsicologo, idhorario, fecha, hora, online, motivo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      `INSERT INTO cita (idpaciente, idpsicologo, idhorario, iddiagnostico, fecha, hora, online, motivo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
       [
         idpaciente,
         idpsicologo,
         idhorario,
+        iddiagnostico,
         fecha,
         hora,
         online,
@@ -40,20 +35,12 @@ export const createCita = async (req, res, next) => {
 
 export const getCitasPaciente = async (req, res, next) => {
   try {
-    const { idusuario } = req.userId;
-
-    const paciente = await db.oneOrNone(
-      `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
-      [idusuario]
-    );
-
-    const idpaciente = paciente.idpaciente;
-
+    const { id } = req.params;
     const result = await db.any(
       `SELECT *
       FROM cita
       WHERE idpaciente = $1`,
-      [idpaciente]
+      [id]
     );
 
     if (!result) {
@@ -68,20 +55,12 @@ export const getCitasPaciente = async (req, res, next) => {
 
 export const getCitasPsicologo = async (req, res, next) => {
   try {
-    const { idusuario } = req.userId;
-
-    const psicologo = await db.oneOrNone(
-      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
-      [idusuario]
-    );
-
-    const idpsicologo = psicologo.idpsicologo;
-
+    const { id } = req.params;
     const result = await db.any(
       `SELECT *
       FROM cita
       WHERE idpsicologo = $1`,
-      [idpsicologo]
+      [id]
     );
 
     if (!result) {
@@ -116,9 +95,14 @@ export const getCita = async (req, res, next) => {
 
 export const updateCita = async (req, res, next) => {
   try {
-    const { idcita } = req.params;
+    const { id } = req.params;
     const {
+      idpsicologo,
+      idhorario,
       iddiagnostico,
+      fecha,
+      hora,
+      online,
       url,
       comentario,
       estado,
@@ -126,15 +110,20 @@ export const updateCita = async (req, res, next) => {
 
     const result = await db.one(
       `UPDATE cita
-      SET iddiagnostico = $1, fecha = $2, hora = $3, online = $4, url = $5, comentario = $6, estado = $7
-      WHERE idcita = $8
+      SET idpsicologo = $1, idhorario = $2, iddiagnostico = $3, fecha = $4, hora = $5, online = $6, url = $7, comentario = $8, estado = $9
+      WHERE idcita = $10
       RETURNING *`,
       [
+        idpsicologo,
+        idhorario,
         iddiagnostico,
+        fecha,
+        hora,
+        online,
         url,
         comentario,
         estado,
-        idcita,
+        id,
       ]
     );
 
