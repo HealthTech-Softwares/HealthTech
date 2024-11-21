@@ -66,3 +66,15 @@ Asegúrate de tener instalados estos elementos:
    Con ello, se ejecutará el servidor local para el frontend.
 
 1. Dirígete al al servidor local ingresando el siguiente link en tu navegador: http://localhost:5173/
+
+### Cuentas de prueba:
+
+- Rol de paciente:
+  - Correo: richard.torres@example.com
+  - Contraseña: richie123
+- Rol de psicologo:
+  - Correo: pedro.martinez@example.com
+  - Contraseña: pedro.martinez123
+- Rol de admin:
+  - Correo:  admin.ms@example.com
+  - Contraseña: admin123
