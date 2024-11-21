@@ -45,7 +45,22 @@ export const getTurnoPsicologo = async (req, res, next) => {
         .status(404)
         .json({ message: "Psicologo no cuenta con turnos" });
     }
-    res.json(result);
+
+    const turnosPorDia = result.reduce((acc, turno) => {
+      const { dia, hora_inicio, hora_fin } = turno;
+      if (!acc[dia]) {
+        acc[dia] = [];
+      }
+      acc[dia].push({ hora_inicio, hora_fin });
+      return acc;
+    }, {});
+    
+    const turnosAgrupados = Object.keys(turnosPorDia).map(dia => ({
+      dia,
+      turnos: turnosPorDia[dia]
+    }));
+
+    res.json(turnosAgrupados);
   } catch (error) {
     next(error);
   }
