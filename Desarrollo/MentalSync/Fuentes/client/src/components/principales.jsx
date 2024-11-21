@@ -285,7 +285,7 @@ export function PsicologoConFoto(props) {
   return (
     <div>
       <img
-        src={logoUsuario}
+        src={props.foto}
         alt="Psicólogo"
         className={`mb-3 ${styles.logoPsico}`}
       />
