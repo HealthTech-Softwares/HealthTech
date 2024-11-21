@@ -3,14 +3,37 @@ import logoMental from "../assets/logo_mentalsync.png";
 import logoUsuario from "../assets/user.png";
 import logoCampana from "../assets/bell.png";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export function NavBarMental() {
+  const {user} = useAuth();
+  let ruta = "";
+  let ruta2 = "";
+  switch (user.rol) {
+    case "Paciente":
+      ruta = "/principal";
+      ruta2 = "/modificar-datos-paciente";
+      break;
+    case "Psicologo":
+      ruta = "/mis-pacientes";
+      ruta2 = "/modificar-datos-psicologo";
+      break;
+    case "Administrador":
+      ruta = "/lista-psicologos";
+      ruta2 = '/';
+      break;
+    default:
+      ruta = "/404";
+      ruta2 = "/403";
+      break;
+  }
+  
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid d-flex align-items-center">
         <Link
           className="navbar-brand d-flex align-items-center"
-          to="/principal"
+          to={ ruta }
         >
           <img
             src={logoMental}
@@ -29,7 +52,7 @@ export function NavBarMental() {
             />
           </Link>
 
-          <Link to="/modificar-datos-paciente">
+          <Link to={ ruta2 } >
             <img
               src={logoUsuario}
               alt="Usuario"
@@ -41,6 +64,40 @@ export function NavBarMental() {
     </nav>
   );
 }
+
+export function NavBarAdmin(){
+  const {user} = useAuth();
+  let ruta = "/lista-psicologos";
+  
+  return (
+    <nav className="navbar bg-body-tertiary">
+      <div className="container-fluid d-flex align-items-center">
+        <Link
+          className="navbar-brand d-flex align-items-center"
+          to={ ruta }
+        >
+          <img
+            src={logoMental}
+            alt="Logo"
+            className={`d-inline-block align-text-top ${styles.logoNav}`}
+          />
+          MentalSync
+        </Link>
+
+        <div className="col-6 d-flex justify-content-end">
+          <Link to="/notificaciones">
+            <img
+              src={logoCampana}
+              alt="Campana"
+              className={`${styles.logoNav}`}
+            />
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
 
 export function InfoPsicologo(props) {
   return (
@@ -56,7 +113,7 @@ export function InfoPsicologo(props) {
             />
             <h5 className="card-title">{props.nombre}</h5>
             <h6 className="card-subtitle mb-2 text-body-secondary">
-              {props.dni}
+              DNI: {props.dni}
             </h6>
           </div>
           

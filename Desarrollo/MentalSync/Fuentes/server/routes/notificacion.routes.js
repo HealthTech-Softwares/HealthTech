@@ -5,13 +5,13 @@ import {
   getNotificaciones,
   updateNotificacion
 } from "../controllers/notificacion.controller";
-import { verifyToken } from "../libs/auth.middleware";
+import { verifyToken, isAdmin, hasRole } from "../libs/auth.middleware";
 
 const router = Router();
 
 router.post("/notificacion", createNotificacion);
-router.get("/notificaciones", verifyToken, getTodasNotificaciones);
-router.get("/notificaciones/:id", verifyToken, getNotificaciones);
-router.put("/notificacion/:id", verifyToken, updateNotificacion);
+router.get("/notificaciones", verifyToken, isAdmin, getTodasNotificaciones);
+router.get("/notificaciones/:id", verifyToken, hasRole("Administrador", "Paciente", "Medico"), getNotificaciones);
+router.put("/notificacion/:id", updateNotificacion);
 
 export default router;

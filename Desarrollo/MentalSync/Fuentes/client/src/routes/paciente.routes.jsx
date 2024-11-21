@@ -6,7 +6,7 @@ import { CalificarPsico } from "../components/paciente/calificar_psico/calificar
 import { MisCitas } from "../components/paciente/mis_citas/mis_citas"
 import { CitaVirtual } from "../components/paciente/cita_virtual/cita_virtual"
 import { ModificarDatosPaciente } from "../components/paciente/modificar_datos_paciente/modificar_datos_paciente"
-import { Notificaciones } from "../components/general/notificaciones/notificaciones"
+// import { Notificaciones } from "../components/general/notificaciones/notificaciones"
 
 export default function RutasPaciente() {
   return (
@@ -18,7 +18,7 @@ export default function RutasPaciente() {
       <Route path="/mis-citas" element={<MisCitas />} />
       <Route path="/cita-reservada" element={<CitaVirtual />} />
       <Route path="/modificar-datos-paciente" element={<ModificarDatosPaciente />} />
-      <Route path='/notificaciones' element={ <Notificaciones /> } />
+      {/* <Route path='/notificaciones' element={ <Notificaciones /> } /> */}
     </>
   )
 }

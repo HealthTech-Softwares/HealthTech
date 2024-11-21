@@ -2,6 +2,7 @@ import styles from "../../principales.module.css";
 import { NavBarMental, NombrePantalla } from "../../principales";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import Loading from "../../../pages/Loading";
 
 export function PopNotif(props) {
   return (
@@ -20,8 +21,9 @@ export function PopNotif(props) {
 }
 
 export function Notificaciones() {
-  const { logout } = useAuth();
-  return (
+  const { user, isAuthenticated, loading, logout } = useAuth();
+  if (loading) return <Loading />;
+  if (isAuthenticated) return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
       <section>
@@ -63,4 +65,5 @@ export function Notificaciones() {
       </section>
     </div>
   );
+  return;
 }
