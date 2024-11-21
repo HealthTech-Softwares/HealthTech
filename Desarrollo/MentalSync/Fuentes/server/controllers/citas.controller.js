@@ -52,3 +52,23 @@ export const getCitasPaciente = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getCitasPsicologo = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await db.any(
+      `SELECT *
+      FROM cita
+      WHERE idpsicologo = $1`,
+      [id]
+    );
+
+    if (!result) {
+      return res.status(404).json({ message: "Citas no encontradas" });
+    }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
