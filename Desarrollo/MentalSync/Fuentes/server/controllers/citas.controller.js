@@ -126,8 +126,8 @@ export const updateCita = async (req, res, next) => {
 
     const result = await db.one(
       `UPDATE cita
-      SET iddiagnostico = $1, fecha = $2, hora = $3, online = $4, url = $5, comentario = $6, estado = $7
-      WHERE idcita = $8
+      SET iddiagnostico = $1, url = $2, comentario = $3, estado = $4
+      WHERE idcita = $5
       RETURNING *`,
       [
         iddiagnostico,
