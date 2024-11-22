@@ -66,7 +66,31 @@ export const createPsicologo = async (req, res, next) => {
 
 export const getPsicologos = async (req, res, next) => {
   try {
-    const result = await db.any(`SELECT * FROM psicologo LIMIT 100;`);
+    const result = await db.any(`
+      SELECT 
+        p.idpsicologo,
+        p.nombre,
+        p.apellidop,
+        p.apellidom,
+        p.dni,
+        p.foto,
+        p.descripcion,
+        p.consulta_online,
+        -- Otros campos de psicólogo...
+        COALESCE(
+          JSON_AGG(
+            jsonb_build_object(
+              'nombre', e.nombre
+            )
+          ) FILTER (WHERE e.nombre IS NOT NULL), 
+          '[]'
+        ) AS especialidades
+      FROM psicologo p
+      LEFT JOIN especialidad_psicologo ep ON ep.idpsicologo = p.idpsicologo
+      LEFT JOIN especialidad e ON e.idespecialidad = ep.idespecialidad
+      GROUP BY p.idpsicologo
+      ORDER BY p.nombre;
+    `);
     res.json(result);
   } catch (error) {
     next(error);
@@ -104,12 +128,33 @@ export const perfilPsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.oneOrNone(
-      `SELECT * FROM psicologo WHERE idpsicologo = $1`,
+      `SELECT
+        p.idpsicologo,
+        p.nombre,
+        p.apellidop,
+        p.apellidom,
+        p.dni,
+        p.foto,
+        p.descripcion,
+        p.consulta_online,
+        p.disponible,
+        -- Especialidades --
+        COALESCE(
+          JSON_AGG(
+            json_build_object(
+              'nombre', e.nombre
+            )
+          ) FILTER (WHERE e.nombre IS NOT NULL),
+          '[]'
+        ) AS especialidades
+        -- Turnos --
+      FROM psicologo p
+      LEFT JOIN especialidad_psicologo ep ON ep.idpsicologo = p.idpsicologo
+      LEFT JOIN especialidad e ON e.idespecialidad = ep.idespecialidad
+      WHERE p.idpsicologo = $1
+      GROUP BY p.idpsicologo`,
       [idpsicologo]
     );
-    if (!result) {
-      return res.status(404).json({ message: "Psicologo no encontrado" });
-    }
     res.json(result);
   } catch (error) {
     next(error);

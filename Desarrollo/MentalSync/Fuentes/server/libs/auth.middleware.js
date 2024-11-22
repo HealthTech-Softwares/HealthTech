@@ -34,7 +34,7 @@ export const isPaciente = (req, res, next) => {
 };
 
 export const isPsicologo = (req, res, next) => {
-  if (req.userRole !== "Medico") {
+  if (req.userRole !== "Psicologo") {
     return res.status(403).json({ message: "Se requiere rol psicologo" });
   }
   next();
