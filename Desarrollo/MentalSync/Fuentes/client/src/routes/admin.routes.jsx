@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
-import { ListaPsicologos } from "../components/lista_psicologos/lista_psicologos"
-import { AgregarPsicologo } from "../components/agregar_psicologo/agregar_psicologo"
-import { Notificaciones } from "../components/notificaciones/notificaciones"
+import { ListaPsicologos } from "../components/administrador/lista_psicologos/lista_psicologos"
+import { AgregarPsicologo } from "../components/administrador/agregar_psicologo/agregar_psicologo"
+import { Notificaciones } from "../components/general/notificaciones/notificaciones"
 
 export default function RutasAdmin() {
   return (
