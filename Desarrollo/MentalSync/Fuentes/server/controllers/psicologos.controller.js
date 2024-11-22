@@ -66,32 +66,38 @@ export const createPsicologo = async (req, res, next) => {
 
 export const getPsicologos = async (req, res, next) => {
   try {
-    const result = await db.any(`
-      SELECT 
-        p.idpsicologo,
-        p.nombre,
-        p.apellidop,
-        p.apellidom,
-        p.dni,
-        p.foto,
-        p.descripcion,
-        p.consulta_online,
-        -- Otros campos de psicólogo...
-        COALESCE(
-          JSON_AGG(
-            jsonb_build_object(
-              'nombre', e.nombre
-            )
-          ) FILTER (WHERE e.nombre IS NOT NULL), 
-          '[]'
-        ) AS especialidades
-      FROM psicologo p
-      LEFT JOIN especialidad_psicologo ep ON ep.idpsicologo = p.idpsicologo
-      LEFT JOIN especialidad e ON e.idespecialidad = ep.idespecialidad
-      GROUP BY p.idpsicologo
-      ORDER BY p.nombre;
-    `);
-    res.json(result);
+    const result = await db.any(
+      `SELECT p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online,
+              e.nombre AS especialidad
+       FROM psicologo p
+       LEFT JOIN especialidad_psicologo ep ON p.idpsicologo = ep.idpsicologo
+       LEFT JOIN especialidad e ON ep.idespecialidad = e.idespecialidad`
+    );
+
+    const psicologos = result.reduce((acc, row) => {
+      const { idpsicologo, nombre, apellidop, apellidom, dni, foto, descripcion, consulta_online, especialidad } = row;
+      if (!acc[idpsicologo]) {
+        acc[idpsicologo] = {
+          idpsicologo,
+          nombre,
+          apellidop,
+          apellidom,
+          dni,
+          foto,
+          descripcion,
+          consulta_online,
+          especialidades: []
+        };
+      }
+      if (especialidad) {
+        acc[idpsicologo].especialidades.push({ nombre: especialidad });
+      }
+      return acc;
+    }, {});
+
+    const psicologosArray = Object.values(psicologos);
+
+    res.json(psicologosArray);
   } catch (error) {
     next(error);
   }
@@ -100,14 +106,45 @@ export const getPsicologos = async (req, res, next) => {
 export const getPsicologo = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await db.oneOrNone(
+    const psicologo = await db.oneOrNone(
       `SELECT * FROM psicologo WHERE idpsicologo = $1`,
       [id]
     );
-    if (!result) {
-      return res.status(404).json({ message: "Psicologo no encontrado" });
-    }
-    res.json(result);
+    const especialidades = await db.any(
+      `SELECT jsonb_build_object('nombre', e.nombre) AS especialidad
+      FROM especialidad e
+      INNER JOIN especialidad_psicologo ep ON e.idespecialidad = ep.idespecialidad
+      WHERE ep.idpsicologo = $1`,
+      [id]
+    );
+
+    const horarios = await db.any(
+      `SELECT h.dia, t.hora_inicio, t.hora_fin
+      FROM horario h
+      INNER JOIN turno t ON h.idturno = t.idturno
+      WHERE h.idpsicologo = $1 AND h.disponible = true`,
+      [id]
+    );
+
+    const turnosPorDia = horarios.reduce((acc, turno) => {
+      const { dia, hora_inicio, hora_fin } = turno;
+      if (!acc[dia]) {
+        acc[dia] = [];
+      }
+      acc[dia].push({ hora_inicio, hora_fin });
+      return acc;
+    }, {});
+
+    const turnosAgrupados = Object.keys(turnosPorDia).map(dia => ({
+      dia,
+      turnos: turnosPorDia[dia]
+    }));
+
+    res.json({
+      ...psicologo,
+      especialidades: especialidades.map(e => e.especialidad),
+      horarios: turnosAgrupados
+    });
   } catch (error) {
     next(error);
   }
@@ -117,7 +154,7 @@ export const perfilPsicologo = async (req, res, next) => {
   try {
     const idusuario = req.userId;
     const psicologo = await db.oneOrNone(
-      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      `SELECT * FROM psicologo WHERE idusuario = $1`,
       [idusuario]
     );
 
@@ -127,35 +164,41 @@ export const perfilPsicologo = async (req, res, next) => {
 
     const idpsicologo = psicologo.idpsicologo;
 
-    const result = await db.oneOrNone(
-      `SELECT
-        p.idpsicologo,
-        p.nombre,
-        p.apellidop,
-        p.apellidom,
-        p.dni,
-        p.foto,
-        p.descripcion,
-        p.consulta_online,
-        p.disponible,
-        -- Especialidades --
-        COALESCE(
-          JSON_AGG(
-            json_build_object(
-              'nombre', e.nombre
-            )
-          ) FILTER (WHERE e.nombre IS NOT NULL),
-          '[]'
-        ) AS especialidades
-        -- Turnos --
-      FROM psicologo p
-      LEFT JOIN especialidad_psicologo ep ON ep.idpsicologo = p.idpsicologo
-      LEFT JOIN especialidad e ON e.idespecialidad = ep.idespecialidad
-      WHERE p.idpsicologo = $1
-      GROUP BY p.idpsicologo`,
+    const especialidades = await db.any(
+      `SELECT jsonb_build_object('nombre', e.nombre) AS especialidad
+      FROM especialidad e
+      INNER JOIN especialidad_psicologo ep ON e.idespecialidad = ep.idespecialidad
+      WHERE ep.idpsicologo = $1`,
       [idpsicologo]
     );
-    res.json(result);
+
+    const horarios = await db.any(
+      `SELECT h.dia, t.hora_inicio, t.hora_fin
+      FROM horario h
+      INNER JOIN turno t ON h.idturno = t.idturno
+      WHERE h.idpsicologo = $1 AND h.disponible = true`,
+      [idpsicologo]
+    );
+
+    const turnosPorDia = horarios.reduce((acc, turno) => {
+      const { dia, hora_inicio, hora_fin } = turno;
+      if (!acc[dia]) {
+        acc[dia] = [];
+      }
+      acc[dia].push({ hora_inicio, hora_fin });
+      return acc;
+    }, {});
+
+    const turnosAgrupados = Object.keys(turnosPorDia).map(dia => ({
+      dia,
+      turnos: turnosPorDia[dia]
+    }));
+
+    res.json({
+      ...psicologo,
+      especialidades: especialidades.map(e => e.especialidad),
+      horarios: turnosAgrupados
+    });
   } catch (error) {
     next(error);
   }
