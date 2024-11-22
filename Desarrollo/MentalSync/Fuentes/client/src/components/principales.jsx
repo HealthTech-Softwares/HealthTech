@@ -221,12 +221,17 @@ export function SelectInfoConLabelDoce(props) {
   );
 }
 
-export function SelectInfo({ props }) {
+export function SelectInfo({ descripcion, options, filtro, handleFiltroChange }) {
   return (
-    <select className="form-select">
-      {props?.map((prop, index) => (
-        <option key={index} value={prop.key}>
-          {prop.nombre}
+    <select
+      className="form-select"
+      value={filtro}
+      onChange={handleFiltroChange}
+    >
+      <option value="">{descripcion}</option>
+      {options.map((option, index) => (
+        <option key={index} value={option.nombre }>
+          {option.nombre}
         </option>
       ))}
     </select>
@@ -293,7 +298,6 @@ export function PsicologoConFoto(props) {
       <h6 className="card-subtitle mb-2 text-body-secondary">
         DNI: {props.identificador}
       </h6>
-      <p>{props.especialidad}</p>
     </div>
   );
 }
