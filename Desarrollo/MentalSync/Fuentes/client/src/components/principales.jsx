@@ -3,14 +3,37 @@ import logoMental from "../assets/logo_mentalsync.png";
 import logoUsuario from "../assets/user.png";
 import logoCampana from "../assets/bell.png";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export function NavBarMental() {
+  const {user} = useAuth();
+  let ruta = "";
+  let ruta2 = "";
+  switch (user.rol) {
+    case "Paciente":
+      ruta = "/principal";
+      ruta2 = "/modificar-datos-paciente";
+      break;
+    case "Psicologo":
+      ruta = "/mis-pacientes";
+      ruta2 = "/modificar-datos-psicologo";
+      break;
+    case "Administrador":
+      ruta = "/lista-psicologos";
+      ruta2 = '/';
+      break;
+    default:
+      ruta = "/404";
+      ruta2 = "/403";
+      break;
+  }
+  
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid d-flex align-items-center">
         <Link
           className="navbar-brand d-flex align-items-center"
-          to="/principal"
+          to={ ruta }
         >
           <img
             src={logoMental}
@@ -29,7 +52,7 @@ export function NavBarMental() {
             />
           </Link>
 
-          <Link to="/modificar-datos-paciente">
+          <Link to={ ruta2 } >
             <img
               src={logoUsuario}
               alt="Usuario"
@@ -42,11 +65,46 @@ export function NavBarMental() {
   );
 }
 
+export function NavBarAdmin(){
+  const {user} = useAuth();
+  let ruta = "/lista-psicologos";
+  
+  return (
+    <nav className="navbar bg-body-tertiary">
+      <div className="container-fluid d-flex align-items-center">
+        <Link
+          className="navbar-brand d-flex align-items-center"
+          to={ ruta }
+        >
+          <img
+            src={logoMental}
+            alt="Logo"
+            className={`d-inline-block align-text-top ${styles.logoNav}`}
+          />
+          MentalSync
+        </Link>
+
+        <div className="col-6 d-flex justify-content-end">
+          <Link to="/notificaciones">
+            <img
+              src={logoCampana}
+              alt="Campana"
+              className={`${styles.logoNav}`}
+            />
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+
 export function InfoPsicologo(props) {
   return (
     <div className={`card ${styles.myCardInfoPsico} mb-3`}>
       <div className="card-body">
         <div className="row">
+          {/* Imagen y datos básicos */}
           <div className="col-3 text-center">
             <img
               src={props.foto}
@@ -55,13 +113,33 @@ export function InfoPsicologo(props) {
             />
             <h5 className="card-title">{props.nombre}</h5>
             <h6 className="card-subtitle mb-2 text-body-secondary">
-              {props.dni}
+              DNI: {props.dni}
             </h6>
           </div>
+          
+          {/* Detalles del psicólogo */}
           <div className="col-9 d-flex flex-column justify-content-between">
             <p className="card-text">{props.descripcion}</p>
+            
+            {/* Listado de especialidades */}
+            <p className="card-text">
+              <strong>Especialidades:</strong>{" "}
+              {props.especialidades.length > 0 ? (
+                props.especialidades.map((especialidad) => especialidad.nombre).join(', ')
+              ) : (
+                "No especificadas"
+              )}
+            </p>
+            
+            {/* Consulta Online */}
+            <p className="card-text">
+              <strong>Consulta Online:</strong>{" "}
+              {props.consulta_online ? "Sí" : "No"}
+            </p>
+            
+            {/* Botón para reservar cita */}
             <div className="d-flex justify-content-end">
-              <Link to="/reserva-cita">
+              <Link to={`/reserva-cita/${props.idpsicologo}`}>
                 <BotonAccion nombre="Reservar cita" />
               </Link>
             </div>
@@ -72,9 +150,10 @@ export function InfoPsicologo(props) {
   );
 }
 
-export function InputInfoSinLabel() {
+
+export function InputInfoSinLabel(props) {
   return (
-    <input type="text" className="form-control" placeholder="Código/Nombre" />
+    <input type="text" className="form-control" placeholder={props.placeholder} onChange={props.onChange} />
   );
 }
 
@@ -206,7 +285,7 @@ export function PsicologoConFoto(props) {
   return (
     <div>
       <img
-        src={logoUsuario}
+        src={props.foto}
         alt="Psicólogo"
         className={`mb-3 ${styles.logoPsico}`}
       />

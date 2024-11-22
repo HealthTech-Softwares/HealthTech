@@ -1,4 +1,4 @@
-import db from "../db.js";
+import db from "../src/db.js";
 
 export const createNotificacion = async (req, res, next) => {
   try {
@@ -60,7 +60,7 @@ export const updateNotificacion = async (req, res, next) => {
     const result = await db.result(
       `UPDATE notificacion
       SET leido = true
-      WHERE idnotificacion = $2`,
+      WHERE idnotificacion = $1`,
       [id]
     );
 
