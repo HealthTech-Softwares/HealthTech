@@ -64,11 +64,28 @@ export function ListaPsicologos() {
     obtenerDatos();
   }, []);
 
+  // Filtracion de datos
   const datosFiltrados = psicologos.filter((psico) => {
     const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
     const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
     return coincideNombre && coincideEspecialidad;
   });
+
+  // Paginacion
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 9;
+  // Calculos de la paginacion
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = datosFiltrados.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    if (endIndex < datosFiltrados.length) setPage(page + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (startIndex > 0) setPage(page - 1);
+  };
 
   return (
     <div className={`${styles.fondo}`}>
@@ -115,7 +132,7 @@ export function ListaPsicologos() {
                 </div>
               </div>
               <div className={`row justify-content-center`}>
-                {datosFiltrados.map((psico) => (
+                {currentData.map((psico) => (
                   <div className="col-4" key={psico.idpsicologo}>
                     <div className={`card ${mis.myCard} mb-3`}>
                       <div className="card-body">
@@ -134,6 +151,22 @@ export function ListaPsicologos() {
                   </div>
                 ))}
               </div>
+              <div className="d-flex p-2 justify-content-center gap-2">
+                <button
+                  className="btn btn-light"
+                  onClick={handlePreviousPage}
+                  disabled={page === 1}
+                >
+                  Anterior
+                </button>
+                <button
+                  className="btn btn-light"
+                  onClick={handleNextPage}
+                  disabled={endIndex >= datosFiltrados.length}
+                >
+                  Siguiente
+                </button>
+                </div>
             </div>
           </section>
         </>
