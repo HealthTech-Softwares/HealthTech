@@ -19,6 +19,7 @@ export function ModificarDatosPsicologo() {
   const [loading, setLoading] = useState(true);
   const [consultaOnline, setConsultaOnline] = useState(false);
   const [disponibilidad, setDisponibilidad] = useState(false);
+  const [descripcion, setDescripcion] = useState(""); // Estado para la descripción
 
   useEffect(() => {
     const obtenerPerfil = async () => {
@@ -28,6 +29,7 @@ export function ModificarDatosPsicologo() {
         setPsicologo(psicologoResponse.data);
         setConsultaOnline(psicologoResponse.data.consulta_online);
         setDisponibilidad(psicologoResponse.data.disponible);
+        setDescripcion(psicologoResponse.data.descripcion || ""); // Cargar la descripción existente
       } catch (error) {
         console.error("Error al cargar el perfil: ", error);
         // setError(true);
@@ -38,7 +40,7 @@ export function ModificarDatosPsicologo() {
     obtenerPerfil();
   }, []);
 
-  // Manejadores de cambios en los checkbox
+  // Manejadores de cambios
   const handleConsultaOnlineChange = (e) => {
     setConsultaOnline(e.target.checked);
   };
@@ -46,10 +48,17 @@ export function ModificarDatosPsicologo() {
   const handleDisponibilidadChange = (e) => {
     setDisponibilidad(e.target.checked);
   };
+
+  const handleDescripcionChange = (e) => {
+    setDescripcion(e.target.value);
+  };
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
-      {loading ? (<div>Cargando ...</div>) : (
+      {loading ? (
+        <div>Cargando ...</div>
+      ) : (
         <>
           <section>
             <div className="container-fluid">
@@ -65,8 +74,8 @@ export function ModificarDatosPsicologo() {
                       <div className="row align-items-center">
                         <div className="col-12 text-center">
                           <PsicologoConFoto
-                            foto={psicologo.foto }
-                            nombre={ psicologo.nombre}
+                            foto={psicologo.foto}
+                            nombre={psicologo.nombre}
                             identificador={psicologo.dni}
                           />
                         </div>
@@ -80,21 +89,12 @@ export function ModificarDatosPsicologo() {
                       <div className="col-5">
                         <LabelModifDatosSoloLectura
                           propiedad="Nombres"
-                          ejemplo={ psicologo.nombre}
+                          ejemplo={psicologo.nombre}
                         />
-                        {/* <LabelModifDatosSoloLectura
-                          propiedad="Fecha de nacimiento"
-                          ejemplo="12/09/1978"
-                        />
-                        <LabelModifDatosEditar
-                          propiedad="Especialidad"
-                          ejemplo="Psicología clínica"
-                        /> */}
-
-                        <label for="exampleInputEmail1" className="form-label">
+                        <label htmlFor="horario" className="form-label">
                           Horario de atención
                         </label>
-                        <select className="form-select w-80 mb-5">
+                        <select className="form-select w-80 mb-5" id="horario">
                           <option value="1">8:00 AM - 10:00 AM</option>
                           <option value="2">10:00 AM - 12:00 PM</option>
                           <option value="3">12:00 PM - 14:00 PM</option>
@@ -105,7 +105,7 @@ export function ModificarDatosPsicologo() {
                       <div className="col-5">
                         <LabelModifDatosSoloLectura
                           propiedad="Apellidos"
-                          ejemplo={ psicologo.apellidop + " " + psicologo.apellidom }
+                          ejemplo={`${psicologo.apellidop} ${psicologo.apellidom}`}
                         />
                         <ul className="list-group">
                           <li className="list-group-item">
@@ -116,7 +116,7 @@ export function ModificarDatosPsicologo() {
                               checked={consultaOnline}
                               onChange={handleConsultaOnlineChange}
                             />
-                            <label className="form-check-label" for="firstCheckbox">
+                            <label className="form-check-label" htmlFor="firstCheckbox">
                               Consulta Online
                             </label>
                           </li>
@@ -128,11 +128,25 @@ export function ModificarDatosPsicologo() {
                               checked={disponibilidad}
                               onChange={handleDisponibilidadChange}
                             />
-                            <label className="form-check-label" for="firstCheckbox">
+                            <label className="form-check-label" htmlFor="firstCheckbox">
                               Disponibilidad
                             </label>
                           </li>
                         </ul>
+                      </div>
+                    </div>
+                    <div className="row m-2">
+                      <div className="col-10">
+                        <label htmlFor="descripcion" className="form-label">
+                          Descripción
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="descripcion"
+                          rows="4"
+                          value={descripcion}
+                          onChange={handleDescripcionChange}
+                        ></textarea>
                       </div>
                     </div>
                     <div className="row m-2">
