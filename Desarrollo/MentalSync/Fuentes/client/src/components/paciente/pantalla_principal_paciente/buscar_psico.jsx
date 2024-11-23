@@ -8,85 +8,45 @@ import styles from "../../principales.module.css";
 import { Link } from "react-router-dom";
 import { especialidesRequest } from "../../../api/especialidades";
 import { psicologosRequest } from "../../../api/test.buscar.psico";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { usePagination } from "../../../hooks/usePagination";
 
 export function BuscarPsico() {
-  const [especialidades, setEspecialidades] = useState([]);
-  const [psicologos, setPsicologos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Peticion de datos
+  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequest]);
 
-  // Filtracion de datos
+  // Filtros
   const [filtroNombre, setFiltroNombre] = useState("");
   const [filtroEspecialidad, setFiltroEspecialidad] = useState("");
   const [filtroConsultaOnline, setFiltroConsultaOnline] = useState(false);
 
   const handleFiltroNombreChange = (e) => {
+    setPage(1);
     setFiltroNombre(e.target.value);
   }
 
   const handleFiltroEspecialidadChange = (e) => {
+    setPage(1);
     setFiltroEspecialidad(e.target.value);
   }
 
   const handleFiltroConsultaOnlineChange = (e) => {
+    setPage(1);
     setFiltroConsultaOnline(e.target.checked);
   }
 
-  useEffect(() => {
-    let isMounted = true; // Bandera para asegurar que el componente está montado
-
-    const obtenerDatos = async () => {
-      try {
-        setLoading(true);
-        const [especialidadesResponse, psicologosResponse] = await Promise.all([
-          especialidesRequest(),
-          psicologosRequest(),
-        ]);
-        if (isMounted) {
-          // Solo actualizamos el estado si el componente sigue montado
-          setEspecialidades(especialidadesResponse.data);
-          setPsicologos(psicologosResponse.data);
-        }
-      } catch (error) {
-        console.error("Error al cargar los datos: ", error);
-        // setError(true);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    obtenerDatos();
-
-    return () => {
-      isMounted = false; // Limpiar cuando el componente se desmonte
-    };
-  }, []);
-
-  const datosFiltrados = psicologos.filter((psico) => {
+  // Filtrar psicologos
+  const datosFiltrados = (psicologos || []).filter((psico) => {
     const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
     const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
     const coincideConsultaOnline = !filtroConsultaOnline || psico.consulta_online === filtroConsultaOnline;
     return coincideNombre && coincideEspecialidad && coincideConsultaOnline;
   });
-
-  // Valores para la paginacion
-  const [page, setPage] = useState(1);
+  
+  // Paginacion
   const itemsPerPage = 10;
-
-  // Calculo de la paginacion
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = datosFiltrados.slice(startIndex, endIndex);
-
-  const handleNextPage = () => {
-    if (endIndex < datosFiltrados.length) setPage(page + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (startIndex > 0) setPage(page - 1);
-  };
+  const { currentData, page, setPage, endIndex, handleNextPage, handlePreviousPage } = usePagination(datosFiltrados, itemsPerPage);
 
   return (
     <div className={`${styles.fondo}`}>
@@ -127,19 +87,19 @@ export function BuscarPsico() {
                         </select>
                       </div>
 
-                        {/* Filtro por consulta online */}
-                        <div className="col-2 mt-2">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="online"
-                            checked={filtroConsultaOnline}
-                            onChange={handleFiltroConsultaOnlineChange}
-                          />
-                          <label className="form-check-label" htmlFor="online">
-                            Consulta online
-                          </label>
-                        </div>
+                      {/* Filtro por consulta online */}
+                      <div className="col-2 mt-2">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id="online"
+                          checked={filtroConsultaOnline}
+                          onChange={handleFiltroConsultaOnlineChange}
+                        />
+                        <label className="form-check-label" htmlFor="online">
+                          Consulta online
+                        </label>
+                      </div>
 
                       {/* Enlace a "Mis citas" */}
                       <div className="col-1">
