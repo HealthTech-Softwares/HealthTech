@@ -1,13 +1,12 @@
 import db from "../src/db.js";
+import moment from "moment";
 
 export const createCita = async (req, res, next) => {
   try {
-    const { idusuario } = req.userId;
+    const idusuario = req.userId;
     const {
       idpsicologo,
       idhorario,
-      fecha,
-      hora,
       online,
       motivo,
     } = req.body;
@@ -19,14 +18,34 @@ export const createCita = async (req, res, next) => {
 
     const idpaciente = paciente.idpaciente;
 
+    const horario = await db.oneOrNone(
+      `SELECT t.hora_inicio, h.dia
+      FROM horario h
+      INNER JOIN turno t ON h.idturno = t.idturno
+      WHERE h.idhorario = $1`,
+      [idhorario]
+    );
+
+    const { hora_inicio, dia } = horario;
+    const diaLowerCase = dia.toLowerCase();
+
+    const diasSemana = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+    const diaSemana = diasSemana.indexOf(diaLowerCase);
+
+    if (diaSemana === -1) {
+      return res.status(400).json({ message: "Día de la semana no válido" });
+    }
+
+    const fecha = moment().day(diaSemana).isBefore(moment()) ? moment().day(diaSemana + 7) : moment().day(diaSemana);
+
     const result = await db.one(
       `INSERT INTO cita (idpaciente, idpsicologo, idhorario, fecha, hora, online, motivo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
       [
         idpaciente,
         idpsicologo,
         idhorario,
-        fecha,
-        hora,
+        fecha.format("YYYY-MM-DD"),
+        hora_inicio,
         online,
         motivo,
       ]
@@ -40,7 +59,7 @@ export const createCita = async (req, res, next) => {
 
 export const getCitasPaciente = async (req, res, next) => {
   try {
-    const { idusuario } = req.userId;
+    const idusuario = req.userId;
 
     const paciente = await db.oneOrNone(
       `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
@@ -68,7 +87,7 @@ export const getCitasPaciente = async (req, res, next) => {
 
 export const getCitasPsicologo = async (req, res, next) => {
   try {
-    const { idusuario } = req.userId;
+    const idusuario = req.userId;
 
     const psicologo = await db.oneOrNone(
       `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
@@ -106,6 +125,63 @@ export const getCita = async (req, res, next) => {
 
     if (!result) {
       return res.status(404).json({ message: "Cita no encontrada" });
+    }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPacientesPsicologo = async (req, res, next) => {
+  try {
+    const idusuario = req.userId;
+
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    const idpsicologo = psicologo.idpsicologo;
+
+    const result = await db.any(
+      `SELECT DISTINCT *
+      FROM cita c
+      INNER JOIN paciente p ON c.idpaciente = p.idpaciente
+      WHERE c.idpsicologo = $1`,
+      [idpsicologo]);
+
+      if (result.length === 0) {
+        return res.status(404).json({ message: "No se encontraron citas con pacientes" });
+      }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCitasPacientePsicologo = async (req, res, next) => {
+  try {
+    const idusuario = req.userId;
+    const { idpaciente } = req.params;
+
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    const idpsicologo = psicologo.idpsicologo;
+
+    const result = await db.any(
+      `SELECT *
+      FROM cita c
+      WHERE c.idpsicologo = $1 AND c.idpaciente = $2`,
+      [idpsicologo, idpaciente]
+    );
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No se encontraron citas con el paciente" });
     }
 
     res.json(result);
