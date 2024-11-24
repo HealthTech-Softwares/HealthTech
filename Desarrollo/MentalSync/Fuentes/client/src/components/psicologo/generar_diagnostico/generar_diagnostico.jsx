@@ -6,12 +6,15 @@ import {
   NombrePantalla,
   PacienteConFoto,
 } from "../../principales";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { citaRequest } from "../../../api/citas";
+import { diagnosticosRequest } from "../../../api/diagnostico";
 
 export function TextosAreas(props) {
   return (
     <div>
-      <label for="exampleInputEmail1" className="form-label">
+      <label htmlFor="exampleInputEmail1" className="form-label">
         {props.propiedad}
       </label>
       <div className="form-floating mb-4">
@@ -25,10 +28,21 @@ export function TextosAreas(props) {
 }
 
 export function GenerarDiagnostico() {
+  // Obtener el parametro de cita
+  const { idcita } = useParams();
+  // Peticion de datos
+  const { data: [cita, diagnosticos], loading, error, mensaje } = useFetchData([
+    () => citaRequest(idcita),
+    diagnosticosRequest
+  ]);
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
-
+      {loading
+        ? (<div>Cargando ...</div>)
+        : error ? (<h1>{mensaje}</h1>)
+        : (      
       <section>
         <div className="container-fluid">
           <div className="row ms-4">
@@ -41,13 +55,13 @@ export function GenerarDiagnostico() {
             <div className="col-12">
               <div className={`${gen.myInfo}`}>
                 <p>
-                  <b>Motivo: </b>Episodios de ansiedad
+                  <b>Motivo: </b>{cita.motivo}
                 </p>
                 <p>
-                  <b>Fecha y hora: </b>24/11/2024 16:30 PM
+                  <b>Fecha y hora: </b>{cita.fecha + " " + cita.hora}
                 </p>
                 <p>
-                  <b>Online: </b>Sí
+                  <b>Online: </b>{cita.online ? "Si" : "No"}
                 </p>
               </div>
             </div>
@@ -60,11 +74,12 @@ export function GenerarDiagnostico() {
                   <div className="row align-items-center">
                     <div className="col-3 text-center">
                       <PacienteConFoto
-                        nombre="Santos Jiggets"
-                        identificador="12345678"
-                        ultimaCita="23/09/24"
+                        foto={cita.foto}
+                        nombre={cita.nombre + " " + cita.apellidop}
+                        dni={cita.dni}
+                        
                       />
-                      <Link to="/historia-clinica">
+                      <Link to={`/historia-clinica/${cita.idpaciente}`} >
                         <BotonAccion nombre="Ver historia clínica" />
                       </Link>
                     </div>
@@ -73,19 +88,19 @@ export function GenerarDiagnostico() {
                         <div className="row m-2">
                           <div className="col-6">
                             <label
-                              for="exampleInputEmail1"
+                              htmlFor="exampleInputEmail1"
                               className="form-label"
                             >
                               Diagnóstico
                             </label>
                             <select
-                              class="form-select mb-4"
+                              className="form-select mb-4"
                               aria-label="Default select example"
                             >
-                              <option selected>Seleccione</option>
-                              <option value="1">Primero</option>
-                              <option value="2">Segundo</option>
-                              <option value="3">Tercero</option>
+                              <option value="">Seleccione un diagnóstico</option>
+                              {diagnosticos.map((dg) => (
+                                <option value={dg.iddiagnostico}>{dg.nombre}</option>
+                              ))}
                             </select>
                             <TextosAreas propiedad="Notas (opcional)" />
                           </div>
@@ -104,6 +119,8 @@ export function GenerarDiagnostico() {
           </div>
         </div>
       </section>
+        )
+      }
     </div>
   );
 }

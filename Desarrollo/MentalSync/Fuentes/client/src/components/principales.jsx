@@ -278,13 +278,17 @@ export function PacienteConFoto(props) {
       <h6 className="card-subtitle mb-2 text-body-secondary">
         DNI: {props.dni}
       </h6>
-      <p>
-        <b>{props.labelFecha + ": "}</b>
-        {props.fecha}
-      </p>
+      {/* Renderizar <p> solo si labelFecha y fecha están definidos */}
+      {props.labelFecha && props.fecha && (
+        <p>
+          <b>{props.labelFecha + ": "}</b>
+          {props.fecha}
+        </p>
+      )}
     </div>
   );
 }
+
 
 export function PsicologoConFoto(props) {
   return (

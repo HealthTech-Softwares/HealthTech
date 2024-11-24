@@ -8,3 +8,6 @@ export const pacientePsicologoRequest = async (idpaciente) => await axios.get(`/
 
 // Historial de citas de un paciente y un psicologo
 export const citasPacientePsicologoRequest = async (idpaciente) => await axios.get(`/citas/pacientes/${idpaciente}`);
+
+// Datos de una cita
+export const citaRequest = async (idcita) => await axios.get(`/cita/${idcita}`);
