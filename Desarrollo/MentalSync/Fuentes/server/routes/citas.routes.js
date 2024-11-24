@@ -4,6 +4,8 @@ import {
   getCitasPaciente,
   getCitasPsicologo,
   getCita,
+  getPacientesPsicologo,
+  getCitasPacientePsicologo,
   updateCita,
 } from "../controllers/citas.controller.js";
 import {
@@ -18,6 +20,8 @@ const router = Router();
 router.post("/cita", verifyToken, isPaciente, createCita);
 router.get("/citas", verifyToken, isPaciente, getCitasPaciente);
 router.get("/citas", verifyToken, isPsicologo, getCitasPsicologo);
+router.get("/citas/pacientes", verifyToken, isPsicologo, getPacientesPsicologo);
+router.get("/citas/pacientes/:id", verifyToken, isPsicologo, getCitasPacientePsicologo);
 router.get("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), getCita);
 router.put("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), updateCita);
 
