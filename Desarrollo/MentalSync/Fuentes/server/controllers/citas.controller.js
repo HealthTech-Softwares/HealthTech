@@ -145,22 +145,17 @@ export const getPacientesPsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT p.idpaciente, p.nombre, p.apellidop, p.apellidom, p.dni, c.fecha
+      `SELECT p.idpaciente, p.foto, p.nombre, p.apellidop, p.apellidom, p.dni, c.idcita, TO_CHAR(c.fecha, 'DD-MM-YY') AS fecha, c.estado
       FROM paciente p
       INNER JOIN (
-        SELECT DISTINCT ON (c.idpaciente) c.idpaciente, c.fecha
+        SELECT DISTINCT ON (c.idpaciente) c.idcita, c.idpaciente, c.fecha, c.estado
         FROM cita c
-        WHERE c.idpsicologo = $1 AND c.estado = 'Pendiente'
-        ORDER BY c.idpaciente, c.fecha ASC
+        WHERE c.idpsicologo = $1
+        ORDER BY c.idpaciente, c.fecha DESC
       ) AS c ON p.idpaciente = c.idpaciente
-      ORDER BY c.fecha ASC`,
+      ORDER BY c.fecha DESC`,
       [idpsicologo]
     );
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: "No se encontraron citas con pacientes" });
-    }
-
 
     res.json(result);
   } catch (error) {
@@ -186,10 +181,6 @@ export const getCitasPacientePsicologo = async (req, res, next) => {
       WHERE c.idpsicologo = $1 AND c.idpaciente = $2`,
       [idpsicologo, idpaciente]
     );
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: "No se encontraron citas con el paciente" });
-    }
 
     res.json(result);
   } catch (error) {

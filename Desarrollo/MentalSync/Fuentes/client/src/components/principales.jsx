@@ -279,8 +279,8 @@ export function PacienteConFoto(props) {
         DNI: {props.dni}
       </h6>
       <p>
-        <b>Última cita: </b>
-        {props.ultimaCita}
+        <b>{props.labelFecha + ": "}</b>
+        {props.fecha}
       </p>
     </div>
   );
