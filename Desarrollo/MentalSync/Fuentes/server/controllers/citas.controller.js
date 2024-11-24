@@ -119,7 +119,7 @@ export const getCita = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await db.oneOrNone(
-      `SELECT c.idcita, c.estado, c.motivo, c.online, c.hora, to_char(c.fecha, 'DD/MM/YYYY') as fecha
+      `SELECT c.idcita, c.estado, c.motivo, c.online, c.hora, to_char(c.fecha, 'DD/MM/YYYY') as fecha,
               p.nombre, p.apellidop, p.dni, p.foto
       FROM cita c
       LEFT JOIN paciente p ON c.idpaciente = p.idpaciente
@@ -147,6 +147,8 @@ export const getDiagnostico = async (req, res, next) => {
     if (result.length === 0) {
       return res.status(404).json({ message: "No se encontraron diagnósticos" });
     }
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
