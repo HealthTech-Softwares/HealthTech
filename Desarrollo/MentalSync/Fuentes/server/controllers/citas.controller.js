@@ -18,6 +18,15 @@ export const createCita = async (req, res, next) => {
 
     const idpaciente = paciente.idpaciente;
 
+    const citaPendiente = await db.oneOrNone(
+      `SELECT 1 FROM cita WHERE idpaciente = $1 AND idpsicologo = $2 AND estado = 'Pendiente'`,
+      [idpaciente, idpsicologo]
+    );
+
+    if (citaPendiente) {
+      return res.status(400).json({ message: "Ya tienes una cita pendiente con este psicólogo" });
+    }
+
     const horario = await db.oneOrNone(
       `SELECT t.hora_inicio, h.dia
       FROM horario h
@@ -268,7 +277,7 @@ export const updateCita = async (req, res, next) => {
       return res.status(404).json({ message: "Cita no encontrada" });
     }
 
-    res.json(result);
+    return res.status(201).json(result);
   } catch (error) {
     next(error);
   }
