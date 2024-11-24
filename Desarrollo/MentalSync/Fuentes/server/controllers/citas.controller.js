@@ -39,7 +39,9 @@ export const createCita = async (req, res, next) => {
     const fecha = moment().day(diaSemana).isBefore(moment()) ? moment().day(diaSemana + 7) : moment().day(diaSemana);
 
     const result = await db.one(
-      `INSERT INTO cita (idpaciente, idpsicologo, idhorario, fecha, hora, online, motivo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      `INSERT INTO cita (idpaciente, idpsicologo, idhorario, fecha, hora, online, motivo)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING idcita, idpaciente, idpsicologo, idhorario, to_char(fecha, 'DD/MM/YYYY') as fecha, hora, online, motivo`,
       [
         idpaciente,
         idpsicologo,
