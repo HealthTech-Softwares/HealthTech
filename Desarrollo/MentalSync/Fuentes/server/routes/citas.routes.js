@@ -8,6 +8,7 @@ import {
   getPacientesPsicologo,
   getCitasPacientePsicologo,
   updateCita,
+  getPacientePsicologo,
 } from "../controllers/citas.controller.js";
 import {
   verifyToken,
@@ -22,6 +23,7 @@ router.post("/cita", verifyToken, isPaciente, createCita);
 router.get("/citas", verifyToken, isPaciente, getCitasPaciente);
 router.get("/citas", verifyToken, isPsicologo, getCitasPsicologo);
 router.get("/citas/pacientes", verifyToken, isPsicologo, getPacientesPsicologo);
+router.get("/last-cita/:idpaciente", verifyToken, isPsicologo, getPacientePsicologo);
 router.get("/citas/pacientes/:idpaciente", verifyToken, isPsicologo, getCitasPacientePsicologo);
 router.get("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), getCita);
 router.get("/diagnostico", verifyToken, hasRole("Administrador", "Psicologo"), getDiagnostico);

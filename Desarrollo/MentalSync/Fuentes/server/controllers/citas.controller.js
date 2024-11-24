@@ -137,6 +137,7 @@ export const getCita = async (req, res, next) => {
   }
 };
 
+
 export const getDiagnostico = async (req, res, next) => {
   try {
     const result = await db.any(
@@ -147,6 +148,31 @@ export const getDiagnostico = async (req, res, next) => {
     if (result.length === 0) {
       return res.status(404).json({ message: "No se encontraron diagnósticos" });
     }
+
+
+export const getPacientePsicologo = async (req, res, next) => {
+  try {
+    const idusuario = req.userId;
+    const { idpaciente } = req.params;
+
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+    const idpsicologo = psicologo.idpsicologo;
+    const result = await db.any(
+      `SELECT p.foto, p.nombre, p.apellidop, p.apellidom, p.dni, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.estado
+      FROM paciente p
+      INNER JOIN (
+        SELECT DISTINCT ON (c.idpaciente) c.idcita, c.idpaciente, c.fecha, c.estado
+        FROM cita c
+        WHERE c.idpsicologo = $1 AND c.idpaciente = $2
+        ORDER BY c.idpaciente, c.fecha DESC
+      ) AS c ON p.idpaciente = c.idpaciente
+      ORDER BY c.fecha DESC
+      LIMIT 1`,
+      [idpsicologo, idpaciente]
+    );
 
     res.json(result);
   } catch (error) {

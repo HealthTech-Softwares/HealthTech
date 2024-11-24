@@ -15,7 +15,10 @@ export function TextosAreas(props) {
         {props.propiedad}
       </label>
       <div className="form-floating mb-4">
-        <textarea className="form-control h-50" id="floatingTextarea"></textarea>
+        <textarea
+          className="form-control h-50"
+          id="floatingTextarea"
+        ></textarea>
       </div>
     </div>
   );
@@ -33,6 +36,23 @@ export function GenerarDiagnostico() {
               <NombrePantalla nombre="Generar diagnóstico" />
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-12">
+              <div className={`${gen.myInfo}`}>
+                <p>
+                  <b>Motivo: </b>Episodios de ansiedad
+                </p>
+                <p>
+                  <b>Fecha y hora: </b>24/11/2024 16:30 PM
+                </p>
+                <p>
+                  <b>Online: </b>Sí
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="row justify-content-center ">
             <div className="col-12">
               <div className={`card ${gen.myCard} mb-3`}>
@@ -52,11 +72,22 @@ export function GenerarDiagnostico() {
                       <form>
                         <div className="row m-2">
                           <div className="col-6">
-                            <TextosAreas propiedad="Coloque aquí su diagnóstico" />
+                            <label
+                              for="exampleInputEmail1"
+                              className="form-label"
+                            >
+                              Diagnóstico
+                            </label>
+                            <select
+                              class="form-select mb-4"
+                              aria-label="Default select example"
+                            >
+                              <option selected>Seleccione</option>
+                              <option value="1">Primero</option>
+                              <option value="2">Segundo</option>
+                              <option value="3">Tercero</option>
+                            </select>
                             <TextosAreas propiedad="Notas (opcional)" />
-                          </div>
-                          <div className="col-6">
-                            <TextosAreas propiedad="Firma digital" />
                           </div>
                         </div>
                         <div className="row m-2">
