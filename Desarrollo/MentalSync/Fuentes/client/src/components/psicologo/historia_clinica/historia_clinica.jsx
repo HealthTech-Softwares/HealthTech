@@ -8,19 +8,20 @@ import {
 } from "../../principales";
 import { Link, useParams } from "react-router-dom";
 import { useFetchData } from "../../../hooks/useFetchData";
-import { citasPacientePsicologoRequest } from "../../../api/citas";
+import { citasPacientePsicologoRequest, pacientePsicologoRequest } from "../../../api/citas";
 
-export function TablaHistClin({ citas }) {
+export function TablaHistClin({ citas, paciente }) {
   return (
     <div className={`card ${his.myCard} mb-3`}>
       <div className="card-body">
         <div className="row align-items-center">
           <div className="col-3 text-center">
             <PacienteConFoto
-              nombre="Santos Jiggets"
-              dni="12345678"
-              labelFecha="hola"
-              fecha="mundo"
+              nombre={paciente.nombre + " " + paciente.apellidop}
+              foto={paciente.foto}
+              dni={paciente.dni}
+              labelFecha={paciente.estado === "Pendiente" ? "Proxima cita" : "Última cita"}
+              fecha={paciente.fecha}
             />
           </div>
           <div className="col-9">
@@ -40,7 +41,7 @@ export function TablaHistClin({ citas }) {
                     <td>{cita.fecha}</td>
                     <td>{cita.hora}</td>
                     <td>{cita.motivo}</td>
-                    <td>{cita.iddiagnostico}</td>
+                    <td>{cita.diagnostico}</td>
                     <td>{cita.comentario}</td>
                   </tr>
                 ))}
@@ -64,8 +65,10 @@ export function HistoriaClinica() {
   // Obtener el parametro
   const { idpaciente } = useParams();
   // Peticion de datos
-  const { data: [citas], loading, error, mensaje } = useFetchData([
-    () => citasPacientePsicologoRequest(idpaciente)]);
+  const { data: [citas, paciente], loading, error, mensaje } = useFetchData([
+    () => citasPacientePsicologoRequest(idpaciente),
+    () => pacientePsicologoRequest(idpaciente)
+  ]);
 
   return (
     <div className={`${styles.fondo}`}>
@@ -85,7 +88,7 @@ export function HistoriaClinica() {
                 <div className="col-12">
                   {citas.length === 0
                     ? (<p>El paciente no tiene citas</p>) 
-                    : (<TablaHistClin citas={citas} />)}
+                      : (<TablaHistClin citas={citas} paciente={paciente[0]} />)}
                 </div>
               </div>
             </div>
