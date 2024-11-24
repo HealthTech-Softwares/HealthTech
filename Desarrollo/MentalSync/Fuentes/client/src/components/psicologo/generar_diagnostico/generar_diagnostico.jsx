@@ -6,35 +6,39 @@ import {
   NombrePantalla,
   PacienteConFoto,
 } from "../../principales";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useFetchData } from "../../../hooks/useFetchData";
-import { citaRequest } from "../../../api/citas";
+import { citaRequest, putCitaRequest } from "../../../api/citas";
 import { diagnosticosRequest } from "../../../api/diagnostico";
-
-export function TextosAreas(props) {
-  return (
-    <div>
-      <label htmlFor="exampleInputEmail1" className="form-label">
-        {props.propiedad}
-      </label>
-      <div className="form-floating mb-4">
-        <textarea
-          className="form-control h-50"
-          id="floatingTextarea"
-        ></textarea>
-      </div>
-    </div>
-  );
-}
+import { useForm } from "react-hook-form";
 
 export function GenerarDiagnostico() {
   // Obtener el parametro de cita
   const { idcita } = useParams();
+
+  // Redireccion
+  const navigate = useNavigate();
+
   // Peticion de datos
   const { data: [cita, diagnosticos], loading, error, mensaje } = useFetchData([
     () => citaRequest(idcita),
     diagnosticosRequest
   ]);
+
+  // Configurar useForm
+  const { register, handleSubmit } = useForm();
+
+  // Envio del formulario
+  const onSubmit = async (data) => {
+    try {
+      await putCitaRequest(idcita, data);
+      alert("Cita actualizada correctamente");
+      navigate("/mis-pacientes");
+    } catch (error) {
+      console.error("Error al actualizar cita: ", error);
+      alert("Hubo un error al actualizar la cita ...")
+    }
+  };
 
   return (
     <div className={`${styles.fondo}`}>
@@ -84,25 +88,39 @@ export function GenerarDiagnostico() {
                       </Link>
                     </div>
                     <div className="col-9">
-                      <form>
+                      <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row m-2">
                           <div className="col-6">
-                            <label
-                              htmlFor="exampleInputEmail1"
-                              className="form-label"
-                            >
-                              Diagnóstico
-                            </label>
+                            {/* Diagnostico */}
+                            <label htmlFor="exampleInputEmail1" className="form-label">Diagnóstico</label>
                             <select
                               className="form-select mb-4"
-                              aria-label="Default select example"
+                              {...register("iddiagnostico", {required: true})}
                             >
                               <option value="">Seleccione un diagnóstico</option>
                               {diagnosticos.map((dg) => (
-                                <option value={dg.iddiagnostico}>{dg.nombre}</option>
+                                <option key={dg.iddiagnostico} value={dg.iddiagnostico}>{dg.nombre}</option>
                               ))}
                             </select>
-                            <TextosAreas propiedad="Notas (opcional)" />
+                            {/* Estado */}
+                            <label htmlFor="exampleInputEmail1" className="form-label">Estado</label>
+                            <select
+                              className="form-select mb-4"
+                              {...register("estado", {required: true})}
+                            >
+                              <option value="">Seleccione el estado</option>
+                              <option value="Pendiente">Pendiente</option>
+                              <option value="Ausente">Ausente</option>
+                              <option value="Realizado">Realizado</option>
+                            </select>
+                            {/* Comentario */}
+                            <label htmlFor="exampleInputEmail1" className="form-label">Comentarios</label>
+                            <div className="form-floating mb-4">
+                              <textarea
+                                className="form-control h-50"
+                                {...register("comentario", {required: true})}
+                              ></textarea>
+                            </div>
                           </div>
                         </div>
                         <div className="row m-2">
