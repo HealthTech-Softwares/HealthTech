@@ -182,7 +182,8 @@ export const getCitasPacientePsicologo = async (req, res, next) => {
         c.motivo, c.comentario, COALESCE(d.nombre, 'No hay diagnostico') as diagnostico
       FROM cita c
       LEFT JOIN diagnostico d ON c.iddiagnostico = d.iddiagnostico
-      WHERE c.idpsicologo = $1 AND c.idpaciente = $2`,
+      WHERE c.idpsicologo = $1 AND c.idpaciente = $2
+      ORDER BY c.fecha DESC`,
       [idpsicologo, idpaciente]
     );
 
