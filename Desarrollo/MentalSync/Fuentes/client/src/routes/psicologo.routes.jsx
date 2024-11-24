@@ -8,10 +8,10 @@ import { HistoriaClinica } from "../components/psicologo/historia_clinica/histor
 export default function RutasPsicologo() {
   return (
     <>
-      <Route path="/generar-diagnostico" element={<GenerarDiagnostico />} />
+      <Route path="/generar-diagnostico/:idcita" element={<GenerarDiagnostico />} />
       <Route path="/modificar-datos-psicologo" element={<ModificarDatosPsicologo />} />
       <Route path="/mis-pacientes" element={<MisPacientes />} />
-      <Route path="/historia-clinica" element={<HistoriaClinica />} />
+      <Route path="/historia-clinica/:idpaciente" element={<HistoriaClinica />} />
       {/* <Route path='/notificaciones' element={ <Notificaciones /> } /> */}
     </>
   )

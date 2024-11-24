@@ -6,9 +6,11 @@ import {
   PacienteConFoto,
   BotonAccion,
 } from "../../principales";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { citasPacientePsicologoRequest } from "../../../api/citas";
 
-export function TablaHistClin() {
+export function TablaHistClin({ citas }) {
   return (
     <div className={`card ${his.myCard} mb-3`}>
       <div className="card-body">
@@ -16,8 +18,9 @@ export function TablaHistClin() {
           <div className="col-3 text-center">
             <PacienteConFoto
               nombre="Santos Jiggets"
-              identificador="12345678"
-              ultimaCita="23/09/24"
+              dni="12345678"
+              labelFecha="hola"
+              fecha="mundo"
             />
           </div>
           <div className="col-9">
@@ -25,26 +28,22 @@ export function TablaHistClin() {
               <thead>
                 <tr>
                   <th scope="col">Fecha</th>
+                  <th scope="col">Hora</th>
+                  <th scope="col">Motivo</th>
                   <th scope="col">Diagnóstico</th>
                   <th scope="col">Notas</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>23/09/2024</td>
-                  <td>Trastorno de Ansiedad Generalizada (TAG)</td>
-                  <td>La paciente tiene problemas para dormir</td>
-                </tr>
-                <tr>
-                  <td>20/08/2024</td>
-                  <td>Trastorno de Ansiedad Generalizada (TAG)</td>
-                  <td>La paciente presenta fatiga muscular</td>
-                </tr>
-                <tr>
-                  <td>12/02/2023</td>
-                  <td>Trastorno Disfórico Premenstrual (TDPM)</td>
-                  <td>La paciente tiene cuadros de ansiedad</td>
-                </tr>
+                {citas.map((cita) => (
+                  <tr key={cita.idcita}>
+                    <td>{cita.fecha}</td>
+                    <td>{cita.hora}</td>
+                    <td>{cita.motivo}</td>
+                    <td>{cita.iddiagnostico}</td>
+                    <td>{cita.comentario}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
             <div className="row m-2">
@@ -62,24 +61,37 @@ export function TablaHistClin() {
 }
 
 export function HistoriaClinica() {
+  // Obtener el parametro
+  const { idpaciente } = useParams();
+  // Peticion de datos
+  const { data: [citas], loading, error, mensaje } = useFetchData([
+    () => citasPacientePsicologoRequest(idpaciente)]);
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
-
-      <section>
-        <div className="container-fluid">
-          <div className="row ms-4">
-            <div className="col-12">
-              <NombrePantalla nombre="Historia clínica" />
+      {loading
+        ? (<div>Cargando ...</div>)
+        : error ? (<h1>{mensaje}</h1>)
+        : (
+          <section>
+            <div className="container-fluid">
+              <div className="row ms-4">
+                <div className="col-12">
+                  <NombrePantalla nombre="Historia clínica" />
+                </div>
+              </div>
+              <div className="row justify-content-center ">
+                <div className="col-12">
+                  {citas.length === 0
+                    ? (<p>El paciente no tiene citas</p>) 
+                    : (<TablaHistClin citas={citas} />)}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="row justify-content-center ">
-            <div className="col-12">
-              <TablaHistClin />
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        )
+      }
     </div>
   );
 }
