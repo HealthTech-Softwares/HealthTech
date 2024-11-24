@@ -145,7 +145,7 @@ export const getPacientesPsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT p.idpaciente, p.foto, p.nombre, p.apellidop, p.apellidom, p.dni, c.idcita, TO_CHAR(c.fecha, 'DD-MM-YY') AS fecha, c.estado
+      `SELECT p.idpaciente, c.idcita, p.foto, p.nombre, p.apellidop, p.apellidom, p.dni, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.estado
       FROM paciente p
       INNER JOIN (
         SELECT DISTINCT ON (c.idpaciente) c.idcita, c.idpaciente, c.fecha, c.estado
@@ -176,8 +176,10 @@ export const getCitasPacientePsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT *
+      `SELECT c.idcita, idpaciente, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.hora_inicio, c.hora_fin, c.estado, 
+        c.descripcion,COALESCE(d.nombre, 'No hay diagnostico') as diagnostico
       FROM cita c
+      LEFT JOIN diagnostico d ON c.iddiagnostico = d.iddiagnostico
       WHERE c.idpsicologo = $1 AND c.idpaciente = $2`,
       [idpsicologo, idpaciente]
     );
