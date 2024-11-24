@@ -137,7 +137,6 @@ export const getCita = async (req, res, next) => {
   }
 };
 
-
 export const getDiagnostico = async (req, res, next) => {
   try {
     const result = await db.any(
@@ -148,7 +147,10 @@ export const getDiagnostico = async (req, res, next) => {
     if (result.length === 0) {
       return res.status(404).json({ message: "No se encontraron diagnósticos" });
     }
-
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getPacientePsicologo = async (req, res, next) => {
   try {
@@ -178,7 +180,7 @@ export const getPacientePsicologo = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 export const getPacientesPsicologo = async (req, res, next) => {
   try {
