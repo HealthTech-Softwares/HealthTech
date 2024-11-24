@@ -8,6 +8,8 @@ import {
   PacienteConFoto,
 } from "../../principales";
 import { Link } from "react-router-dom";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { pacientesPsicologoRequest } from "../../../api/citas";
 
 export function SelectEstado() {
   return (
@@ -21,106 +23,62 @@ export function SelectEstado() {
 }
 
 export function MisPacientes() {
+  // Peticion de datos
+  const { data: [pacientes], loading, error, mensaje } = useFetchData([pacientesPsicologoRequest]);
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
-
-      <section>
-        <div className="container-fluid">
-          <div className="row ms-4">
-            <div className="col-12">
-              <NombrePantalla nombre="Mis pacientes" />
-              <form>
-                <div className="row mb-4">
-                  <div className="col-3">
-                    <InputInfoSinLabel />
+      {loading ? (
+        <div>Cargando ...</div>
+      ) : error ? (<h1>{ mensaje }</h1>) : (
+        <section>
+          <div className="container-fluid">
+            <div className="row ms-4">
+              <div className="col-12">
+                <NombrePantalla nombre="Mis pacientes" />
+                <form>
+                  <div className="row mb-4">
+                    <div className="col-3">
+                      <InputInfoSinLabel />
+                    </div>
+                    <div className="col-3">
+                      <SelectEstado />
+                    </div>
+                    <div className="col-1">
+                      <BotonAccion nombre="Buscar" />
+                    </div>
                   </div>
-                  <div className="col-3">
-                    <SelectEstado />
-                  </div>
-                  <div className="col-1">
-                    <BotonAccion nombre="Buscar" />
+                </form>
+              </div>
+            </div>
+            <div className={`row justify-content-center`}>
+              {pacientes.length === 0 ? (<p>No hay pacientes para mostrar</p>) : (pacientes.map((paciente) => (
+                <div className="col-3" key={paciente.idpaciente}>
+                  <div className={`card ${mis.myCard} mb-3`}>
+                    <div className="card-body">
+                      <div className="row align-items-center">
+                        <div className="col-12 text-center">
+                          <PacienteConFoto
+                            foto={paciente.foto}
+                            nombre={paciente.nombre + " " + paciente.apellidop}
+                            dni={paciente.dni}
+                            labelFecha={paciente.estado === "Pendiente" ? "Proxima cita" : "Última cita"}
+                            fecha={paciente.fecha}
+                          />
+                          <Link to={paciente.estado === "Pendiente" ? `/generar-diagnostico/${paciente.idcita}` : `/historia-clinica/${paciente.idpaciente}`}>
+                            <BotonAccion nombre={paciente.estado === "Pendiente" ? "Generar diagnóstico" : "Ver historia clínica"} />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </form>
+              )))}
             </div>
           </div>
-          <div className={`row justify-content-center`}>
-            <div className="col-3">
-              <div className={`card ${mis.myCard} mb-3`}>
-                <div className="card-body">
-                  <div className="row align-items-center">
-                    <div className="col-12 text-center">
-                      <PacienteConFoto
-                        nombre="Santos Jiggets"
-                        identificador="12345678"
-                        ultimaCita="23/09/2024"
-                      />
-                      <Link to="/generar-diagnostico">
-                        <BotonAccion nombre="Generar diagnóstico" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-3">
-              <div className={`card ${mis.myCard} mb-3`}>
-                <div className="card-body">
-                  <div className="row align-items-center">
-                    <div className="col-12 text-center">
-                      <PacienteConFoto
-                        nombre="Olivia Zacarias"
-                        identificador="12345678"
-                        ultimaCita="17/07/2024"
-                      />
-                      <Link to="/historia-clinica">
-                        <BotonAccion nombre="Ver historia clínica" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-3">
-              <div className={`card ${mis.myCard} mb-3`}>
-                <div className="card-body">
-                  <div className="row align-items-center">
-                    <div className="col-12 text-center">
-                      <PacienteConFoto
-                        nombre="Charlotte Abonza"
-                        identificador="12345678"
-                        ultimaCita="20/06/2024"
-                      />
-                      <Link to="/historia-clinica">
-                        <BotonAccion nombre="Ver historia clínica" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-3">
-              <div className={`card ${mis.myCard} mb-3`}>
-                <div className="card-body">
-                  <div className="row align-items-center">
-                    <div className="col-12 text-center">
-                      <PacienteConFoto
-                        nombre="Daniel Shivley"
-                        identificador="12345678"
-                        ultimaCita="14/02/2024"
-                      />
-                      <Link to="/historia-clinica">
-                        <BotonAccion nombre="Ver historia clínica" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

@@ -9,9 +9,11 @@ import {
   SelectInfo,
 } from "../../principales";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { psicologosRequest } from "../../../api/test.buscar.psico";
 import { especialidesRequest } from "../../../api/especialidades";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { usePagination } from "../../../hooks/usePagination";
 
 export function BotonesOpciones(props) {
   return (
@@ -32,67 +34,39 @@ export function BotonesOpciones(props) {
 }
 
 export function ListaPsicologos() {
-  const [especialidades, setEspecialidades] = useState([]);
-  const [psicologos, setPsicologos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Peticion de datos
+  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequest]);
 
-  // Filtro de datos
+  // Filtros
   const [filtroNombre, setFiltroNombre] = useState("");
   const [filtroEspecialidad, setFiltroEspecialidad] = useState("");
 
   const handleFiltroNombreChange = (e) => {
+    setPage(1);
     setFiltroNombre(e.target.value);
   }
 
   const handleFiltroEspecialidadChange = (e) => {
+    setPage(1);
     setFiltroEspecialidad(e.target.value);
   }
 
-  useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        setLoading(true);
-        const [especialidadesResponse, psicologosResponse] = await Promise.all([especialidesRequest(), psicologosRequest()]);
-        setEspecialidades(especialidadesResponse.data);
-        setPsicologos(psicologosResponse.data);
-      } catch (error) {
-        console.error("Error al cargar los datos: ", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    obtenerDatos();
-  }, []);
-
-  // Filtracion de datos
-  const datosFiltrados = psicologos.filter((psico) => {
+  // Filtrar psicologos
+  const datosFiltrados = (psicologos || []).filter((psico) => {
     const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
     const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
     return coincideNombre && coincideEspecialidad;
   });
 
   // Paginacion
-  const [page, setPage] = useState(1);
   const itemsPerPage = 9;
-  // Calculos de la paginacion
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = datosFiltrados.slice(startIndex, endIndex);
-
-  const handleNextPage = () => {
-    if (endIndex < datosFiltrados.length) setPage(page + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (startIndex > 0) setPage(page - 1);
-  };
+  const { currentData, page, setPage, endIndex, handleNextPage, handlePreviousPage } = usePagination(datosFiltrados, itemsPerPage);
 
   return (
     <div className={`${styles.fondo}`}>
       <NavBarAdmin />
       {loading ? (<div>Cargando ...</div>) : (
         <>
-          {console.log(especialidades)}
           <section>
             <div className="container-fluid">
               <div className="row ms-4">
@@ -116,9 +90,6 @@ export function ListaPsicologos() {
                           filtro={filtroEspecialidad}
                           handleFiltroChange={handleFiltroEspecialidadChange}
                         />
-                      </div>
-                      <div className="col-1 text-center">
-                        <BotonAccion nombre="Buscar" />
                       </div>
                       <div className="col-2 text-center">
                         <Link to="/agregar-psicologo">

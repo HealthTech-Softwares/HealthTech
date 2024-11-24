@@ -270,17 +270,17 @@ export function PacienteConFoto(props) {
   return (
     <div>
       <img
-        src={logoUsuario}
+        src={props.foto}
         alt="Psicólogo"
         className={`mb-3 ${styles.logoPsico}`}
       />
       <h5 className="card-title">{props.nombre}</h5>
       <h6 className="card-subtitle mb-2 text-body-secondary">
-        DNI: {props.identificador}
+        DNI: {props.dni}
       </h6>
       <p>
-        <b>Última cita: </b>
-        {props.ultimaCita}
+        <b>{props.labelFecha + ": "}</b>
+        {props.fecha}
       </p>
     </div>
   );

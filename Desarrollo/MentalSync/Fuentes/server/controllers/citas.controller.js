@@ -145,22 +145,17 @@ export const getPacientesPsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT p.idpaciente, p.nombre, p.apellidop, p.apellidom, p.dni, to_char(c.fecha, 'YYYY/MM/DD') as fecha
+      `SELECT p.idpaciente, c.idcita, p.foto, p.nombre, p.apellidop, p.apellidom, p.dni, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.estado
       FROM paciente p
       INNER JOIN (
-        SELECT DISTINCT ON (c.idpaciente) c.idpaciente, c.fecha
+        SELECT DISTINCT ON (c.idpaciente) c.idcita, c.idpaciente, c.fecha, c.estado
         FROM cita c
-        WHERE c.idpsicologo = $1 AND c.estado = 'Pendiente'
-        ORDER BY c.idpaciente, c.fecha ASC
+        WHERE c.idpsicologo = $1
+        ORDER BY c.idpaciente, c.fecha DESC
       ) AS c ON p.idpaciente = c.idpaciente
-      ORDER BY c.fecha ASC`,
+      ORDER BY c.fecha DESC`,
       [idpsicologo]
     );
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: "No se encontraron citas con pacientes" });
-    }
-
 
     res.json(result);
   } catch (error) {
@@ -181,17 +176,13 @@ export const getCitasPacientePsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT c.idcita, idpaciente, to_char(c.fecha, 'YYYY/MM/DD') as fecha, c.hora_inicio, c.hora_fin, c.estado, 
+      `SELECT c.idcita, idpaciente, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.hora_inicio, c.hora_fin, c.estado, 
         c.descripcion,COALESCE(d.nombre, 'No hay diagnostico') as diagnostico
       FROM cita c
       LEFT JOIN diagnostico d ON c.iddiagnostico = d.iddiagnostico
       WHERE c.idpsicologo = $1 AND c.idpaciente = $2`,
       [idpsicologo, idpaciente]
     );
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: "No se encontraron citas con el paciente" });
-    }
 
     res.json(result);
   } catch (error) {

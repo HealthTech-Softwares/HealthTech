@@ -7,6 +7,9 @@ import {
   PacienteConFoto,
 } from "../../principales";
 import { Link } from "react-router-dom";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { perfilPacienteRequest } from "../../../api/pacientes";
+import { useAuth } from "../../../context/AuthContext";
 
 export function LabelModifDatosSoloLectura(props) {
   return (
@@ -40,9 +43,17 @@ export function LabelModifDatosEditar(props) {
 }
 
 export function ModificarDatosPaciente() {
+  // Peticion de datos
+  const { data: [paciente], loading } = useFetchData([perfilPacienteRequest]);
+  const { user } = useAuth();
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
+      {loading ? (
+        <div>Cargando ...</div>
+      ) : (
+          
       <section>
         <div className="container-fluid">
           <div className="row ms-4">
@@ -57,8 +68,9 @@ export function ModificarDatosPaciente() {
                   <div className="row align-items-center">
                     <div className="col-12 text-center">
                       <PacienteConFoto
-                        nombre="Santos Jiggets"
-                        identificador="12345678"
+                        foto={paciente.foto}
+                        nombre={paciente.nombre + " " + paciente.apellidop}
+                        dni={paciente.dni}
                         ultimaCita="23/09/2024"
                       />
                     </div>
@@ -72,29 +84,21 @@ export function ModificarDatosPaciente() {
                   <div className="col-5">
                     <LabelModifDatosSoloLectura
                       propiedad="Nombres"
-                      ejemplo="Santos Carlos"
+                      ejemplo={paciente.nombre}
                     />
                     <LabelModifDatosSoloLectura
-                      propiedad="Fecha de nacimiento"
-                      ejemplo="1/04/1989"
-                    />
-                    <LabelModifDatosEditar
-                      propiedad="Dirección"
-                      ejemplo="Av Mi Casa 209"
+                      propiedad="DNI"
+                      ejemplo={paciente.dni}
                     />
                   </div>
                   <div className="col-5">
                     <LabelModifDatosSoloLectura
                       propiedad="Apellidos"
-                      ejemplo="Jigget Rojas"
-                    />
-                    <LabelModifDatosSoloLectura
-                      propiedad="DNI"
-                      ejemplo="12345678"
+                      ejemplo={paciente.apellidop + " " + paciente.apellidom}
                     />
                     <LabelModifDatosEditar
                       propiedad="Correo electrónico"
-                      ejemplo="@example.com"
+                      ejemplo={user.correo}
                     />
                   </div>
                 </div>
@@ -110,6 +114,7 @@ export function ModificarDatosPaciente() {
           </div>
         </div>
       </section>
+      )}
     </div>
   );
 }
