@@ -57,6 +57,11 @@ export const getPacientes = async (req, res, next) => {
       `SELECT *
       FROM paciente`
     );
+
+    if (!pacientes) {
+      return res.status(404).json({ message: "Pacientes no encontrados" });
+    }
+
     res.json(pacientes);
   } catch (error) {
     next(error);
