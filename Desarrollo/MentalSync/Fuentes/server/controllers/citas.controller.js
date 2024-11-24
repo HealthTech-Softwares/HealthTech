@@ -118,10 +118,12 @@ export const getCitasPsicologo = async (req, res, next) => {
 export const getCita = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await db.one(
-      `SELECT *
-      FROM cita
-      WHERE idcita = $1`,
+    const result = await db.oneOrNone(
+      `SELECT c.idcita, c.estado, 
+              p.nombre, p.apellidop, p.dni, p.foto
+      FROM cita c
+      LEFT JOIN paciente p ON c.idpaciente = p.idpaciente
+      WHERE c.idcita = $1`,
       [id]
     );
 
@@ -134,6 +136,23 @@ export const getCita = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getDiagnostico = async (req, res, next) => {
+  try {
+    const result = await db.any(
+      `SELECT iddiagnostico, nombre
+      FROM diagnostico`
+    );
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No se encontraron diagnósticos" });
+    }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export const getPacientesPsicologo = async (req, res, next) => {
   try {

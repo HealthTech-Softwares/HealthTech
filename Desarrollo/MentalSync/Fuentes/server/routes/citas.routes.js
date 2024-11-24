@@ -4,6 +4,7 @@ import {
   getCitasPaciente,
   getCitasPsicologo,
   getCita,
+  getDiagnostico,
   getPacientesPsicologo,
   getCitasPacientePsicologo,
   updateCita,
@@ -23,6 +24,7 @@ router.get("/citas", verifyToken, isPsicologo, getCitasPsicologo);
 router.get("/citas/pacientes", verifyToken, isPsicologo, getPacientesPsicologo);
 router.get("/citas/pacientes/:idpaciente", verifyToken, isPsicologo, getCitasPacientePsicologo);
 router.get("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), getCita);
+router.get("/diagnostico", verifyToken, hasRole("Administrador", "Psicologo"), getDiagnostico);
 router.put("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), updateCita);
 
 export default router;
