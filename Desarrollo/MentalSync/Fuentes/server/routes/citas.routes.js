@@ -27,6 +27,6 @@ router.get("/last-cita/:idpaciente", verifyToken, isPsicologo, getPacientePsicol
 router.get("/citas/pacientes/:idpaciente", verifyToken, isPsicologo, getCitasPacientePsicologo);
 router.get("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), getCita);
 router.get("/diagnostico", verifyToken, hasRole("Administrador", "Psicologo"), getDiagnostico);
-router.put("/cita/:id", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), updateCita);
+router.put("/cita/:idcita", verifyToken, hasRole("Administrador", "Paciente", "Psicologo"), updateCita);
 
 export default router;

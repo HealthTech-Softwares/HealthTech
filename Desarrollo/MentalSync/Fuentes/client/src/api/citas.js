@@ -11,3 +11,7 @@ export const citasPacientePsicologoRequest = async (idpaciente) => await axios.g
 
 // Datos de una cita
 export const citaRequest = async (idcita) => await axios.get(`/cita/${idcita}`);
+
+
+// Actualizar una cita
+export const putCitaRequest = async (idcita, data) => await axios.put(`/cita/${idcita}`, data)
