@@ -5,10 +5,12 @@ import {
   NavBarMental,
   NombrePantalla,
 } from "../../principales";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { psicologoRequest } from "../../../api/psicologos";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { createCitaRequest } from "../../../api/citas";
 
 export function ReservaCita() {
   const { idpsicologo } = useParams();
@@ -17,28 +19,47 @@ export function ReservaCita() {
     () => psicologoRequest(idpsicologo)
   ]);
 
+  // Configurar useForm
+  const { register, handleSubmit } = useForm();
+  
+  // Redireccion
+  const navigate = useNavigate();
+
+  // Envio del form con idpsicologo
+  const onSubmit = async (data) => {
+    try {
+      const datosCompletos = {
+        ...data, // Datos del formulario
+        idpsicologo, // Agregar el idpsicologo desde useParams
+      };
+      console.log(datosCompletos);
+      await createCitaRequest(datosCompletos);
+      alert("Cita creada satisfactoriamente :)");
+      navigate("/principal");
+    } catch (error) {
+      console.error("Error al actualizar cita: ", error);
+      alert(error.response.data.message);
+    }
+  };
+
   // Estado para días y horarios
   const [diaSeleccionado, setDiaSeleccionado] = useState("");
-  const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
 
   // Generar opciones de días y horarios dinámicamente
   const diasDisponibles = psicologo?.horarios.map((horario) => horario.dia) || [];
+
   const horariosPorDia = psicologo?.horarios.reduce((acc, horario) => {
-    acc[horario.dia] = horario.turnos.map(
-      (turno) =>
-        `${formatearHora(turno.hora_inicio)} - ${formatearHora(turno.hora_fin)}`
-    );
-    return acc;
-  }, {}) || {};
+  acc[horario.dia] = horario.turnos.map((turno) => ({
+    idhorario: turno.idhorario,
+    rango: `${formatearHora(turno.hora_inicio)} - ${formatearHora(turno.hora_fin)}`,
+  }));
+  return acc;
+}, {}) || {};
+
 
   // Manejadores de cambios
   const handleDiaChange = (e) => {
     setDiaSeleccionado(e.target.value);
-    setHorarioSeleccionado(""); // Resetear el horario seleccionado
-  };
-
-  const handleHorarioChange = (e) => {
-    setHorarioSeleccionado(e.target.value);
   };
 
   // Formatear hora a formato legible
@@ -60,50 +81,49 @@ export function ReservaCita() {
           <div className="row ms-4">
             <div className="col-12">
               <NombrePantalla nombre="Reservar cita" />
-              <form>
-                <div className="row mb-3 d-flex justify-content-center">
-                  <InputInfoConLabel propiedad="Nombre" ejemplo={psicologo.nombre} />
-                  <InputInfoConLabel propiedad="Apellidos" ejemplo={psicologo.apellidop + " " + psicologo.apellidom} />
+              <div className="row mb-3 d-flex justify-content-center">
+                <InputInfoConLabel propiedad="Nombre" ejemplo={psicologo.nombre} />
+                <InputInfoConLabel propiedad="Apellidos" ejemplo={psicologo.apellidop + " " + psicologo.apellidom} />
+              </div>
+              <div className="row mb-3 d-flex justify-content-center">
+                <div className="col-5 ms-5">
+                  <label htmlFor="dia" className="form-label">
+                    Día de atención
+                  </label>
+                  <select
+                    className="form-select w-75"
+                    id="dia"
+                    value={diaSeleccionado}
+                    onChange={handleDiaChange}
+                  >
+                    <option value="">Selecciona un día</option>
+                    {diasDisponibles.map((dia) => (
+                      <option key={dia} value={dia}>
+                        {dia}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="row mb-3 d-flex justify-content-center">
-                  <div className="col-5 ms-5">
-                    <label htmlFor="dia" className="form-label">
-                      Día de atención
-                    </label>
-                    <select
-                      className="form-select w-75"
-                      id="dia"
-                      value={diaSeleccionado}
-                      onChange={handleDiaChange}
-                    >
-                      <option value="">Selecciona un día</option>
-                      {diasDisponibles.map((dia) => (
-                        <option key={dia} value={dia}>
-                          {dia}
+              </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="col-5 ms-5">
+                  <label htmlFor="horario" className="form-label">
+                    Horario disponible
+                  </label>
+                  <select
+                    className="form-select w-75"
+                    id="horario"
+                    disabled={!diaSeleccionado} // Desactivar si no hay día seleccionado
+                    {...register("idhorario", {required: true})}
+                  >
+                    <option value="">Selecciona un horario</option>
+                    {diaSeleccionado &&
+                      horariosPorDia[diaSeleccionado]?.map((horario) => (
+                        <option key={horario.idhorario} value={horario.idhorario}>
+                          {horario.rango}
                         </option>
                       ))}
-                    </select>
-                  </div>
-                  <div className="col-5 ms-5">
-                    <label htmlFor="horario" className="form-label">
-                      Horario disponible
-                    </label>
-                    <select
-                      className="form-select w-75"
-                      id="horario"
-                      value={horarioSeleccionado}
-                      onChange={handleHorarioChange}
-                      disabled={!diaSeleccionado} // Desactivar si no hay día seleccionado
-                    >
-                      <option value="">Selecciona un horario</option>
-                      {diaSeleccionado &&
-                        horariosPorDia[diaSeleccionado]?.map((horario) => (
-                          <option key={horario} value={horario}>
-                            {horario}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
+                  </select>
                 </div>
                 <div className="row mb-3 d-flex justify-content-center">
                   <div className="col-8">
@@ -114,6 +134,9 @@ export function ReservaCita() {
                       className="form-control"
                       id="descripcion"
                       rows="4"
+                      maxLength="255"
+                      placeholder="Ingrese el motivo de la cita"
+                      {...register("motivo", {required: true})}
                     ></textarea>
                   </div>
                 </div>
@@ -123,6 +146,7 @@ export function ReservaCita() {
                       className="form-check-input me-3"
                       type="checkbox"
                       id="secondCheckbox"
+                      {...register("online")}
                     />
                     <label className="form-check-label" htmlFor="secondCheckbox">
                       Consulta Online
@@ -131,9 +155,7 @@ export function ReservaCita() {
                 </ul>
                 <div className="row mb-4">
                   <div className="col-10 d-flex justify-content-end">
-                    <Link to="/metodo-pago">
-                      <BotonAccion nombre="Completar cita" />
-                    </Link>
+                    <BotonAccion nombre="Completar cita" />
                   </div>
                 </div>
               </form>
