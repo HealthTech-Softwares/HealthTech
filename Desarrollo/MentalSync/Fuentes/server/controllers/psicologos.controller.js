@@ -64,7 +64,7 @@ export const createPsicologo = async (req, res, next) => {
   }
 };
 
-export const getPsicologos = async (req, res, next) => {
+export const getPsicologosPaciente = async (req, res, next) => {
   try {
     const result = await db.any(
       `SELECT p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online,
@@ -86,6 +86,35 @@ export const getPsicologos = async (req, res, next) => {
       descripcion: row.descripcion,
       consulta_online: row.consulta_online,
       especialidades: row.especialidades.filter(especialidad => especialidad.nombre !== null)
+    }));
+
+    res.json(psicologos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPsicologosAdmin = async (req, res, next) => {
+  try {
+    const result = await db.any(
+      `SELECT p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online,
+              json_agg(DISTINCT jsonb_build_object('nombre', e.nombre)) AS especialidades
+       FROM psicologo p
+       LEFT JOIN especialidad_psicologo ep ON p.idpsicologo = ep.idpsicologo
+       LEFT JOIN especialidad e ON ep.idespecialidad = e.idespecialidad
+       GROUP BY p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online`
+    );
+
+    const psicologos = result.map(row => ({
+      idpsicologo: row.idpsicologo,
+      nombre: row.nombre,
+      apellidop: row.apellidop,
+      apellidom: row.apellidom,
+      dni: row.dni,
+      foto: row.foto,
+      descripcion: row.descripcion,
+      consulta_online: row.consulta_online,
+      especialidades: row.especialidades,
     }));
 
     res.json(psicologos);
