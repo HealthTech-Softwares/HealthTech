@@ -47,6 +47,15 @@ export const createCita = async (req, res, next) => {
 
     const fecha = moment().day(diaSemana).isBefore(moment()) ? moment().day(diaSemana + 7) : moment().day(diaSemana);
 
+    const citaConflicto = await db.oneOrNone(
+      `SELECT 1 FROM cita WHERE idpsicologo = $1 AND fecha = $2 AND hora = $3 AND estado = 'Pendiente'`,
+      [idpsicologo, fecha.format("YYYY-MM-DD"), hora_inicio]
+    );
+
+    if (citaConflicto) {
+      return res.status(400).json({ message: "El psicólogo ya tiene este horario ocupado con otro paciente." });
+    }
+
     const result = await db.one(
       `INSERT INTO cita (idpaciente, idpsicologo, idhorario, fecha, hora, online, motivo)
        VALUES ($1, $2, $3, $4, $5, $6, $7)
