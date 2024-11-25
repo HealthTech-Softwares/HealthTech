@@ -12,7 +12,7 @@ export default function RutasPaciente() {
   return (
     <>
       <Route path="/principal" element={<BuscarPsico />} />
-      <Route path="/reserva-cita" element={<ReservaCita />} />
+      <Route path="/reserva-cita/:idpsicologo" element={<ReservaCita />} />
       <Route path="/metodo-pago" element={<MetodoPago />} />
       <Route path="/calificar-psicologo" element={<CalificarPsico />} />
       <Route path="/mis-citas" element={<MisCitas />} />
