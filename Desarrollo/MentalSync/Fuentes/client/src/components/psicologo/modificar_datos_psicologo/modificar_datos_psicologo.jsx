@@ -8,7 +8,6 @@ import {
 } from "../../principales";
 import {
   LabelModifDatosSoloLectura,
-  LabelModifDatosEditar,
 } from "../../paciente/modificar_datos_paciente/modificar_datos_paciente";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ export function ModificarDatosPsicologo() {
   const [consultaOnline, setConsultaOnline] = useState(false);
   const [disponibilidad, setDisponibilidad] = useState(false);
   const [descripcion, setDescripcion] = useState(""); // Estado para la descripción
+  const [especialidad, setEspecialidad] = useState(""); // Estado para la especialidad
 
   useEffect(() => {
     const obtenerPerfil = async () => {
@@ -30,9 +30,9 @@ export function ModificarDatosPsicologo() {
         setConsultaOnline(psicologoResponse.data.consulta_online);
         setDisponibilidad(psicologoResponse.data.disponible);
         setDescripcion(psicologoResponse.data.descripcion || ""); // Cargar la descripción existente
+        setEspecialidad(psicologoResponse.data.especialidad || ""); // Cargar la especialidad existente
       } catch (error) {
         console.error("Error al cargar el perfil: ", error);
-        // setError(true);
       } finally {
         setLoading(false);
       }
@@ -51,6 +51,10 @@ export function ModificarDatosPsicologo() {
 
   const handleDescripcionChange = (e) => {
     setDescripcion(e.target.value);
+  };
+
+  const handleEspecialidadChange = (e) => {
+    setEspecialidad(e.target.value);
   };
 
   return (
@@ -116,7 +120,7 @@ export function ModificarDatosPsicologo() {
                               checked={consultaOnline}
                               onChange={handleConsultaOnlineChange}
                             />
-                            <label className="form-check-label" htmlFor="firstCheckbox">
+                            <label className="form-check-label" htmlFor="secondCheckbox">
                               Consulta Online
                             </label>
                           </li>
@@ -147,6 +151,28 @@ export function ModificarDatosPsicologo() {
                           value={descripcion}
                           onChange={handleDescripcionChange}
                         ></textarea>
+                      </div>
+                    </div>
+                    <div className="row m-2">
+                      <div className="col-5">
+                        <label htmlFor="especialidad" className="form-label">
+                          Especialidad
+                        </label>
+                        <select
+                          className="form-select"
+                          id="especialidad"
+                          value={especialidad}
+                          onChange={handleEspecialidadChange}
+                        >
+                          <option value="">Selecciona una especialidad</option>
+                          <option value="Psicología Clínica">Psicología Clínica</option>
+                          <option value="Psicología Educativa">Psicología Educativa</option>
+                          <option value="Psicología Organizacional">
+                            Psicología Organizacional
+                          </option>
+                          <option value="Psicología Infantil">Psicología Infantil</option>
+                          <option value="Terapia Familiar">Terapia Familiar</option>
+                        </select>
                       </div>
                     </div>
                     <div className="row m-2">
