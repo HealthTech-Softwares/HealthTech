@@ -172,7 +172,7 @@ export function InputInfoConLabel(props) {
 export function InputInfoConLabelDoce(props) {
   return (
     <div className="col-12 mb-3">
-      <label htmlfor="exampleInputEmail1" className="form-label">
+      <label htmlFor="exampleInputEmail1" className="form-label">
         {props.propiedad}
       </label>
       <input
@@ -187,7 +187,7 @@ export function InputInfoConLabelDoce(props) {
 export function SelectInfoConLabel(props) {
   return (
     <div className="col-5 ms-5">
-      <label htmlfor="exampleInputEmail1" className="form-label">
+      <label htmlFor="exampleInputEmail1" className="form-label">
         {props.propiedad}
       </label>
       <select className="form-select w-75">
