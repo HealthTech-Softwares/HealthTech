@@ -68,37 +68,27 @@ export const getPsicologos = async (req, res, next) => {
   try {
     const result = await db.any(
       `SELECT p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online,
-              e.nombre AS especialidad
+              json_agg(DISTINCT jsonb_build_object('nombre', e.nombre)) AS especialidades
        FROM psicologo p
        INNER JOIN horario h ON p.idpsicologo = h.idpsicologo
        LEFT JOIN especialidad_psicologo ep ON p.idpsicologo = ep.idpsicologo
-       LEFT JOIN especialidad e ON ep.idespecialidad = e.idespecialidad`
+       LEFT JOIN especialidad e ON ep.idespecialidad = e.idespecialidad
+       GROUP BY p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online`
     );
 
-    const psicologos = result.reduce((acc, row) => {
-      const { idpsicologo, nombre, apellidop, apellidom, dni, foto, descripcion, consulta_online, especialidad } = row;
-      if (!acc[idpsicologo]) {
-        acc[idpsicologo] = {
-          idpsicologo,
-          nombre,
-          apellidop,
-          apellidom,
-          dni,
-          foto,
-          descripcion,
-          consulta_online,
-          especialidades: []
-        };
-      }
-      if (especialidad) {
-        acc[idpsicologo].especialidades.push({ nombre: especialidad });
-      }
-      return acc;
-    }, {});
+    const psicologos = result.map(row => ({
+      idpsicologo: row.idpsicologo,
+      nombre: row.nombre,
+      apellidop: row.apellidop,
+      apellidom: row.apellidom,
+      dni: row.dni,
+      foto: row.foto,
+      descripcion: row.descripcion,
+      consulta_online: row.consulta_online,
+      especialidades: row.especialidades.filter(especialidad => especialidad.nombre !== null)
+    }));
 
-    const psicologosArray = Object.values(psicologos);
-
-    res.json(psicologosArray);
+    res.json(psicologos);
   } catch (error) {
     next(error);
   }
@@ -128,18 +118,17 @@ export const getPsicologo = async (req, res, next) => {
     );
 
     const turnosPorDia = horarios.reduce((acc, turno) => {
-      const { idhorario, dia, idturno, hora_inicio, hora_fin, disponible } = turno;
-      if (!acc[idhorario]) {
-        acc[idhorario] = { dia, turnos: [] };
+      const { dia, idturno, hora_inicio, hora_fin, disponible } = turno;
+      if (!acc[dia]) {
+        acc[dia] = { turnos: [] };
       }
-      acc[idhorario].turnos.push({ idturno, hora_inicio, hora_fin, disponible });
+      acc[dia].turnos.push({ idturno, hora_inicio, hora_fin, disponible });
       return acc;
     }, {});
 
-    const turnosAgrupados = Object.keys(turnosPorDia).map(idhorario => ({
-      idhorario: parseInt(idhorario),
-      dia: turnosPorDia[idhorario].dia,
-      turnos: turnosPorDia[idhorario].turnos
+    const turnosAgrupados = Object.keys(turnosPorDia).map(dia => ({
+      dia,
+      turnos: turnosPorDia[dia].turnos
     }));
 
     res.json({
