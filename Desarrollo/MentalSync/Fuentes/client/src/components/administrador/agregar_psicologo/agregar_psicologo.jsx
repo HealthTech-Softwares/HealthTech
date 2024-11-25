@@ -29,7 +29,7 @@ export function AgregarPsicologo() {
                 <div className="card-body">
                   <div className="row">
                     <div className="col-4 d-flex flex-column justify-content-center align-items-center">
-                      <label for="formFileLg" className="form-label">
+                      <label htmlfor="formFileLg" className="form-label">
                         Seleccione foto de perfil
                       </label>
                       <input
@@ -90,7 +90,7 @@ export function AgregarPsicologo() {
                                 />
                                 <label
                                   className="form-check-label"
-                                  for="firstCheckbox"
+                                  htmlfor="firstCheckbox"
                                 >
                                   Disponibilidad
                                 </label>

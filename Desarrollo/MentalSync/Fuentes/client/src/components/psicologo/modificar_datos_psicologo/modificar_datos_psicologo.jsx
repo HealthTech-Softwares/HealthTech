@@ -8,7 +8,6 @@ import {
 } from "../../principales";
 import {
   LabelModifDatosSoloLectura,
-  LabelModifDatosEditar,
 } from "../../paciente/modificar_datos_paciente/modificar_datos_paciente";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -19,6 +18,22 @@ export function ModificarDatosPsicologo() {
   const [loading, setLoading] = useState(true);
   const [consultaOnline, setConsultaOnline] = useState(false);
   const [disponibilidad, setDisponibilidad] = useState(false);
+  const [descripcion, setDescripcion] = useState("");
+  const [especialidad, setEspecialidad] = useState("");
+
+  // Estado para días y horarios
+  const [diaSeleccionado, setDiaSeleccionado] = useState("");
+  const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
+
+  // Opciones de días y horarios disponibles
+  const diasDisponibles = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+  const horariosPorDia = {
+    Lunes: ["8:00 AM - 10:00 AM", "10:00 AM - 12:00 PM"],
+    Martes: ["12:00 PM - 14:00 PM", "14:00 PM - 16:00 PM"],
+    Miércoles: ["16:00 PM - 18:00 PM", "18:00 PM - 20:00 PM"],
+    Jueves: ["8:00 AM - 10:00 AM", "10:00 AM - 12:00 PM"],
+    Viernes: ["12:00 PM - 14:00 PM", "14:00 PM - 16:00 PM"],
+  };
 
   useEffect(() => {
     const obtenerPerfil = async () => {
@@ -28,9 +43,10 @@ export function ModificarDatosPsicologo() {
         setPsicologo(psicologoResponse.data);
         setConsultaOnline(psicologoResponse.data.consulta_online);
         setDisponibilidad(psicologoResponse.data.disponible);
+        setDescripcion(psicologoResponse.data.descripcion || "");
+        setEspecialidad(psicologoResponse.data.especialidad || "");
       } catch (error) {
         console.error("Error al cargar el perfil: ", error);
-        // setError(true);
       } finally {
         setLoading(false);
       }
@@ -38,7 +54,16 @@ export function ModificarDatosPsicologo() {
     obtenerPerfil();
   }, []);
 
-  // Manejadores de cambios en los checkbox
+  // Manejadores de cambios
+  const handleDiaChange = (e) => {
+    setDiaSeleccionado(e.target.value);
+    setHorarioSeleccionado(""); // Resetear el horario seleccionado
+  };
+
+  const handleHorarioChange = (e) => {
+    setHorarioSeleccionado(e.target.value);
+  };
+
   const handleConsultaOnlineChange = (e) => {
     setConsultaOnline(e.target.checked);
   };
@@ -46,10 +71,21 @@ export function ModificarDatosPsicologo() {
   const handleDisponibilidadChange = (e) => {
     setDisponibilidad(e.target.checked);
   };
+
+  const handleDescripcionChange = (e) => {
+    setDescripcion(e.target.value);
+  };
+
+  const handleEspecialidadChange = (e) => {
+    setEspecialidad(e.target.value);
+  };
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
-      {loading ? (<div>Cargando ...</div>) : (
+      {loading ? (
+        <div>Cargando ...</div>
+      ) : (
         <>
           <section>
             <div className="container-fluid">
@@ -65,8 +101,8 @@ export function ModificarDatosPsicologo() {
                       <div className="row align-items-center">
                         <div className="col-12 text-center">
                           <PsicologoConFoto
-                            foto={psicologo.foto }
-                            nombre={ psicologo.nombre}
+                            foto={psicologo.foto}
+                            nombre={psicologo.nombre}
                             identificador={psicologo.dni}
                           />
                         </div>
@@ -80,32 +116,48 @@ export function ModificarDatosPsicologo() {
                       <div className="col-5">
                         <LabelModifDatosSoloLectura
                           propiedad="Nombres"
-                          ejemplo={ psicologo.nombre}
+                          ejemplo={psicologo.nombre}
                         />
-                        {/* <LabelModifDatosSoloLectura
-                          propiedad="Fecha de nacimiento"
-                          ejemplo="12/09/1978"
-                        />
-                        <LabelModifDatosEditar
-                          propiedad="Especialidad"
-                          ejemplo="Psicología clínica"
-                        /> */}
-
-                        <label for="exampleInputEmail1" className="form-label">
-                          Horario de atención
+                        <label htmlFor="dia" className="form-label">
+                          Día de atención
                         </label>
-                        <select className="form-select w-80 mb-5">
-                          <option value="1">8:00 AM - 10:00 AM</option>
-                          <option value="2">10:00 AM - 12:00 PM</option>
-                          <option value="3">12:00 PM - 14:00 PM</option>
-                          <option value="4">14:00 PM - 16:00 PM</option>
-                          <option value="5">16:00 PM - 18:00 PM</option>
+                        <select
+                          className="form-select w-80 mb-3"
+                          id="dia"
+                          value={diaSeleccionado}
+                          onChange={handleDiaChange}
+                        >
+                          <option value="">Selecciona un día</option>
+                          {diasDisponibles.map((dia) => (
+                            <option key={dia} value={dia}>
+                              {dia}
+                            </option>
+                          ))}
+                        </select>
+
+                        <label htmlFor="horario" className="form-label">
+                          Horario disponible
+                        </label>
+                        <select
+                          className="form-select w-80"
+                          id="horario"
+                          value={horarioSeleccionado}
+                          onChange={handleHorarioChange}
+                          disabled={!diaSeleccionado} // Desactivar si no hay día seleccionado
+                        >
+                          <option value="">Selecciona un horario</option>
+                          {diaSeleccionado &&
+                            horariosPorDia[diaSeleccionado]?.map((horario) => (
+                              <option key={horario} value={horario}>
+                                {horario}
+                              </option>
+                            ))}
                         </select>
                       </div>
                       <div className="col-5">
                         <LabelModifDatosSoloLectura
                           propiedad="Apellidos"
-                          ejemplo={ psicologo.apellidop + " " + psicologo.apellidom }
+                          ejemplo={`${psicologo.apellidop} ${psicologo.apellidom}`}
                         />
                         <ul className="list-group">
                           <li className="list-group-item">
@@ -116,7 +168,7 @@ export function ModificarDatosPsicologo() {
                               checked={consultaOnline}
                               onChange={handleConsultaOnlineChange}
                             />
-                            <label className="form-check-label" for="firstCheckbox">
+                            <label className="form-check-label" htmlFor="secondCheckbox">
                               Consulta Online
                             </label>
                           </li>
@@ -128,11 +180,47 @@ export function ModificarDatosPsicologo() {
                               checked={disponibilidad}
                               onChange={handleDisponibilidadChange}
                             />
-                            <label className="form-check-label" for="firstCheckbox">
+                            <label className="form-check-label" htmlFor="firstCheckbox">
                               Disponibilidad
                             </label>
                           </li>
                         </ul>
+                      </div>
+                    </div>
+                    <div className="row m-2">
+                      <div className="col-10">
+                        <label htmlFor="descripcion" className="form-label">
+                          Descripción
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="descripcion"
+                          rows="4"
+                          value={descripcion}
+                          onChange={handleDescripcionChange}
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="row m-2">
+                      <div className="col-5">
+                        <label htmlFor="especialidad" className="form-label">
+                          Especialidad
+                        </label>
+                        <select
+                          className="form-select"
+                          id="especialidad"
+                          value={especialidad}
+                          onChange={handleEspecialidadChange}
+                        >
+                          <option value="">Selecciona una especialidad</option>
+                          <option value="Psicología Clínica">Psicología Clínica</option>
+                          <option value="Psicología Educativa">Psicología Educativa</option>
+                          <option value="Psicología Organizacional">
+                            Psicología Organizacional
+                          </option>
+                          <option value="Psicología Infantil">Psicología Infantil</option>
+                          <option value="Terapia Familiar">Terapia Familiar</option>
+                        </select>
                       </div>
                     </div>
                     <div className="row m-2">
