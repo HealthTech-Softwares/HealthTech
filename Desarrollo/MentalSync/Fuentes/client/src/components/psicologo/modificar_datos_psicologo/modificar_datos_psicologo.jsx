@@ -18,8 +18,22 @@ export function ModificarDatosPsicologo() {
   const [loading, setLoading] = useState(true);
   const [consultaOnline, setConsultaOnline] = useState(false);
   const [disponibilidad, setDisponibilidad] = useState(false);
-  const [descripcion, setDescripcion] = useState(""); // Estado para la descripción
-  const [especialidad, setEspecialidad] = useState(""); // Estado para la especialidad
+  const [descripcion, setDescripcion] = useState("");
+  const [especialidad, setEspecialidad] = useState("");
+
+  // Estado para días y horarios
+  const [diaSeleccionado, setDiaSeleccionado] = useState("");
+  const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
+
+  // Opciones de días y horarios disponibles
+  const diasDisponibles = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+  const horariosPorDia = {
+    Lunes: ["8:00 AM - 10:00 AM", "10:00 AM - 12:00 PM"],
+    Martes: ["12:00 PM - 14:00 PM", "14:00 PM - 16:00 PM"],
+    Miércoles: ["16:00 PM - 18:00 PM", "18:00 PM - 20:00 PM"],
+    Jueves: ["8:00 AM - 10:00 AM", "10:00 AM - 12:00 PM"],
+    Viernes: ["12:00 PM - 14:00 PM", "14:00 PM - 16:00 PM"],
+  };
 
   useEffect(() => {
     const obtenerPerfil = async () => {
@@ -29,8 +43,8 @@ export function ModificarDatosPsicologo() {
         setPsicologo(psicologoResponse.data);
         setConsultaOnline(psicologoResponse.data.consulta_online);
         setDisponibilidad(psicologoResponse.data.disponible);
-        setDescripcion(psicologoResponse.data.descripcion || ""); // Cargar la descripción existente
-        setEspecialidad(psicologoResponse.data.especialidad || ""); // Cargar la especialidad existente
+        setDescripcion(psicologoResponse.data.descripcion || "");
+        setEspecialidad(psicologoResponse.data.especialidad || "");
       } catch (error) {
         console.error("Error al cargar el perfil: ", error);
       } finally {
@@ -41,6 +55,15 @@ export function ModificarDatosPsicologo() {
   }, []);
 
   // Manejadores de cambios
+  const handleDiaChange = (e) => {
+    setDiaSeleccionado(e.target.value);
+    setHorarioSeleccionado(""); // Resetear el horario seleccionado
+  };
+
+  const handleHorarioChange = (e) => {
+    setHorarioSeleccionado(e.target.value);
+  };
+
   const handleConsultaOnlineChange = (e) => {
     setConsultaOnline(e.target.checked);
   };
@@ -95,15 +118,40 @@ export function ModificarDatosPsicologo() {
                           propiedad="Nombres"
                           ejemplo={psicologo.nombre}
                         />
-                        <label htmlFor="horario" className="form-label">
-                          Horario de atención
+                        <label htmlFor="dia" className="form-label">
+                          Día de atención
                         </label>
-                        <select className="form-select w-80 mb-5" id="horario">
-                          <option value="1">8:00 AM - 10:00 AM</option>
-                          <option value="2">10:00 AM - 12:00 PM</option>
-                          <option value="3">12:00 PM - 14:00 PM</option>
-                          <option value="4">14:00 PM - 16:00 PM</option>
-                          <option value="5">16:00 PM - 18:00 PM</option>
+                        <select
+                          className="form-select w-80 mb-3"
+                          id="dia"
+                          value={diaSeleccionado}
+                          onChange={handleDiaChange}
+                        >
+                          <option value="">Selecciona un día</option>
+                          {diasDisponibles.map((dia) => (
+                            <option key={dia} value={dia}>
+                              {dia}
+                            </option>
+                          ))}
+                        </select>
+
+                        <label htmlFor="horario" className="form-label">
+                          Horario disponible
+                        </label>
+                        <select
+                          className="form-select w-80"
+                          id="horario"
+                          value={horarioSeleccionado}
+                          onChange={handleHorarioChange}
+                          disabled={!diaSeleccionado} // Desactivar si no hay día seleccionado
+                        >
+                          <option value="">Selecciona un horario</option>
+                          {diaSeleccionado &&
+                            horariosPorDia[diaSeleccionado]?.map((horario) => (
+                              <option key={horario} value={horario}>
+                                {horario}
+                              </option>
+                            ))}
                         </select>
                       </div>
                       <div className="col-5">
