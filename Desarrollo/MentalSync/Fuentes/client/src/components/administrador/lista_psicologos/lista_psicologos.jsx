@@ -35,7 +35,10 @@ export function BotonesOpciones(props) {
 
 export function ListaPsicologos() {
   // Peticion de datos
-  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequest]);
+  const {
+    data: [especialidades, psicologos],
+    loading,
+  } = useFetchData([especialidesRequest, psicologosRequest]);
 
   // Filtros
   const [filtroNombre, setFiltroNombre] = useState("");
@@ -44,28 +47,41 @@ export function ListaPsicologos() {
   const handleFiltroNombreChange = (e) => {
     setPage(1);
     setFiltroNombre(e.target.value);
-  }
+  };
 
   const handleFiltroEspecialidadChange = (e) => {
     setPage(1);
     setFiltroEspecialidad(e.target.value);
-  }
+  };
 
   // Filtrar psicologos
   const datosFiltrados = (psicologos || []).filter((psico) => {
-    const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
-    const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
+    const coincideNombre = psico.nombre
+      .toLowerCase()
+      .includes(filtroNombre.toLowerCase());
+    const coincideEspecialidad =
+      filtroEspecialidad === "" ||
+      psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
     return coincideNombre && coincideEspecialidad;
   });
 
   // Paginacion
   const itemsPerPage = 9;
-  const { currentData, page, setPage, endIndex, handleNextPage, handlePreviousPage } = usePagination(datosFiltrados, itemsPerPage);
+  const {
+    currentData,
+    page,
+    setPage,
+    endIndex,
+    handleNextPage,
+    handlePreviousPage,
+  } = usePagination(datosFiltrados, itemsPerPage);
 
   return (
     <div className={`${styles.fondo}`}>
       <NavBarAdmin />
-      {loading ? (<div>Cargando ...</div>) : (
+      {loading ? (
+        <div>Cargando ...</div>
+      ) : (
         <>
           <section>
             <div className="container-fluid">
@@ -137,7 +153,7 @@ export function ListaPsicologos() {
                 >
                   Siguiente
                 </button>
-                </div>
+              </div>
             </div>
           </section>
         </>
