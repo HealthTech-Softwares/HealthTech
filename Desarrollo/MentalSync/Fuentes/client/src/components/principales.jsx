@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export function NavBarMental() {
-  const {user} = useAuth();
+  const { user } = useAuth();
   let ruta = "";
   let ruta2 = "";
   switch (user.rol) {
@@ -20,21 +20,18 @@ export function NavBarMental() {
       break;
     case "Administrador":
       ruta = "/lista-psicologos";
-      ruta2 = '/';
+      ruta2 = "/";
       break;
     default:
       ruta = "/404";
       ruta2 = "/403";
       break;
   }
-  
+
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid d-flex align-items-center">
-        <Link
-          className="navbar-brand d-flex align-items-center"
-          to={ ruta }
-        >
+        <Link className="navbar-brand d-flex align-items-center" to={ruta}>
           <img
             src={logoMental}
             alt="Logo"
@@ -52,7 +49,7 @@ export function NavBarMental() {
             />
           </Link>
 
-          <Link to={ ruta2 } >
+          <Link to={ruta2}>
             <img
               src={logoUsuario}
               alt="Usuario"
@@ -65,17 +62,14 @@ export function NavBarMental() {
   );
 }
 
-export function NavBarAdmin(){
-  const {user} = useAuth();
+export function NavBarAdmin() {
+  const { user } = useAuth();
   let ruta = "/lista-psicologos";
-  
+
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid d-flex align-items-center">
-        <Link
-          className="navbar-brand d-flex align-items-center"
-          to={ ruta }
-        >
+        <Link className="navbar-brand d-flex align-items-center" to={ruta}>
           <img
             src={logoMental}
             alt="Logo"
@@ -97,7 +91,6 @@ export function NavBarAdmin(){
     </nav>
   );
 }
-
 
 export function InfoPsicologo(props) {
   return (
@@ -116,27 +109,27 @@ export function InfoPsicologo(props) {
               DNI: {props.dni}
             </h6>
           </div>
-          
+
           {/* Detalles del psicólogo */}
           <div className="col-9 d-flex flex-column justify-content-between">
             <p className="card-text">{props.descripcion}</p>
-            
+
             {/* Listado de especialidades */}
             <p className="card-text">
               <strong>Especialidades:</strong>{" "}
-              {props.especialidades.length > 0 ? (
-                props.especialidades.map((especialidad) => especialidad.nombre).join(', ')
-              ) : (
-                "No especificadas"
-              )}
+              {props.especialidades.length > 0
+                ? props.especialidades
+                    .map((especialidad) => especialidad.nombre)
+                    .join(", ")
+                : "No especificadas"}
             </p>
-            
+
             {/* Consulta Online */}
             <p className="card-text">
               <strong>Consulta Online:</strong>{" "}
               {props.consulta_online ? "Sí" : "No"}
             </p>
-            
+
             {/* Botón para reservar cita */}
             <div className="d-flex justify-content-end">
               <Link to={`/reserva-cita/${props.idpsicologo}`}>
@@ -150,10 +143,14 @@ export function InfoPsicologo(props) {
   );
 }
 
-
 export function InputInfoSinLabel(props) {
   return (
-    <input type="text" className="form-control" placeholder={props.placeholder} onChange={props.onChange} />
+    <input
+      type="text"
+      className="form-control"
+      placeholder={props.placeholder}
+      onChange={props.onChange}
+    />
   );
 }
 
@@ -221,7 +218,12 @@ export function SelectInfoConLabelDoce(props) {
   );
 }
 
-export function SelectInfo({ descripcion, options, filtro, handleFiltroChange }) {
+export function SelectInfo({
+  descripcion,
+  options,
+  filtro,
+  handleFiltroChange,
+}) {
   return (
     <select
       className="form-select"
@@ -230,7 +232,7 @@ export function SelectInfo({ descripcion, options, filtro, handleFiltroChange })
     >
       <option value="">{descripcion}</option>
       {options.map((option, index) => (
-        <option key={index} value={option.nombre }>
+        <option key={index} value={option.nombre}>
           {option.nombre}
         </option>
       ))}
@@ -288,7 +290,6 @@ export function PacienteConFoto(props) {
     </div>
   );
 }
-
 
 export function PsicologoConFoto(props) {
   return (
