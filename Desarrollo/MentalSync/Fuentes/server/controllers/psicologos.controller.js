@@ -118,11 +118,11 @@ export const getPsicologo = async (req, res, next) => {
     );
 
     const turnosPorDia = horarios.reduce((acc, turno) => {
-      const { dia, idturno, hora_inicio, hora_fin, disponible } = turno;
+      const { idhorario, dia, idturno, hora_inicio, hora_fin, disponible } = turno;
       if (!acc[dia]) {
         acc[dia] = { turnos: [] };
       }
-      acc[dia].turnos.push({ idturno, hora_inicio, hora_fin, disponible });
+      acc[dia].turnos.push({ idhorario, idturno, hora_inicio, hora_fin, disponible });
       return acc;
     }, {});
 
