@@ -15,9 +15,12 @@ import { createCitaRequest } from "../../../api/citas";
 export function ReservaCita() {
   const { idpsicologo } = useParams();
   // Peticion de datos
-  const { data: [psicologo], loading, error, mensaje } = useFetchData([
-    () => psicologoRequest(idpsicologo)
-  ]);
+  const {
+    data: [psicologo],
+    loading,
+    error,
+    mensaje,
+  } = useFetchData([() => psicologoRequest(idpsicologo)]);
 
   // Configurar useForm
   const { register, handleSubmit } = useForm();
@@ -163,7 +166,7 @@ export function ReservaCita() {
           </div>
         </div>
       </section>
-        )}
+      )}
     </div>
   );
 }

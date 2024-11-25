@@ -14,7 +14,10 @@ import { usePagination } from "../../../hooks/usePagination";
 
 export function BuscarPsico() {
   // Peticion de datos
-  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequest]);
+  const {
+    data: [especialidades, psicologos],
+    loading,
+  } = useFetchData([especialidesRequest, psicologosRequest]);
 
   // Filtros
   const [filtroNombre, setFiltroNombre] = useState("");
@@ -24,29 +27,41 @@ export function BuscarPsico() {
   const handleFiltroNombreChange = (e) => {
     setPage(1);
     setFiltroNombre(e.target.value);
-  }
+  };
 
   const handleFiltroEspecialidadChange = (e) => {
     setPage(1);
     setFiltroEspecialidad(e.target.value);
-  }
+  };
 
   const handleFiltroConsultaOnlineChange = (e) => {
     setPage(1);
     setFiltroConsultaOnline(e.target.checked);
-  }
+  };
 
   // Filtrar psicologos
   const datosFiltrados = (psicologos || []).filter((psico) => {
-    const coincideNombre = psico.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
-    const coincideEspecialidad = filtroEspecialidad === "" || psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
-    const coincideConsultaOnline = !filtroConsultaOnline || psico.consulta_online === filtroConsultaOnline;
+    const coincideNombre = psico.nombre
+      .toLowerCase()
+      .includes(filtroNombre.toLowerCase());
+    const coincideEspecialidad =
+      filtroEspecialidad === "" ||
+      psico.especialidades.some((esp) => esp.nombre === filtroEspecialidad);
+    const coincideConsultaOnline =
+      !filtroConsultaOnline || psico.consulta_online === filtroConsultaOnline;
     return coincideNombre && coincideEspecialidad && coincideConsultaOnline;
   });
-  
+
   // Paginacion
   const itemsPerPage = 10;
-  const { currentData, page, setPage, endIndex, handleNextPage, handlePreviousPage } = usePagination(datosFiltrados, itemsPerPage);
+  const {
+    currentData,
+    page,
+    setPage,
+    endIndex,
+    handleNextPage,
+    handlePreviousPage,
+  } = usePagination(datosFiltrados, itemsPerPage);
 
   return (
     <div className={`${styles.fondo}`}>
@@ -64,18 +79,18 @@ export function BuscarPsico() {
                     <div className="row mb-4">
                       {/* Filtro por nombre */}
                       <div className="col-3">
-                        <InputInfoSinLabel 
-                          value={filtroNombre} 
-                          onChange={handleFiltroNombreChange} 
+                        <InputInfoSinLabel
+                          value={filtroNombre}
+                          onChange={handleFiltroNombreChange}
                           placeholder="Buscar por nombre"
                         />
                       </div>
 
                       {/* Filtro por especialidad */}
                       <div className="col-3">
-                        <select 
-                          className="form-select" 
-                          value={filtroEspecialidad} 
+                        <select
+                          className="form-select"
+                          value={filtroEspecialidad}
                           onChange={handleFiltroEspecialidadChange}
                         >
                           <option value="">Todas las especialidades</option>
@@ -96,7 +111,7 @@ export function BuscarPsico() {
                           checked={filtroConsultaOnline}
                           onChange={handleFiltroConsultaOnlineChange}
                         />
-                        <label className="form-check-label" htmlFor="online">
+                        <label className="form-check-label ms-2" htmlFor="online">
                           Consulta online
                         </label>
                       </div>
