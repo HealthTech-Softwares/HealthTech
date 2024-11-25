@@ -68,8 +68,19 @@ export const getTurnoPsicologo = async (req, res, next) => {
 
 export const getTurnosFaltantesPsicologo = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const idusuario = req.userId;
     const { dia } = req.body;
+    const psicologo = await db.oneOrNone(
+      `SELECT * FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    if (!psicologo) {
+      return res.status(404).json({ message: "Psicologo no encontrado" });
+    }
+
+    const idpsicologo = psicologo.idpsicologo;
+
     const result = await db.any(
       `SELECT t.idturno, t.hora_inicio, t.hora_fin
       FROM turno t
@@ -78,10 +89,52 @@ export const getTurnosFaltantesPsicologo = async (req, res, next) => {
       AND h.idpsicologo = $1
       AND h.dia = $2
       WHERE h.idpsicologo IS NULL`,
-      [id, dia]
+      [idpsicologo, dia]
     );
     res.json(result);
   } catch (error) {
     next(error);
   }
 };
+
+export const updateTurnoPsicologo = async (req, res, next) => {
+  try {
+    const idusuario = req.userId;
+    const { horarios } = req.body;
+
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    if (!psicologo) {
+      return res.status(404).json({ message: "Psicologo no encontrado" });
+    }
+
+    const idpsicologo = psicologo.idpsicologo;
+
+    await db.tx(async t => {
+      for (const { idturno, dia_semana } of horarios) {
+        const turno = await t.oneOrNone(
+          `SELECT idturno FROM turno WHERE idturno = $1`,
+          [idturno]
+        );
+
+        if (!turno) {
+          throw new Error(`Turno no encontrado: ${idturno}`);
+        }
+
+        await t.none(
+          `INSERT INTO horario (idpsicologo, idturno, dia)
+           VALUES ($1, $2, $3)
+           ON CONFLICT (idpsicologo, idturno, dia) DO NOTHING`,
+          [idpsicologo, idturno, dia_semana]
+        );
+      }
+    });
+
+    res.json({ message: "Turnos asignados correctamente" });
+  } catch (error) {
+    next(error);
+  }
+}
