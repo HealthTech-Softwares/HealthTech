@@ -84,9 +84,9 @@ export function GenerarDiagnostico() {
                     <div className="row align-items-center">
                       <div className="col-3 text-center">
                         <PacienteConFoto
-                          foto={cita.foto}
-                          nombre={cita.nombre + " " + cita.apellidop}
-                          dni={cita.dni}
+                          foto={cita.foto_paciente}
+                          nombre={cita.nombre_paciente + " " + cita.apellidop_paciente}
+                          dni={cita.dni_paciente}
                         />
                         <Link to={`/historia-clinica/${cita.idpaciente}`}>
                           <BotonAccion nombre="Ver historia clínica" />

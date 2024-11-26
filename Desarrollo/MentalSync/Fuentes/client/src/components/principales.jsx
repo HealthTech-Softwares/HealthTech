@@ -255,15 +255,12 @@ export function NombrePantalla(props) {
 export function EnlaceLabel(props) {
   return (
     <div>
-      <label for="exampleInputEmail1" className="form-label">
+      <label className="form-label">
         Enlace
       </label>
-      <input
-        type="text"
+      <a
         className={`form-control mb-3`}
-        placeholder={`${props.enlace}`}
-        readOnly
-      />
+      >{props.enlace}</a>
     </div>
   );
 }

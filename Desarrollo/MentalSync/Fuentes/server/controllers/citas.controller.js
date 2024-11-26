@@ -146,9 +146,10 @@ export const getCita = async (req, res, next) => {
     const { id } = req.params;
     const result = await db.oneOrNone(
       `SELECT c.idpaciente, c.idcita, c.estado, c.motivo, c.online, c.hora, to_char(c.fecha, 'DD/MM/YYYY') as fecha,
-              p.nombre, p.apellidop, p.dni, p.foto
+              p.nombre as nombre_paciente, p.apellidop as apellidop_paciente, p.dni as dni_paciente, p.foto as foto_paciente, ps.nombre as nombre_psicologo, ps.dni as dni_psicologo, ps.apellidop as apellidop_psicologo, ps.foto as foto_psicologo
       FROM cita c
       LEFT JOIN paciente p ON c.idpaciente = p.idpaciente
+      INNER JOIN psicologo ps ON c.idpsicologo = ps.idpsicologo
       WHERE c.idcita = $1`,
       [id]
     );

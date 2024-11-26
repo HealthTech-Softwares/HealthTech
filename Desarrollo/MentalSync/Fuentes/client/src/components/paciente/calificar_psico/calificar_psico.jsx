@@ -6,9 +6,19 @@ import {
   NavBarMental,
   NombrePantalla,
 } from "../../principales";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { citaRequest } from "../../../api/citas";
 
 export function CalificarPsico() {
+  // Obtener parametro de cita
+  const { idcita } = useParams();
+
+  // Peticion de daton
+  const { data: [cita], loading, error, mensaje} = useFetchData([
+    () => citaRequest(idcita)
+  ])
+
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
@@ -25,22 +35,24 @@ export function CalificarPsico() {
               <div className={`card ${cali.myCardCalificarPsico} mb-3`}>
                 <div className="card-body">
                   <div className="row align-items-center">
-                    <div className="col-4 text-center">
-                      <img
-                        src=""
-                        alt="Psicólogo"
-                        className={`mb-3 ${styles.logoPsico}`}
-                      />
-                      <h5 className="card-title">Ruperta Martinez Orbegón</h5>
-                      <p className="m-0">
-                        <b>Fecha de cita:</b> 11/11/24
-                      </p>
-                    </div>
+                    {loading ? (<h3>Cargando...</h3>) : error ? (<h2>{mensaje}</h2>) : (
+                      <div className="col-4 text-center">
+                        <img
+                          src={cita.foto_psicologo}
+                          alt="Psicólogo"
+                          className={`mb-3 ${styles.logoPsico}`}
+                        />
+                        <h5 className="card-title">{cita.nombre_psicologo}</h5>
+                        <p className="m-0">
+                          <b>Fecha de cita:</b>{cita.fecha}
+                        </p>
+                      </div>
+                    )}
                     <div className="col-8">
                       <form>
                         <div className="row m-2">
                           <div className="col-12">
-                            <EnlaceLabel enlace="URL de Google Forms" />
+                            <EnlaceLabel enlace="https://example.com/" />
                           </div>
                         </div>
                         <div className="row m-2">
