@@ -14,7 +14,7 @@ export default function RutasPaciente() {
       <Route path="/principal" element={<BuscarPsico />} />
       <Route path="/reserva-cita/:idpsicologo" element={<ReservaCita />} />
       {/* <Route path="/metodo-pago" element={<MetodoPago />} /> */}
-      {/* <Route path="/calificar-psicologo" element={<CalificarPsico />} /> */}
+      <Route path="/calificar-psicologo/:idcita" element={<CalificarPsico />} />
       <Route path="/mis-citas" element={<MisCitas />} />
       {/* <Route path="/cita-reservada" element={<CitaVirtual />} /> */}
       <Route path="/modificar-datos-paciente" element={<ModificarDatosPaciente />} />

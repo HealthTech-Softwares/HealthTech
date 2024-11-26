@@ -27,14 +27,11 @@ export function CalificarPsico() {
                   <div className="row align-items-center">
                     <div className="col-4 text-center">
                       <img
-                        src={logoUsuario}
+                        src=""
                         alt="Psicólogo"
                         className={`mb-3 ${styles.logoPsico}`}
                       />
                       <h5 className="card-title">Ruperta Martinez Orbegón</h5>
-                      <h6 className="card-subtitle mb-2 text-body-secondary">
-                        Terapeuta
-                      </h6>
                       <p className="m-0">
                         <b>Fecha de cita:</b> 11/11/24
                       </p>
