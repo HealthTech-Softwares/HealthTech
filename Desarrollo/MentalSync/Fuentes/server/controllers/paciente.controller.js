@@ -83,9 +83,10 @@ export const getPaciente = async (req, res, next) => {
     const idpaciente = paciente.idpaciente;
 
     const result = await db.oneOrNone(
-      `SELECT *
-      FROM paciente
-      WHERE idpaciente = $1`,
+      `SELECT p.*, u.correo, u.contrasenia
+      FROM paciente p
+      INNER JOIN usuario u ON p.idusuario = u.idusuario
+      WHERE p.idpaciente = $1`,
       [idpaciente]
     );
     if (!result) {
@@ -100,7 +101,7 @@ export const getPaciente = async (req, res, next) => {
 export const updatePaciente = async (req, res) => {
   try {
     const idusuario = req.userId;
-    const updateFields = req.body;
+    const { correo, contrasenia } = req.body;
 
     const paciente = await db.oneOrNone(
       `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
@@ -111,23 +112,29 @@ export const updatePaciente = async (req, res) => {
       return res.status(404).json({ message: "Paciente no encontrado" });
     }
 
-    const idpaciente = paciente.idpaciente;
+    if (correo) {
+      const correoExistente = await db.oneOrNone(
+        `SELECT 1 FROM usuario WHERE correo = $1 AND idusuario != $2`,
+        [correo, idusuario]
+      );
 
-    const fields = Object.keys(updateFields);
-    const values = Object.values(updateFields);
+      if (correoExistente) {
+        return res.status(400).json({ message: "Otro usuario ya tiene en uso este correo" });
+      }
+    }
 
-    const setClause = fields.map((field, index) => `${field} = $1`).join(", ");
-
-    const result = await db.query(
-      `UPDATE paciente SET ${setClause} 
-      WHERE idpaciente = $2
-      RETURNING *`,
-      [...values, idpaciente]
+    const result = await db.one(
+      `UPDATE usuario SET 
+        correo = COALESCE($1, correo), 
+        contrasenia = COALESCE($2, contrasenia)
+      WHERE idusuario = $3
+      RETURNING idusuario, correo`,
+      [correo, contrasenia, idusuario]
     );
 
     res.json(result);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Hubo un error al actualizar paciente");
+    res.status(500).send("Hubo un error al actualizar el usuario");
   }
 };
