@@ -21,18 +21,48 @@ export function ModificarDatosPsicologo() {
   const [descripcion, setDescripcion] = useState("");
   const [especialidad, setEspecialidad] = useState("");
 
-  // Estado para días y horarios
+  // Estados para días y horarios
   const [diaSeleccionado, setDiaSeleccionado] = useState("");
-  const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
-
-  // Opciones de días y horarios disponibles
-  const diasDisponibles = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
-  const horariosPorDia = {
+  const [nuevoHorario, setNuevoHorario] = useState("");
+  const [horarios, setHorarios] = useState({
     Lunes: ["8:00 AM - 10:00 AM", "10:00 AM - 12:00 PM"],
     Martes: ["12:00 PM - 14:00 PM", "14:00 PM - 16:00 PM"],
     Miércoles: ["16:00 PM - 18:00 PM", "18:00 PM - 20:00 PM"],
     Jueves: ["8:00 AM - 10:00 AM", "10:00 AM - 12:00 PM"],
     Viernes: ["12:00 PM - 14:00 PM", "14:00 PM - 16:00 PM"],
+  });
+
+  // Opciones de días y horarios
+  const diasDisponibles = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+  const opcionesHorarios = [
+    "8:00 AM - 10:00 AM",
+    "10:00 AM - 12:00 PM",
+    "12:00 PM - 14:00 PM",
+    "14:00 PM - 16:00 PM",
+    "16:00 PM - 18:00 PM",
+    "18:00 PM - 20:00 PM",
+  ];
+
+  // Estados y funciones para especialidades dinámicas
+  const [listaEspecialidades, setListaEspecialidades] = useState([
+    "Psicología Clínica",
+    "Psicología Educativa",
+    "Psicología Organizacional",
+    "Psicología Infantil",
+    "Terapia Familiar",
+  ]);
+  const [nuevaEspecialidad, setNuevaEspecialidad] = useState("");
+
+  const agregarEspecialidad = () => {
+    if (
+      nuevaEspecialidad.trim() !== "" &&
+      !listaEspecialidades.includes(nuevaEspecialidad)
+    ) {
+      setListaEspecialidades((prev) => [...prev, nuevaEspecialidad]);
+      setNuevaEspecialidad("");
+    } else {
+      alert("La especialidad ya existe o está vacía.");
+    }
   };
 
   useEffect(() => {
@@ -57,11 +87,20 @@ export function ModificarDatosPsicologo() {
   // Manejadores de cambios
   const handleDiaChange = (e) => {
     setDiaSeleccionado(e.target.value);
-    setHorarioSeleccionado(""); // Resetear el horario seleccionado
   };
 
-  const handleHorarioChange = (e) => {
-    setHorarioSeleccionado(e.target.value);
+  const handleNuevoHorarioChange = (e) => {
+    setNuevoHorario(e.target.value);
+  };
+
+  const agregarHorario = () => {
+    if (diaSeleccionado && nuevoHorario) {
+      setHorarios((prevHorarios) => ({
+        ...prevHorarios,
+        [diaSeleccionado]: [...prevHorarios[diaSeleccionado], nuevoHorario],
+      }));
+      setNuevoHorario("");
+    }
   };
 
   const handleConsultaOnlineChange = (e) => {
@@ -94,7 +133,7 @@ export function ModificarDatosPsicologo() {
                   <NombrePantalla nombre="Modificar datos de psicólogo" />
                 </div>
               </div>
-              <div className="row justify-content-center ">
+              <div className="row justify-content-center">
                 <div className="col-3">
                   <div className={`card ${modi.myCard} mb-3`}>
                     <div className="card-body">
@@ -135,24 +174,39 @@ export function ModificarDatosPsicologo() {
                           ))}
                         </select>
 
-                        <label htmlFor="horario" className="form-label">
-                          Horario disponible
+                        <label htmlFor="horarios" className="form-label">
+                          Horarios disponibles
+                        </label>
+                        <ul>
+                          {horarios[diaSeleccionado]?.map((horario, index) => (
+                            <li key={index}>{horario}</li>
+                          ))}
+                        </ul>
+
+                        <label htmlFor="nuevoHorario" className="form-label">
+                          Añadir nuevo horario
                         </label>
                         <select
-                          className="form-select w-80"
-                          id="horario"
-                          value={horarioSeleccionado}
-                          onChange={handleHorarioChange}
-                          disabled={!diaSeleccionado} // Desactivar si no hay día seleccionado
+                          className="form-select w-80 mb-3"
+                          id="nuevoHorario"
+                          value={nuevoHorario}
+                          onChange={handleNuevoHorarioChange}
                         >
                           <option value="">Selecciona un horario</option>
-                          {diaSeleccionado &&
-                            horariosPorDia[diaSeleccionado]?.map((horario) => (
-                              <option key={horario} value={horario}>
-                                {horario}
-                              </option>
-                            ))}
+                          {opcionesHorarios.map((horario) => (
+                            <option key={horario} value={horario}>
+                              {horario}
+                            </option>
+                          ))}
                         </select>
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={agregarHorario}
+                          disabled={!diaSeleccionado || !nuevoHorario}
+                        >
+                          Agregar horario
+                        </button>
                       </div>
                       <div className="col-5">
                         <LabelModifDatosSoloLectura
@@ -168,7 +222,10 @@ export function ModificarDatosPsicologo() {
                               checked={consultaOnline}
                               onChange={handleConsultaOnlineChange}
                             />
-                            <label className="form-check-label" htmlFor="secondCheckbox">
+                            <label
+                              className="form-check-label"
+                              htmlFor="secondCheckbox"
+                            >
                               Consulta Online
                             </label>
                           </li>
@@ -180,7 +237,10 @@ export function ModificarDatosPsicologo() {
                               checked={disponibilidad}
                               onChange={handleDisponibilidadChange}
                             />
-                            <label className="form-check-label" htmlFor="firstCheckbox">
+                            <label
+                              className="form-check-label"
+                              htmlFor="firstCheckbox"
+                            >
                               Disponibilidad
                             </label>
                           </li>
@@ -213,21 +273,34 @@ export function ModificarDatosPsicologo() {
                           onChange={handleEspecialidadChange}
                         >
                           <option value="">Selecciona una especialidad</option>
-                          <option value="Psicología Clínica">Psicología Clínica</option>
-                          <option value="Psicología Educativa">Psicología Educativa</option>
-                          <option value="Psicología Organizacional">
-                            Psicología Organizacional
-                          </option>
-                          <option value="Psicología Infantil">Psicología Infantil</option>
-                          <option value="Terapia Familiar">Terapia Familiar</option>
+                          {listaEspecialidades.map((esp, index) => (
+                            <option key={index} value={esp}>
+                              {esp}
+                            </option>
+                          ))}
                         </select>
                       </div>
-                    </div>
-                    <div className="row m-2">
-                      <div className="col-10 d-flex justify-content-end">
-                        <Link to="/mis-pacientes">
-                          <BotonAccion nombre="Guardar cambios" />
-                        </Link>
+                      <div className="col-5">
+                        <label htmlFor="nuevaEspecialidad" className="form-label">
+                          Añadir nueva especialidad
+                        </label>
+                        <div className="input-group mb-3">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="nuevaEspecialidad"
+                            placeholder="Nueva especialidad"
+                            value={nuevaEspecialidad}
+                            onChange={(e) => setNuevaEspecialidad(e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={agregarEspecialidad}
+                          >
+                            Agregar
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -235,8 +308,15 @@ export function ModificarDatosPsicologo() {
               </div>
             </div>
           </section>
+          <footer className="fixed-bottom">
+            <BotonAccion
+              ruta="/modificar_datos_psicologo"
+              nombre="Guardar Cambios"
+            />
+          </footer>
         </>
       )}
     </div>
   );
 }
+
