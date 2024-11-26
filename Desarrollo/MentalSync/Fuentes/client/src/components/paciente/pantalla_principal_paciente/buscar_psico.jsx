@@ -7,7 +7,7 @@ import {
 import styles from "../../principales.module.css";
 import { Link } from "react-router-dom";
 import { especialidesRequest } from "../../../api/especialidades";
-import { psicologosRequest } from "../../../api/test.buscar.psico";
+import { psicologosRequest } from "../../../api/psicologos";
 import { useState } from "react";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { usePagination } from "../../../hooks/usePagination";

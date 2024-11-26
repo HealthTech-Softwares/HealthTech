@@ -10,7 +10,7 @@ import {
 } from "../../principales";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { psicologosRequest } from "../../../api/test.buscar.psico";
+import { psicologosRequestAdmin } from "../../../api/psicologos";
 import { especialidesRequest } from "../../../api/especialidades";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { usePagination } from "../../../hooks/usePagination";
@@ -35,7 +35,7 @@ export function BotonesOpciones(props) {
 
 export function ListaPsicologos() {
   // Peticion de datos
-  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequest]);
+  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequestAdmin]);
 
   // Filtros
   const [filtroNombre, setFiltroNombre] = useState("");
