@@ -89,9 +89,13 @@ export const getCitasPaciente = async (req, res, next) => {
     const idpaciente = paciente.idpaciente;
 
     const result = await db.any(
-      `SELECT *
-      FROM cita
-      WHERE idpaciente = $1`,
+      `SELECT c.idcita, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.motivo, to_char(c.hora, 'HH12:MI AM') as hora, c.comentario,
+              p.idpsicologo, p.nombre as psicologo_nombre, p.apellidop as psicologo_apellidop,
+              COALESCE(d.nombre, 'Sin diagnostico disponible') as diagnostico_nombre
+      FROM cita c
+      INNER JOIN psicologo p ON c.idpsicologo = p.idpsicologo
+      LEFT JOIN diagnostico d ON c.iddiagnostico = d.iddiagnostico
+      WHERE c.idpaciente = $1`,
       [idpaciente]
     );
 
@@ -117,9 +121,13 @@ export const getCitasPsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT *
-      FROM cita
-      WHERE idpsicologo = $1`,
+      `SELECT c.idcita, to_char(c.fecha, 'DD/MM/YYYY') as fecha, c.motivo, to_char(c.hora, 'HH12:MI AM') as hora, c.comentario,
+              p.idpaciente, p.nombre as paciente_nombre, p.apellidop as paciente_apellidop,
+              COALESCE(d.nombre, 'Sin diagnostico disponible') as diagnostico_nombre
+      FROM cita c
+      INNER JOIN paciente p ON c.idpaciente = p.idpaciente
+      LEFT JOIN diagnostico d ON c.iddiagnostico = d.iddiagnostico
+      WHERE c.idpaciente = $1`,
       [idpsicologo]
     );
 
