@@ -20,6 +20,10 @@ export const getNotificacionesPsicologo = async (req, res, next) => {
       [idpsicologo]
     );
 
+    if (!result) {
+      return res.status(404).json({ message: "No hay notificaciones" });
+    }
+
     res.json(result);
   } catch (error) {
     next(error);
@@ -45,6 +49,11 @@ export const getNotificacionesPaciente = async (req, res, next) => {
       WHERE n.idreceptor = $1`,
       [idpaciente]
     );
+
+    if(!result) {
+      return res.status(404).json({ message: "No hay notificaciones" });
+    }
+
     res.json(result);
   } catch (error) {
     next(error);
