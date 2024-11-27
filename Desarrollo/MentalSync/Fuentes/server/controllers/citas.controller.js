@@ -71,6 +71,13 @@ export const createCita = async (req, res, next) => {
       ]
     );
 
+    const mensaje = `Tienes una nueva cita para el ${fecha.format("DD/MM/YYYY")} a las ${hora_inicio}`;
+    const titulo = `Nueva cita programada`;
+    await db.none(
+      `INSERT INTO notificacion (idemisor, idreceptor, titulo, mensaje) VALUES ($1, $2, $3, $4)`,
+      [idpaciente, idpsicologo, titulo, mensaje]
+    );
+
     return res.status(201).json(result);
   } catch (error) {
     next(error);
@@ -271,12 +278,27 @@ export const getCitasPacientePsicologo = async (req, res, next) => {
 
 export const updateCita = async (req, res, next) => {
   try {
+    const idusuario = req.userId;
     const { idcita } = req.params;
     const {
       iddiagnostico,
       comentario,
       estado,
     } = req.body;
+
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    const idpsicologo = psicologo.idpsicologo;
+
+    const cita = await db.oneOrNone(
+      `SELECT idpaciente FROM cita WHERE idcita = $1`,
+      [idcita]
+    );
+
+    const idpaciente = cita.idpaciente;
 
     const result = await db.one(
       `UPDATE cita
@@ -294,6 +316,20 @@ export const updateCita = async (req, res, next) => {
     if (!result) {
       return res.status(404).json({ message: "Cita no encontrada" });
     }
+
+    const diagnostico = await db.oneOrNone(
+      `SELECT nombre FROM diagnostico WHERE iddiagnostico = $1`,
+      [iddiagnostico]
+    );
+
+    const diagNombre = diagnostico.nombre;
+
+    const mensaje = `Se le ha diagnosticado con ${diagNombre}. El psicologo comenta también: ${comentario}`;
+    const titulo = `Diagnostico de cita generado`;
+    await db.none(
+      `INSERT INTO notificacion (idemisor, idreceptor, titulo, mensaje) VALUES ($1, $2, $3, $4)`,
+      [idpsicologo, idpaciente, titulo, mensaje]
+    );
 
     return res.status(201).json(result);
   } catch (error) {

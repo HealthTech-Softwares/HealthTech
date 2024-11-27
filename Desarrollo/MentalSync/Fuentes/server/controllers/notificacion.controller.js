@@ -1,25 +1,49 @@
 import db from "../src/db.js";
 
-export const createNotificacion = async (req, res, next) => {
+export const getNotificacionesPsicologo = async (req, res, next) => {
   try {
-    const { idemisor, idreceptor, mensaje } = req.body;
+    const idusuario = req.userId;
 
-    const result = await db.one(
-      `INSERT INTO notificacion (idemisor, idreceptor, mensaje) VALUES ($1, $2, $3) RETURNING *`,
-      [idemisor, idreceptor, mensaje]
+    const psicologo = await db.oneOrNone(
+      `SELECT idpsicologo FROM psicologo WHERE idusuario = $1`,
+      [idusuario]
     );
 
-    return res.status(201).json(result);
+    const idpsicologo = psicologo.idpsicologo;
+
+    const result = await db.any(
+      `SELECT n.idnotificacion, n.titulo, n.mensaje, n.fecha_creacion,
+              p.nombre AS paciente_nombre, p.apellidop AS paciente_apellidop
+      FROM notificacion n
+      INNER JOIN paciente p ON n.idemisor = p.idpaciente
+      WHERE n.idreceptor = $1`,
+      [idpsicologo]
+    );
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
 };
 
-export const getTodasNotificaciones = async (res, next) => {
+export const getNotificacionesPaciente = async (req, res, next) => {
   try {
+    const idusuario = req.userId;
+
+    const paciente = await db.oneOrNone(
+      `SELECT idpaciente FROM paciente WHERE idusuario = $1`,
+      [idusuario]
+    );
+
+    const idpaciente = paciente.idpaciente;
+
     const result = await db.any(
-      `SELECT *
-      FROM notificacion`
+      `SELECT n.idnotificacion, n.titulo, n.mensaje, n.fecha_creacion,
+              p.nombre AS psicologo_nombre, p.apellidop AS psicologo_apellidop
+      FROM notificacion n
+      INNER JOIN psicologo p ON n.idemisor = p.idpsicologo
+      WHERE n.idreceptor = $1`,
+      [idpaciente]
     );
     res.json(result);
   } catch (error) {
@@ -27,49 +51,3 @@ export const getTodasNotificaciones = async (res, next) => {
   }
 };
 
-export const getNotificaciones = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await db.any(
-      `SELECT *
-      FROM notificacion
-      WHERE idreceptor = $1`,
-      [id]
-    );
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const updateNotificacion = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    const notificacion = await db.oneOrNone(
-      `SELECT *
-      FROM notificacion
-      WHERE idnotificacion = $1`,
-      [id]
-    );
-
-    if (!notificacion) {
-      return res.status(404).json({ message: "Notificacion no encontrada" });
-    }
-
-    const result = await db.result(
-      `UPDATE notificacion
-      SET leido = true
-      WHERE idnotificacion = $1`,
-      [id]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: "Notificacion no encontrada" });
-    }
-
-    return res.sendStatus(204);
-  } catch (error) {
-    next(error);
-  }
-};
