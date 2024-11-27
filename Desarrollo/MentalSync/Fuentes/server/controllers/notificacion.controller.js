@@ -12,13 +12,18 @@ export const getNotificacionesPsicologo = async (req, res, next) => {
     const idpsicologo = psicologo.idpsicologo;
 
     const result = await db.any(
-      `SELECT n.idnotificacion, n.titulo, n.mensaje, n.fecha_creacion,
-              p.nombre AS paciente_nombre, p.apellidop AS paciente_apellidop
+      `SELECT n.idnotificacion, n.titulo, n.mensaje, to_char(n.fecha_creacion, 'DD/MM/YYYY HH12:MI AM') as fecha_creacion,
+          p.nombre AS paciente_nombre, p.apellidop AS paciente_apellidop
       FROM notificacion n
-      INNER JOIN paciente p ON n.idemisor = p.idpaciente
+      INNER JOIN usuario u ON n.idemisor = u.idusuario
+      INNER JOIN psicologo p ON u.idusuario = p.idusuario
       WHERE n.idreceptor = $1`,
-      [idpsicologo]
+      [idusuario]
     );
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No hay notificaciones" });
+    }
 
     res.json(result);
   } catch (error) {
@@ -38,13 +43,19 @@ export const getNotificacionesPaciente = async (req, res, next) => {
     const idpaciente = paciente.idpaciente;
 
     const result = await db.any(
-      `SELECT n.idnotificacion, n.titulo, n.mensaje, n.fecha_creacion,
-              p.nombre AS psicologo_nombre, p.apellidop AS psicologo_apellidop
+      `SELECT n.idnotificacion, n.titulo, n.mensaje, to_char(n.fecha_creacion, 'DD/MM/YYYY HH12:MI AM') as fecha_creacion,
+          p.nombre AS psicologo_nombre, p.apellidop AS psicologo_apellidop
       FROM notificacion n
-      INNER JOIN psicologo p ON n.idemisor = p.idpsicologo
+      INNER JOIN usuario u ON n.idemisor = u.idusuario
+      INNER JOIN psicologo p ON u.idusuario = p.idusuario
       WHERE n.idreceptor = $1`,
-      [idpaciente]
+      [idusuario]
     );
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No hay notificaciones" });
+    }
+
     res.json(result);
   } catch (error) {
     next(error);
