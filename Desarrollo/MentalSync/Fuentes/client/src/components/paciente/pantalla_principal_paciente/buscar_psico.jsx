@@ -111,7 +111,10 @@ export function BuscarPsico() {
                           checked={filtroConsultaOnline}
                           onChange={handleFiltroConsultaOnlineChange}
                         />
-                        <label className="form-check-label ms-2" htmlFor="online">
+                        <label
+                          className="form-check-label ms-2"
+                          htmlFor="online"
+                        >
                           Consulta online
                         </label>
                       </div>
