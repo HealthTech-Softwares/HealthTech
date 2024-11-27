@@ -94,12 +94,12 @@ export function GenerarDiagnostico() {
                       </div>
                       <div className="col-9">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                          <div className="row m-2">
-                            <div className="col-6">
+                          <div className="row justify-content-center">
+                            <div className="col-8">
                               {/* Diagnostico */}
                               <label
                                 htmlFor="exampleInputEmail1"
-                                className="form-label"
+                                className="form-label text-center d-block"
                               >
                                 Diagnóstico
                               </label>
@@ -124,7 +124,7 @@ export function GenerarDiagnostico() {
                               {/* Estado */}
                               <label
                                 htmlFor="exampleInputEmail1"
-                                className="form-label"
+                                className="form-label text-center d-block"
                               >
                                 Estado
                               </label>
@@ -140,7 +140,7 @@ export function GenerarDiagnostico() {
                               {/* Comentario */}
                               <label
                                 htmlFor="exampleInputEmail1"
-                                className="form-label"
+                                className="form-label text-center d-block"
                               >
                                 Comentarios
                               </label>

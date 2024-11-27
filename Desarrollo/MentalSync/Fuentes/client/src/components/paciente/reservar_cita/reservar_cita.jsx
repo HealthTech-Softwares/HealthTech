@@ -52,13 +52,12 @@ export function ReservaCita() {
   const diasDisponibles = psicologo?.horarios.map((horario) => horario.dia) || [];
 
   const horariosPorDia = psicologo?.horarios.reduce((acc, horario) => {
-  acc[horario.dia] = horario.turnos.map((turno) => ({
-    idhorario: turno.idhorario,
-    rango: `${formatearHora(turno.hora_inicio)} - ${formatearHora(turno.hora_fin)}`,
-  }));
-  return acc;
-}, {}) || {};
-
+    acc[horario.dia] = horario.turnos.map((turno) => ({
+      idhorario: turno.idhorario,
+      rango: `${formatearHora(turno.hora_inicio)} - ${formatearHora(turno.hora_fin)}`,
+    }));
+    return acc;
+  }, {}) || {};
 
   // Manejadores de cambios
   const handleDiaChange = (e) => {
@@ -88,48 +87,48 @@ export function ReservaCita() {
                 <InputInfoConLabel propiedad="Nombre" ejemplo={psicologo.nombre} />
                 <InputInfoConLabel propiedad="Apellidos" ejemplo={psicologo.apellidop + " " + psicologo.apellidom} />
               </div>
-              <div className="row mb-3 d-flex justify-content-center">
-                <div className="col-5 ms-5">
-                  <label htmlFor="dia" className="form-label">
-                    Día de atención
-                  </label>
-                  <select
-                    className="form-select w-75"
-                    id="dia"
-                    value={diaSeleccionado}
-                    onChange={handleDiaChange}
-                  >
-                    <option value="">Selecciona un día</option>
-                    {diasDisponibles.map((dia) => (
-                      <option key={dia} value={dia}>
-                        {dia}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="col-5 ms-5">
-                  <label htmlFor="horario" className="form-label">
-                    Horario disponible
-                  </label>
-                  <select
-                    className="form-select w-75"
-                    id="horario"
-                    disabled={!diaSeleccionado} // Desactivar si no hay día seleccionado
-                    {...register("idhorario", {required: true})}
-                  >
-                    <option value="">Selecciona un horario</option>
-                    {diaSeleccionado &&
-                      horariosPorDia[diaSeleccionado]?.map((horario) => (
-                        <option key={horario.idhorario} value={horario.idhorario}>
-                          {horario.rango}
+                <div className="row mb-3 d-flex justify-content-center">
+                  <div className="col-5">
+                    <label htmlFor="dia" className="form-label">
+                      Día de atención
+                    </label>
+                    <select
+                      className="form-select"
+                      id="dia"
+                      value={diaSeleccionado}
+                      onChange={handleDiaChange}
+                    >
+                      <option value="">Selecciona un día</option>
+                      {diasDisponibles.map((dia) => (
+                        <option key={dia} value={dia}>
+                          {dia}
                         </option>
                       ))}
-                  </select>
+                    </select>
+                  </div>
+                  <div className="col-5">
+                    <label htmlFor="horario" className="form-label">
+                      Horario disponible
+                    </label>
+                    <select
+                      className="form-select"
+                      id="horario"
+                      disabled={!diaSeleccionado}
+                      {...register("idhorario", {required: true})}
+                    >
+                      <option value="">Selecciona un horario</option>
+                      {diaSeleccionado &&
+                        horariosPorDia[diaSeleccionado]?.map((horario) => (
+                          <option key={horario.idhorario} value={horario.idhorario}>
+                            {horario.rango}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
                 </div>
                 <div className="row mb-3 d-flex justify-content-center">
-                  <div className="col-8">
+                  <div className="col-10">
                     <label htmlFor="descripcion" className="form-label">
                       Motivo
                     </label>
@@ -143,19 +142,21 @@ export function ReservaCita() {
                     ></textarea>
                   </div>
                 </div>
-                <ul className="list-group col-5">
-                  <li className="list-group-item">
-                    <input
-                      className="form-check-input me-3"
-                      type="checkbox"
-                      id="secondCheckbox"
-                      {...register("online")}
-                    />
-                    <label className="form-check-label" htmlFor="secondCheckbox">
-                      Consulta Online
-                    </label>
-                  </li>
-                </ul>
+                <div className="row mb-3 d-flex justify-content-center">
+                  <div className="col-10">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="secondCheckbox"
+                        {...register("online")}
+                      />
+                      <label className="form-check-label" htmlFor="secondCheckbox">
+                        Consulta Online
+                      </label>
+                    </div>
+                  </div>
+                </div>
                 <div className="row mb-4">
                   <div className="col-10 d-flex justify-content-end">
                     <BotonAccion nombre="Completar cita" />
