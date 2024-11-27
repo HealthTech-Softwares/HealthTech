@@ -32,6 +32,7 @@ export function GenerarDiagnostico() {
 
   // Envio del formulario
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       await putCitaRequest(idcita, data);
       alert("Cita actualizada correctamente");
@@ -85,7 +86,9 @@ export function GenerarDiagnostico() {
                       <div className="col-3 text-center">
                         <PacienteConFoto
                           foto={cita.foto_paciente}
-                          nombre={cita.nombre_paciente + " " + cita.apellidop_paciente}
+                          nombre={
+                            cita.nombre_paciente + " " + cita.apellidop_paciente
+                          }
                           dni={cita.dni_paciente}
                         />
                         <Link to={`/historia-clinica/${cita.idpaciente}`}>
