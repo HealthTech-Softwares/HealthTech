@@ -1,17 +1,13 @@
 import { Router } from "express";
 import {
-  createNotificacion,
-  getTodasNotificaciones,
-  getNotificaciones,
-  updateNotificacion
+  getNotificacionesPaciente,
+  getNotificacionesPsicologo
 } from "../controllers/notificacion.controller";
-import { verifyToken, isAdmin, hasRole } from "../libs/auth.middleware";
+import { verifyToken, isPsicologo, isPaciente } from "../libs/auth.middleware";
 
 const router = Router();
 
-router.post("/notificacion", createNotificacion);
-router.get("/notificaciones", verifyToken, isAdmin, getTodasNotificaciones);
-router.get("/notificaciones/:id", verifyToken, hasRole("Administrador", "Paciente", "Medico"), getNotificaciones);
-router.put("/notificacion/:id", updateNotificacion);
+router.get("/notificaciones_paciente", verifyToken, isPaciente, getNotificacionesPaciente);
+router.get("/notificaciones_psicologo", verifyToken, isPsicologo, getNotificacionesPsicologo);
 
 export default router;
