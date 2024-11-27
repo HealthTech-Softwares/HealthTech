@@ -8,6 +8,7 @@ import especialidadRouter from "../routes/especialidad.routes.js";
 import authRouter from "../routes/auth.routes.js";
 import pacienteRouter from "../routes/paciente.routes.js";
 import citaRouter from "../routes/citas.routes.js";
+import notificacionRouter from "../routes/notificacion.routes.js";
  
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/api", turnoRouter);
 app.use("/api", especialidadRouter);
 app.use("/api", pacienteRouter);
 app.use("/api", citaRouter);
+app.use("/api", notificacionRouter);
 
 // Handling errors
 app.use((err, req, res, next) => {
