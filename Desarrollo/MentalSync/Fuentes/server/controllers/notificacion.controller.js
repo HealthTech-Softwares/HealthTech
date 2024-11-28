@@ -9,14 +9,12 @@ export const getNotificacionesPsicologo = async (req, res, next) => {
       [idusuario]
     );
 
-    const idpsicologo = psicologo.idpsicologo;
-
     const result = await db.any(
-      `SELECT n.idnotificacion, n.titulo, n.mensaje, to_char(n.fecha_creacion, 'DD/MM/YYYY HH12:MI AM') as fecha_creacion,
+      `SELECT n.idnotificacion, n.titulo, n.mensaje, to_char(n.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion,
           p.nombre AS paciente_nombre, p.apellidop AS paciente_apellidop
       FROM notificacion n
       INNER JOIN usuario u ON n.idemisor = u.idusuario
-      INNER JOIN psicologo p ON u.idusuario = p.idusuario
+      INNER JOIN paciente p ON u.idusuario = p.idusuario
       WHERE n.idreceptor = $1`,
       [idusuario]
     );
@@ -40,10 +38,8 @@ export const getNotificacionesPaciente = async (req, res, next) => {
       [idusuario]
     );
 
-    const idpaciente = paciente.idpaciente;
-
     const result = await db.any(
-      `SELECT n.idnotificacion, n.titulo, n.mensaje, to_char(n.fecha_creacion, 'DD/MM/YYYY HH12:MI AM') as fecha_creacion,
+      `SELECT n.idnotificacion, n.titulo, n.mensaje, to_char(n.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion,
           p.nombre AS psicologo_nombre, p.apellidop AS psicologo_apellidop
       FROM notificacion n
       INNER JOIN usuario u ON n.idemisor = u.idusuario
