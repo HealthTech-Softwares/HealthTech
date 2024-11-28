@@ -9,11 +9,12 @@ import authRouter from "../routes/auth.routes.js";
 import pacienteRouter from "../routes/paciente.routes.js";
 import citaRouter from "../routes/citas.routes.js";
 import notificacionRouter from "../routes/notificacion.routes.js";
+import { FRONTEND_URL } from "./config.js";
  
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: FRONTEND_URL || 'http://localhost:5173',
   credentials: true
 }));
 app.use(morgan("dev"));
