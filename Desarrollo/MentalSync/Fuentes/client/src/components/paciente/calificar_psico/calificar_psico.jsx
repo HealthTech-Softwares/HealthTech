@@ -15,9 +15,12 @@ export function CalificarPsico() {
   const { idcita } = useParams();
 
   // Peticion de daton
-  const { data: [cita], loading, error, mensaje} = useFetchData([
-    () => citaRequest(idcita)
-  ])
+  const {
+    data: [cita],
+    loading,
+    error,
+    mensaje,
+  } = useFetchData([() => citaRequest(idcita)]);
 
   return (
     <div className={`${styles.fondo}`}>
@@ -35,7 +38,11 @@ export function CalificarPsico() {
               <div className={`card ${cali.myCardCalificarPsico} mb-3`}>
                 <div className="card-body">
                   <div className="row align-items-center">
-                    {loading ? (<h3>Cargando...</h3>) : error ? (<h2>{mensaje}</h2>) : (
+                    {loading ? (
+                      <b>Cargando...</b>
+                    ) : error ? (
+                      <b>{mensaje}</b>
+                    ) : (
                       <div className="col-4 text-center">
                         <img
                           src={cita.foto_psicologo}
@@ -44,7 +51,8 @@ export function CalificarPsico() {
                         />
                         <h5 className="card-title">{cita.nombre_psicologo}</h5>
                         <p className="m-0">
-                          <b>Fecha de cita:</b>{cita.fecha}
+                          <b>Fecha de cita:</b>
+                          {cita.fecha}
                         </p>
                       </div>
                     )}

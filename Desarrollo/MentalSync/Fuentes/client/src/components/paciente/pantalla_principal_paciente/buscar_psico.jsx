@@ -17,6 +17,8 @@ export function BuscarPsico() {
   const {
     data: [especialidades, psicologos],
     loading,
+    error,
+    mensaje,
   } = useFetchData([especialidesRequest, psicologosRequest]);
 
   // Filtros
@@ -67,7 +69,9 @@ export function BuscarPsico() {
     <div className={`${styles.fondo}`}>
       <NavBarMental />
       {loading ? (
-        <div>Cargando...</div>
+        <b>Cargando...</b>
+      ) : error ? (
+        <b>{mensaje}</b>
       ) : (
         <>
           <section>

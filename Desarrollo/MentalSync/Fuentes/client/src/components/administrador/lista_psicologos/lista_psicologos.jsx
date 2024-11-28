@@ -35,7 +35,12 @@ export function BotonesOpciones(props) {
 
 export function ListaPsicologos() {
   // Peticion de datos
-  const { data: [especialidades, psicologos], loading } = useFetchData([especialidesRequest, psicologosRequestAdmin]);
+  const {
+    data: [especialidades, psicologos],
+    loading,
+    error,
+    mensaje,
+  } = useFetchData([especialidesRequest, psicologosRequestAdmin]);
 
   // Filtros
   const [filtroNombre, setFiltroNombre] = useState("");
@@ -77,7 +82,9 @@ export function ListaPsicologos() {
     <div className={`${styles.fondo}`}>
       <NavBarAdmin />
       {loading ? (
-        <div>Cargando ...</div>
+        <b>Cargando ...</b>
+      ) : error ? (
+        <b>{mensaje}</b>
       ) : (
         <>
           <section>
