@@ -63,7 +63,7 @@ export function NavBarMental() {
 }
 
 export function NavBarAdmin() {
-  const { user } = useAuth();
+  const { logout } = useAuth();
   let ruta = "/lista-psicologos";
 
   return (
@@ -79,12 +79,8 @@ export function NavBarAdmin() {
         </Link>
 
         <div className="col-6 d-flex justify-content-end">
-          <Link to="/notificaciones">
-            <img
-              src={logoCampana}
-              alt="Campana"
-              className={`${styles.logoNav}`}
-            />
+          <Link className="btn btn-primary" to="/" onClick={() => logout()}>
+            Cerrar sesión
           </Link>
         </div>
       </div>
@@ -255,12 +251,8 @@ export function NombrePantalla(props) {
 export function EnlaceLabel(props) {
   return (
     <div>
-      <label className="form-label">
-        Enlace
-      </label>
-      <a
-        className={`form-control mb-3`}
-      >{props.enlace}</a>
+      <label className="form-label">Enlace</label>
+      <a className={`form-control mb-3`}>{props.enlace}</a>
     </div>
   );
 }
