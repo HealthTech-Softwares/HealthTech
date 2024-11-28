@@ -11,20 +11,10 @@ import citaRouter from "../routes/citas.routes.js";
 import notificacionRouter from "../routes/notificacion.routes.js";
 import { FRONTEND_URL } from "./config.js";
  
-const allowedOrigins = [
-  FRONTEND_URL || 'http://localhost:5173',
-  'http://localhost:5173'
-];
+const app = express();
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin: FRONTEND_URL || 'http://localhost:5173',
   credentials: true
 }));
 app.use(morgan("dev"));
