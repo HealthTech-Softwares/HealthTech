@@ -74,7 +74,7 @@ export function ModificarDatosPaciente() {
       alert("Usuario paciente actualizado correctamente");
       navigate("/principal");
     } catch (error) {
-      console.error("Error al actulizar usuario: ", error);
+      console.error("Error al actualizar usuario: ", error);
       alert("Hubo un error: ", error);
       reset();
     }
@@ -130,78 +130,103 @@ export function ModificarDatosPaciente() {
                     </div>
                   </div>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <label htmlFor="inputCorreo" className="form-label">
-                    Correo:
-                  </label>
-                  <input
-                    type="text"
-                    id="inputCorreo"
-                    className="form-control w-80 mb-4"
-                    placeholder={paciente.correo}
-                    {...register("correo", {
-                      required: {
-                        value: true,
-                        message: `Correo es requerido`,
-                      },
-                      pattern: {
-                        value:
-                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                        message: "Correo no válido",
-                      },
-                    })}
-                  />
-                  {errors.correo && (
-                    <p className="text-danger">{errors.correo.message}</p>
-                  )}
-                  <label htmlFor="password" className="form-label">
-                    Nueva contraseña:
-                  </label>
-                  <input
-                    id="password"
-                    className="form-control w-80 mb-4"
-                    type="password"
-                    placeholder="contraseña"
-                    {...register("password", {
-                      required: {
-                        value: true,
-                        message: "Contaseña es requerida",
-                      },
-                      minLength: {
-                        value: 6,
-                        message: "La contraseña debe ser mayor a 6 caracteres",
-                      },
-                    })}
-                  />
-                  {errors.password && (
-                    <p className="text-danger">{errors.password.message}</p>
-                  )}
-                  <label htmlFor="confirmarPassword" className="form-label">
-                    Confirmar contraseña:
-                  </label>
-                  <input
-                    id="confirmarPassword"
-                    className="form-control w-80 mb-4"
-                    placeholder="nueva contraseña"
-                    type="password"
-                    {...register("confirmarPassword", {
-                      required: {
-                        value: true,
-                        message: "Confirmar contraseña es requerido",
-                      },
-                      validate: (value) =>
-                        value === getValues("password") ||
-                        "Las contraseñas no coinciden",
-                    })}
-                  />
-                  {errors.confirmarPassword && (
-                    <p className="text-danger">
-                      {errors.confirmarPassword.message}
-                    </p>
-                  )}
-                  <button type="submit" className="btn btn-primary">
-                    Guardar cambios
-                  </button>
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
+                  <div className="row mb-3">
+                    <div className="col-12">
+                      <label htmlFor="inputCorreo" className="form-label">
+                        Correo:
+                      </label>
+                      <input
+                        type="text"
+                        id="inputCorreo"
+                        className="form-control"
+                        placeholder={paciente.correo}
+                        {...register("correo", {
+                          required: {
+                            value: true,
+                            message: "Correo es requerido",
+                          },
+                          pattern: {
+                            value:
+                              /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                            message: "Correo no válido",
+                          },
+                        })}
+                      />
+                      {errors.correo && (
+                        <p className="text-danger mt-1">
+                          {errors.correo.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="row mb-3">
+                    <div className="col-md-6">
+                      <label htmlFor="password" className="form-label">
+                        Nueva contraseña:
+                      </label>
+                      <input
+                        id="password"
+                        className="form-control"
+                        type="password"
+                        placeholder="contraseña"
+                        {...register("password", {
+                          required: {
+                            value: true,
+                            message: "Contraseña es requerida",
+                          },
+                          minLength: {
+                            value: 6,
+                            message:
+                              "La contraseña debe ser mayor a 6 caracteres",
+                          },
+                        })}
+                      />
+                      {errors.password && (
+                        <p className="text-danger mt-1">
+                          {errors.password.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="col-md-6">
+                      <label
+                        htmlFor="confirmarPassword"
+                        className="form-label"
+                      >
+                        Confirmar contraseña:
+                      </label>
+                      <input
+                        id="confirmarPassword"
+                        className="form-control"
+                        type="password"
+                        placeholder="nueva contraseña"
+                        {...register("confirmarPassword", {
+                          required: {
+                            value: true,
+                            message: "Confirmar contraseña es requerido",
+                          },
+                          validate: (value) =>
+                            value === getValues("password") ||
+                            "Las contraseñas no coinciden",
+                        })}
+                      />
+                      {errors.confirmarPassword && (
+                        <p className="text-danger mt-1">
+                          {errors.confirmarPassword.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-12 text-center">
+                      <button type="submit" className="btn btn-primary mt-3">
+                        Guardar cambios
+                      </button>
+                    </div>
+                  </div>
                 </form>
               </div>
             </>
@@ -211,3 +236,5 @@ export function ModificarDatosPaciente() {
     </div>
   );
 }
+
+
