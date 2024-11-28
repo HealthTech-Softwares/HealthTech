@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export function NavBarMental() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   let ruta = "";
   let ruta2 = "";
   switch (user.rol) {
