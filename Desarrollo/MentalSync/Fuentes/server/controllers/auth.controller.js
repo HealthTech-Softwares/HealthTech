@@ -20,7 +20,10 @@ export const login = async (req, res) => {
 
     const token = await createAccesToken({ id: user.idusuario, rol: user.rol });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+    });
 
     res.json({
       idusuario: user.idusuario,
@@ -40,15 +43,17 @@ export const logout = async (req, res) => {
 
 export const verify = async (req, res) => {
   const token = req.cookies.token;
-  if(!token) {
+  if (!token) {
     return res.status(401).json({ message: "No autorizado" });
   }
-  try{
+  try {
     const decoded = jwt.verify(token, TOKEN_SECRET);
-    const rows = await db.query("SELECT * FROM usuario WHERE idusuario = $1", [decoded.id]);
+    const rows = await db.query("SELECT * FROM usuario WHERE idusuario = $1", [
+      decoded.id,
+    ]);
     const userFound = rows[0];
 
-    if(!userFound) {
+    if (!userFound) {
       return res.status(401).json({ message: "No autorizado" });
     }
 
