@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export function NavBarMental() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   let ruta = "";
   let ruta2 = "";
   switch (user.rol) {
@@ -31,6 +31,7 @@ export function NavBarMental() {
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid d-flex align-items-center">
+        {/* Logo y título */}
         <Link className="navbar-brand d-flex align-items-center" to={ruta}>
           <img
             src={logoMental}
@@ -39,7 +40,8 @@ export function NavBarMental() {
           />
           MentalSync
         </Link>
-
+  
+        {/* Íconos de notificaciones y usuario */}
         <div className="col-6 d-flex justify-content-end">
           <Link to="/notificaciones">
             <img
@@ -48,7 +50,7 @@ export function NavBarMental() {
               className={`${styles.logoNav}`}
             />
           </Link>
-
+  
           <Link to={ruta2}>
             <img
               src={logoUsuario}
@@ -56,6 +58,16 @@ export function NavBarMental() {
               className={`${styles.logoNav}`}
             />
           </Link>
+  
+          {/* Botón de cerrar sesión */}
+          <button
+            className="btn btn-primary ms-3"
+            onClick={() => {
+              logout();
+            }}
+          >
+            Cerrar sesión
+          </button>
         </div>
       </div>
     </nav>
