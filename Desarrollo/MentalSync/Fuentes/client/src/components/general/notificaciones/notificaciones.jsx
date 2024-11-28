@@ -3,6 +3,11 @@ import { NavBarMental, NombrePantalla } from "../../principales";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import Loading from "../../../pages/Loading";
+import { useFetchData } from "../../../hooks/useFetchData";
+import {
+  notificacionesPacienteRequest,
+  notificacionesPsicologoRequest,
+} from "../../../api/auth";
 
 export function PopNotif(props) {
   return (
@@ -11,8 +16,8 @@ export function PopNotif(props) {
         <div className={`card m-3 ${styles.myCard}`}>
           <div className="card-body">
             <h4>{props.nombre}</h4>
-            <h5>De: {props.persona}</h5>
             <h6>{props.descripcion}</h6>
+            <h6>{props.fecha}</h6>
           </div>
         </div>
       </div>
@@ -21,9 +26,32 @@ export function PopNotif(props) {
 }
 
 export function Notificaciones() {
+  // Verificar autenticacion
   const { user, isAuthenticated, loading, logout } = useAuth();
+
+  // Define qué request usar dependiendo del rol del usuario
+  const request =
+    user?.rol === "Psicologo"
+      ? notificacionesPsicologoRequest
+      : notificacionesPacienteRequest;
+
+  // Usa la hook con el request correspondiente
+  const {
+    data: [notificaciones],
+    loading: ld,
+    error,
+    mensaje,
+  } = useFetchData([request]);
+
+  // Si está cargando la autenticación, muestra el componente de carga
   if (loading) return <Loading />;
-  if (isAuthenticated) return (
+
+  // Si el usuario no está autenticado, redirige o muestra un mensaje
+  if (!isAuthenticated) {
+    return <p>No tienes acceso. Por favor, inicia sesión.</p>;
+  }
+
+  return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
       <section>
@@ -42,25 +70,30 @@ export function Notificaciones() {
               </div>
             </div>
           </div>
-          <div className="row ms-4 me-4">
-            <div className="col-12">
-              <PopNotif
-                nombre="Recordatorio de renovación"
-                persona="Administrador"
-                descripcion="Hola, queremos recordarte que debes renovar tu información pronto para seguir disfrutando de nuestros servicios."
-              />
-              <PopNotif
-                nombre="Cancelación de cita"
-                persona="Olivia"
-                descripcion="Lamentablemente, debo cancelar nuestra cita para mañana. Disculpa por cualquier inconveniente; podemos reagendar si te parece bien."
-              />
-              <PopNotif
-                nombre="Pensamientos intrusivos"
-                persona="Santos"
-                descripcion="A veces siento que mi mente se llena de pensamientos que no quiero. Sé que no son reales, pero siguen apareciendo sin que los pueda controlar."
-              />
-            </div>
-          </div>
+          {ld ? (
+            <b>Cargando ...</b>
+          ) : error ? (
+            <b>{mensaje}</b>
+          ) : (
+            <>
+              <div className="row ms-4 me-4">
+                <div className="col-12">
+                  {notificaciones.length === 0 ? (
+                    <b>No hay notificaciones para mostrar</b>
+                  ) : (
+                    notificaciones.map((notificacion) => (
+                      <PopNotif
+                        key={notificacion.idnotificacion}
+                        nombre={notificacion.titulo}
+                        descripcion={notificacion.mensaje}
+                        fecha={notificacion.fecha_creacion}
+                      />
+                    ))
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </section>
     </div>
