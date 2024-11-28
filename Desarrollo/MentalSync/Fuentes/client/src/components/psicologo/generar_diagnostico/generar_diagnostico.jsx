@@ -47,9 +47,9 @@ export function GenerarDiagnostico() {
     <div className={`${styles.fondo}`}>
       <NavBarMental />
       {loading ? (
-        <div>Cargando ...</div>
+        <b>Cargando ...</b>
       ) : error ? (
-        <h1>{mensaje}</h1>
+        <b>{mensaje}</b>
       ) : (
         <section>
           <div className="container-fluid">

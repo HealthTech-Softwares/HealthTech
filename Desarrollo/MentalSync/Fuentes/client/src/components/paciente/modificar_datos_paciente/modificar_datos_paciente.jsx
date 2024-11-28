@@ -92,9 +92,9 @@ export function ModificarDatosPaciente() {
             </div>
           </div>
           {loading ? (
-            <h2>Cargando ...</h2>
+            <b>Cargando ...</b>
           ) : error ? (
-            <h2>{mensaje}</h2>
+            <b>{mensaje}</b>
           ) : (
             <>
               <div className="row justify-content-center">

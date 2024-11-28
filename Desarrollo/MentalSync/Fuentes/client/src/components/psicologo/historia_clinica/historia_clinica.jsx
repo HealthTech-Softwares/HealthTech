@@ -8,7 +8,10 @@ import {
 } from "../../principales";
 import { Link, useParams } from "react-router-dom";
 import { useFetchData } from "../../../hooks/useFetchData";
-import { citasPacientePsicologoRequest, pacientePsicologoRequest } from "../../../api/citas";
+import {
+  citasPacientePsicologoRequest,
+  pacientePsicologoRequest,
+} from "../../../api/citas";
 
 export function TablaHistClin({ citas, paciente }) {
   return (
@@ -20,7 +23,9 @@ export function TablaHistClin({ citas, paciente }) {
               nombre={paciente.nombre + " " + paciente.apellidop}
               foto={paciente.foto}
               dni={paciente.dni}
-              labelFecha={paciente.estado === "Pendiente" ? "Proxima cita" : "Última cita"}
+              labelFecha={
+                paciente.estado === "Pendiente" ? "Proxima cita" : "Última cita"
+              }
               fecha={paciente.fecha}
             />
           </div>
@@ -65,36 +70,43 @@ export function HistoriaClinica() {
   // Obtener el parametro
   const { idpaciente } = useParams();
   // Peticion de datos
-  const { data: [citas, paciente], loading, error, mensaje } = useFetchData([
+  const {
+    data: [citas, paciente],
+    loading,
+    error,
+    mensaje,
+  } = useFetchData([
     () => citasPacientePsicologoRequest(idpaciente),
-    () => pacientePsicologoRequest(idpaciente)
+    () => pacientePsicologoRequest(idpaciente),
   ]);
 
   return (
     <div className={`${styles.fondo}`}>
       <NavBarMental />
-      {loading
-        ? (<div>Cargando ...</div>)
-        : error ? (<h1>{mensaje}</h1>)
-        : (
-          <section>
-            <div className="container-fluid">
-              <div className="row ms-4">
-                <div className="col-12">
-                  <NombrePantalla nombre="Historia clínica" />
-                </div>
-              </div>
-              <div className="row justify-content-center ">
-                <div className="col-12">
-                  {citas.length === 0
-                    ? (<p>El paciente no tiene citas</p>) 
-                      : (<TablaHistClin citas={citas} paciente={paciente[0]} />)}
-                </div>
+      {loading ? (
+        <b>Cargando ...</b>
+      ) : error ? (
+        <b>{mensaje}</b>
+      ) : (
+        <section>
+          <div className="container-fluid">
+            <div className="row ms-4">
+              <div className="col-12">
+                <NombrePantalla nombre="Historia clínica" />
               </div>
             </div>
-          </section>
-        )
-      }
+            <div className="row justify-content-center ">
+              <div className="col-12">
+                {citas.length === 0 ? (
+                  <p>El paciente no tiene citas</p>
+                ) : (
+                  <TablaHistClin citas={citas} paciente={paciente[0]} />
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

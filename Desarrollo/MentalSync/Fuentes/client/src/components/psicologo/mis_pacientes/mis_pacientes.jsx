@@ -42,8 +42,7 @@ export function MisPacientes() {
       .toLowerCase()
       .includes(filtroNombre.toLowerCase());
     const coincideEstado =
-      filtroEstado === "" ||
-      pac.estado.includes(filtroEstado);
+      filtroEstado === "" || pac.estado.includes(filtroEstado);
     return coincideNombre && coincideEstado;
   });
 
@@ -62,9 +61,9 @@ export function MisPacientes() {
     <div className={`${styles.fondo}`}>
       <NavBarMental />
       {loading ? (
-        <div>Cargando ...</div>
+        <b>Cargando ...</b>
       ) : error ? (
-        <h1>{mensaje}</h1>
+        <b>{mensaje}</b>
       ) : (
         <section>
           <div className="container-fluid">
@@ -77,16 +76,16 @@ export function MisPacientes() {
                       <InputInfoSinLabel onChange={handleFiltroNombreChange} />
                     </div>
                     <div className="col-3">
-                        <select
-                          className="form-select"
-                          value={filtroEstado}
-                          onChange={handleFiltroEstadoChange}
-                        >
-                          <option value="">Estado</option>
-                          <option value="Pendiente">Pendiente</option>
-                          <option value="Ausente">Ausente</option>
-                          <option value="Realizado">Realizado</option>
-                        </select>
+                      <select
+                        className="form-select"
+                        value={filtroEstado}
+                        onChange={handleFiltroEstadoChange}
+                      >
+                        <option value="">Estado</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Ausente">Ausente</option>
+                        <option value="Realizado">Realizado</option>
+                      </select>
                     </div>
                     <div className="col-1">
                       <BotonAccion nombre="Buscar" />
@@ -98,47 +97,47 @@ export function MisPacientes() {
             <div className={`row justify-content-center`}>
               <div className="col-12 d-flex justify-content-center">
                 {currentData.map((paciente) => (
-                    <div className="col-3" key={paciente.idpaciente}>
-                      <div className={`card ${mis.myCard} mb-3`}>
-                        <div className="card-body">
-                          <div className="row align-items-center">
-                            <div className="col-12 text-center">
-                              <PacienteConFoto
-                                foto={paciente.foto}
+                  <div className="col-3" key={paciente.idpaciente}>
+                    <div className={`card ${mis.myCard} mb-3`}>
+                      <div className="card-body">
+                        <div className="row align-items-center">
+                          <div className="col-12 text-center">
+                            <PacienteConFoto
+                              foto={paciente.foto}
+                              nombre={
+                                paciente.nombre + " " + paciente.apellidop
+                              }
+                              dni={paciente.dni}
+                              labelFecha={
+                                paciente.estado === "Pendiente"
+                                  ? "Proxima cita"
+                                  : "Última cita"
+                              }
+                              fecha={paciente.fecha}
+                            />
+                            <Link
+                              to={
+                                paciente.estado === "Pendiente"
+                                  ? `/generar-diagnostico/${paciente.idcita}`
+                                  : `/historia-clinica/${paciente.idpaciente}`
+                              }
+                            >
+                              <BotonAccion
                                 nombre={
-                                  paciente.nombre + " " + paciente.apellidop
-                                }
-                                dni={paciente.dni}
-                                labelFecha={
                                   paciente.estado === "Pendiente"
-                                    ? "Proxima cita"
-                                    : "Última cita"
+                                    ? "Generar diagnóstico"
+                                    : "Ver historia clínica"
                                 }
-                                fecha={paciente.fecha}
                               />
-                              <Link
-                                to={
-                                  paciente.estado === "Pendiente"
-                                    ? `/generar-diagnostico/${paciente.idcita}`
-                                    : `/historia-clinica/${paciente.idpaciente}`
-                                }
-                              >
-                                <BotonAccion
-                                  nombre={
-                                    paciente.estado === "Pendiente"
-                                      ? "Generar diagnóstico"
-                                      : "Ver historia clínica"
-                                  }
-                                />
-                              </Link>
-                            </div>
+                            </Link>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
-              
+
               <div className="d-flex p-2 justify-content-center gap-2">
                 <button
                   className="btn btn-light"
@@ -149,7 +148,7 @@ export function MisPacientes() {
                 </button>
                 <button
                   className="btn btn-light"
-                  onClick={handleNextPage} 
+                  onClick={handleNextPage}
                   disabled={endIndex >= datosFiltrados.length}
                 >
                   Siguiente
