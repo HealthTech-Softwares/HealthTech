@@ -52,7 +52,7 @@ export function CalificarPsico() {
                       <form>
                         <div className="row m-2">
                           <div className="col-12">
-                            <EnlaceLabel enlace="https://example.com/" />
+                            <EnlaceLabel enlace="https://forms.gle/HppUqsc2aYJA8u27A" />
                           </div>
                         </div>
                         <div className="row m-2">

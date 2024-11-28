@@ -48,7 +48,7 @@ export function MisPacientes() {
   });
 
   // Paginacion
-  const itemsPerPage = 1;
+  const itemsPerPage = 9;
   const {
     currentData,
     page,
