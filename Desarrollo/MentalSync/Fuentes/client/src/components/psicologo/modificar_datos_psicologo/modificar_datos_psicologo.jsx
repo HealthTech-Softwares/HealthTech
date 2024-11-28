@@ -309,10 +309,9 @@ export function ModificarDatosPsicologo() {
             </div>
           </section>
           <footer className="fixed-bottom">
-            <BotonAccion
-              ruta="/modificar_datos_psicologo"
-              nombre="Guardar Cambios"
-            />
+            <Link to={"/mis-pacientes"}>
+              <BotonAccion nombre="Guardar Cambios" />
+            </Link>
           </footer>
         </>
       )}
