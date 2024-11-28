@@ -1,12 +1,9 @@
 import styles from "../../principales.module.css";
 import {
   BotonAccion,
-  InputInfoConLabel,
   InputInfoConLabelDoce,
   NavBarAdmin,
-  NavBarMental,
   NombrePantalla,
-  SelectInfoConLabel,
   SelectInfoConLabelDoce,
 } from "../../principales";
 import { Link } from "react-router-dom";
@@ -29,14 +26,9 @@ export function AgregarPsicologo() {
                 <div className="card-body">
                   <div className="row">
                     <div className="col-4 d-flex flex-column justify-content-center align-items-center">
-                      <label htmlfor="formFileLg" className="form-label">
-                        Seleccione foto de perfil
-                      </label>
-                      <input
-                        className="form-control form-control-lg"
-                        id="formFileLg"
-                        type="file"
-                        accept="image/*"
+                      <img
+                        src="https://i.ibb.co/kyNqMYh/user.png"
+                        alt="psico"
                       />
                     </div>
                     <div className="col-8">
@@ -49,8 +41,8 @@ export function AgregarPsicologo() {
                             />
 
                             <InputInfoConLabelDoce
-                              propiedad="Fecha de nacimiento"
-                              ejemplo="DD/MM/YYYY"
+                              propiedad="Correo"
+                              ejemplo="example@example.com"
                             />
 
                             <SelectInfoConLabelDoce
@@ -77,8 +69,8 @@ export function AgregarPsicologo() {
                               ejemplo="Apellidos"
                             />
                             <InputInfoConLabelDoce
-                              propiedad="Identificador"
-                              ejemplo="P0000"
+                              propiedad="DNI"
+                              ejemplo="12345678"
                             />
                             <ul className="list-group w-75">
                               <li className="list-group-item">
@@ -90,9 +82,23 @@ export function AgregarPsicologo() {
                                 />
                                 <label
                                   className="form-check-label"
-                                  htmlfor="firstCheckbox"
+                                  htmlFor="firstCheckbox"
                                 >
                                   Disponibilidad
+                                </label>
+                              </li>
+                              <li className="list-group-item">
+                                <input
+                                  className="form-check-input me-3"
+                                  type="checkbox"
+                                  value=""
+                                  id="secondCheckbox"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="secondCheckbox"
+                                >
+                                  Consulta online
                                 </label>
                               </li>
                             </ul>
