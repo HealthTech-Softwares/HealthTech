@@ -60,13 +60,6 @@ export function Notificaciones() {
             <div className="col-12 d-flex justify-content-between">
               <NombrePantalla nombre="Notificaciones" />
               <div className="d-flex align-items-center justify-content-end">
-                <Link
-                  className="btn btn-primary"
-                  to="/"
-                  onClick={() => logout()}
-                >
-                  Cerrar sesión
-                </Link>
               </div>
             </div>
           </div>
