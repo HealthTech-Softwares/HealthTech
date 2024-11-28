@@ -14,7 +14,7 @@ export const getNotificacionesPsicologo = async (req, res, next) => {
           p.nombre AS paciente_nombre, p.apellidop AS paciente_apellidop
       FROM notificacion n
       INNER JOIN usuario u ON n.idemisor = u.idusuario
-      INNER JOIN psicologo p ON u.idusuario = p.idusuario
+      INNER JOIN paciente p ON u.idusuario = p.idusuario
       WHERE n.idreceptor = $1`,
       [idusuario]
     );
