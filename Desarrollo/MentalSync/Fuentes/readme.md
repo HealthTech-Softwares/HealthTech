@@ -1,80 +1,21 @@
-## Requisitos para levantar localmente el proyecto en su estado actual
+<div align="center">
+  <a href="https://github.com/HealthTech-Softwares/HealthTech">
+    <img src="logo.png" alt="Logo" width="80" height="80">
+  </a>
+  <h3 align="center">HealthTech</h3>
+  <p align="center">"Mejorando tu experiencia"
+  <p>
+</div>
 
-### Prerrequisitos
+**HealthTech** es una empresa especializada en el desarrollo de soluciones tecnológicas avanzadas para el sector de la salud mental. Nos enfocamos en crear software innovador que facilite la gestión y el cuidado en hospitales psiquiátricos, clínicas de psicología y centros de salud mental, tanto en el ámbito público como privado.
 
-Asegúrate de tener instalados estos elementos:
+## Misión
+Nuestra misión es transformar el cuidado de la salud mental mediante la tecnología, ofreciendo herramientas digitales que optimizan la administración, el seguimiento y la calidad del servicio en centros especializados. Buscamos mejorar la eficiencia de los profesionales y la experiencia de los pacientes con soluciones intuitivas y seguras.
 
-- [Node.js](https://nodejs.org/)
-- [Git](https://git-scm.com/downloads)
+## Visión
+Aspiramos a ser líderes globales en innovación tecnológica para la salud mental, impulsando un futuro donde cada centro de atención cuente con plataformas digitales que les permitan brindar un servicio de calidad, accesible y centrado en el bienestar de cada paciente.
 
-### Cómo levantar el proyecto localmente
-
-1. Ubicate en la carpeta de desarrollo de código de MentalSync, para ello ejecuta el siguiente comando en la terminal:
-   ```bash
-   cd desarrollo/mentalsync/fuentes
-   ```
-1. Después, descarga los módulos necesarios de node para el backend con el siguiente comando:
-
-   ```bash
-   npm ci
-   ```
-
-1. Dirígete a la carpeta client, en la misma terminal, ejecutando el comando:
-
-   ```bash
-   cd client
-   ```
-
-   En la carpeta client, ejecuta el siguiente comando en la terminal:
-
-   ```bash
-   npm ci
-   ```
-
-1. Luego, dirígete a la carpeta principal del código fuente. Puedes hacerlo ejecutando en la misma terminal abierta, el siguiente comando:
-
-   ```bash
-   cd ..
-   ```
-
-   En la carpeta principal del código fuente, ejecuta en la terminal el siguiente comando:
-
-   ```bash
-   npm run start
-   ```
-
-   Con ello, se ejecutará el servidor local para el backend. Recuerda tener configurado el archivo _.env_
-
-   Si quieres ejecutar el servidor y que este se actualice automaticamente con cada cambio realizado, ejecuta el siguiente comando en lugar del anterior:
-
-   ```bash
-   npm run dev
-   ```
-
-1. En la carpeta client, a la que puedes desplazarte otra vez, con el comando:
-
-   ```bash
-   cd client
-   ```
-
-   Ejecuta el siguiente comando en la terminal:
-
-   ```bash
-   npm run dev
-   ```
-
-   Con ello, se ejecutará el servidor local para el frontend.
-
-1. Dirígete al al servidor local ingresando el siguiente link en tu navegador: http://localhost:5173/
-
-### Cuentas de prueba:
-
-- Rol de paciente:
-  - Correo: richard.torres@example.com
-  - Contraseña: richie123
-- Rol de psicologo:
-  - Correo: pedro.martinez@example.com
-  - Contraseña: pedro.martinez123
-- Rol de admin:
-  - Correo:  admin.ms@example.com
-  - Contraseña: admin123
+## Contacto
+- Página Web: www.HealthTech.com.pe
+- Teléfono: 452-152
+- Redes Sociales: @HealthTech
