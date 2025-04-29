@@ -89,7 +89,7 @@ export function FuncionChat() {
                 className="d-flex align-items-center justify-content-start"
                 style={{
                   height: "10%",
-                  boxShadow: "0 1px 1px rgba(0, 0, 0, 0.5)",
+                  boxShadow: "0 1px 1px rgba(0, 0, 1, 0.5)",
                   padding: "10px",
                   backgroundColor: message.isReceived ? "rgb(228, 228, 227)" : "white",
                 }}
