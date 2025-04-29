@@ -8,7 +8,7 @@ export function FuncionChat() {
 
   const socketRef = useRef(null);
 
-  // Conectar con el websocket
+  // Conectar Websocket
   useEffect(()=>{
     const ws = new WebSocket("ws://localhost:3001");
     socketRef.current = ws;
