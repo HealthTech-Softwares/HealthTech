@@ -5,10 +5,9 @@ import Rutas from './routes/index.routes'
 function App() {
 
   return (
-    // <AuthProvider>
-    //   <Rutas />
-    // </AuthProvider>
-    <FuncionChat />
+    <AuthProvider>
+      <Rutas />
+    </AuthProvider>
   )
 }
 
