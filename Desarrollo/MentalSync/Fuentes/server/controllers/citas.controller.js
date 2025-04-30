@@ -86,11 +86,10 @@ export const createCita = async (req, res, next) => {
 
             const nombrePacienteCompleto = `${paciente.nombre} ${paciente.apellidop}`;
             const mensajeDB = `Nueva cita con ${nombrePacienteCompleto} para el ${resultCitaCreada.fecha_formateada} a las ${resultCitaCreada.hora_formateada}. Motivo: ${motivo}`;
-            const tituloDB = `Nueva cita programada`;
             try {
                 await db.none(
-                    `INSERT INTO notificacion (idemisor, idreceptor, titulo, mensaje) VALUES ($1, $2, $3, $4)`,
-                    [idusuario_paciente_creador, idusuario_psicologo, tituloDB, mensajeDB]
+                    `INSERT INTO notificaciones (idemisor, idreceptor, mensaje) VALUES ($1, $2, $3)`,
+                    [idusuario_paciente_creador, idusuario_psicologo, mensajeDB]
                 );
                 console.log(`[createCita] Notificación en DB creada para psicólogo (usuario ID ${idusuario_psicologo})`);
             } catch (dbNotifyError) {
@@ -400,8 +399,8 @@ export const updateCita = async (req, res, next) => {
 
         try {
             await db.none(
-                `INSERT INTO notificacion (idemisor, idreceptor, titulo, mensaje) VALUES ($1, $2, $3, $4)`,
-                [idusuario_psicologo_actualizador, idusuario_paciente, titulo, mensaje]
+                `INSERT INTO notificaciones (idemisor, idreceptor, mensaje) VALUES ($1, $2, $3)`,
+                [idusuario_psicologo_actualizador, idusuario_paciente, mensaje]
             );
             console.log(`[updateCita] Notificación DB creada para paciente ${idusuario_paciente}`);
         } catch (dbNotifyError) {
