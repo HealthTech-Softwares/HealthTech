@@ -1,9 +1,20 @@
 import app from "./server/src/app.js";
 import { PORT } from "./server/src/config.js";
-import { connectMongoDB } from "./server/src/dbMongo.js";
+import http from 'http';
+import { setupWebSocketServer } from './server/websocket.js';
 
-await connectMongoDB();
+const httpServer = http.createServer(app);
 
-app.listen(PORT, () => {
-  console.log(`Servidor Express escuchando en el puerto ${PORT}`);
+setupWebSocketServer(httpServer);
+
+httpServer.listen(PORT, () => {
+  console.log(`🚀 Servidor HTTP y WebSocket escuchando en el puerto ${PORT}`);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('ERROR NO CAPTURADO:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('RECHAZO DE PROMESA NO MANEJADO:', reason);
 });
