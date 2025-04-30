@@ -23,13 +23,13 @@ export const login = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
     });
-
     res.json({
       idusuario: user.idusuario,
       correo: user.correo,
       rol: user.rol,
+      token: token 
     });
   } catch (error) {
     console.error("Error en login:", error);
@@ -39,23 +39,24 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   res.clearCookie("token");
-  res.json({ message: "Cierre de sesion exitoso" });
+  res.status(200).json({ message: "Cierre de sesion exitoso" }); 
 };
 
 export const verify = async (req, res) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.status(401).json({ message: "No autorizado" });
+    return res.status(401).json({ message: "No autorizado, falta token" });
   }
   try {
     const decoded = jwt.verify(token, TOKEN_SECRET);
-    const rows = await db.query("SELECT * FROM usuario WHERE idusuario = $1", [
+
+    const userFound = await db.oneOrNone("SELECT idusuario, correo, rol FROM usuario WHERE idusuario = $1", [
       decoded.id,
     ]);
-    const userFound = rows[0];
 
     if (!userFound) {
-      return res.status(401).json({ message: "No autorizado" });
+      res.clearCookie("token");
+      return res.status(401).json({ message: "No autorizado, usuario no encontrado" });
     }
 
     return res.json({
@@ -64,6 +65,13 @@ export const verify = async (req, res) => {
       rol: userFound.rol,
     });
   } catch (error) {
-    return res.status(401).json({ message: "No autorizado" });
+     if (error.name === 'JsonWebTokenError') {
+         return res.status(401).json({ message: "No autorizado, token inválido" });
+     }
+     if (error.name === 'TokenExpiredError') {
+         return res.status(401).json({ message: "No autorizado, token expirado" });
+     }
+     console.error("Error en verify token:", error);
+     return res.status(500).json({ message: "Error interno del servidor al verificar token" });
   }
 };

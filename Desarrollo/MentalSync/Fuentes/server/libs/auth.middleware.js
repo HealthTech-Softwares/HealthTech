@@ -2,10 +2,14 @@ import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../src/config.js";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.cookies.token || req.headers["authorization"];
+  let token = req.cookies.token || req.headers["authorization"];
 
   if (!token) {
     return res.status(401).json({ message: "Acceso denegado" });
+  }
+
+  if (token.startsWith("Bearer ")) {
+    token = token.slice(7);
   }
 
   jwt.verify(token, TOKEN_SECRET, (err, user) => {
@@ -18,6 +22,7 @@ export const verifyToken = (req, res, next) => {
     next();
   });
 };
+
 
 export const isAdmin = (req, res, next) => {
   if (req.userRole !== "Administrador") {
