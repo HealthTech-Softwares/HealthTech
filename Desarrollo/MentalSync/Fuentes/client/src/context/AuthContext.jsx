@@ -32,9 +32,13 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      // console.log(res)
       setUser(res.data);
       setIsAuthenticated(true);
+      Cookies.set('token', res.data.token, {
+        expires: 7,
+        secure: true,
+        sameSite: 'strict'
+      });
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -59,27 +63,35 @@ export const AuthProvider = ({ children }) => {
 
   // Verificar token
   useEffect(() => {
-    async function checkLogin() {
-      const cookies = Cookies.get();
-      if (!cookies.token) {
-        setIsAuthenticated(false);
-        setUser(null);
-        setLoading(false);
-        return;
-      }
-
+    const checkLogin = async () => {
       try {
+        const token = Cookies.get('token');
+        if (!token) {
+          setIsAuthenticated(false);
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+
         const res = await verifyTokenRequest();
-        if (!res.data) return setIsAuthenticated(false);
-        setIsAuthenticated(true);
-        setUser(res.data);
-        setLoading(false);
+        if (!res.data) {
+          setIsAuthenticated(false);
+          setUser(null);
+          Cookies.remove('token');
+        } else {
+          setIsAuthenticated(true);
+          setUser(res.data);
+        }
       } catch (error) {
+        console.error("Error al verificar sesión:", error);
         setIsAuthenticated(false);
         setUser(null);
+        Cookies.remove('token');
+      } finally {
         setLoading(false);
       }
-    }
+    };
+
     checkLogin();
   }, []);
 
